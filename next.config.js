@@ -39,9 +39,9 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      { 
-        source: "/projects/evision/app/:path*", 
-        destination: "https://evision.up.railway.app/:path*" 
+      {
+        source: "/projects/evision/app/:path*",
+        destination: "https://evision.up.railway.app/:path*"
       }
     ];
   },
