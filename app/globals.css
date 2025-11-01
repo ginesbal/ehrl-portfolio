@@ -292,3 +292,12 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
 .modal-w-960  { width: min(100%, 960px); }
 .modal-w-1040 { width: min(100%, 1040px); }
 .modal-w-1120 { width: min(100%, 1120px); }
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}

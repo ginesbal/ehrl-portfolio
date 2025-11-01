@@ -69,7 +69,12 @@ export default function SkillsCreative() {
 
         {/* Tabs */}
         <div className="mb-5">
-          <div role="tablist" aria-label="Skill categories" onKeyDown={onKeyTabs} className="flex gap-8 relative">
+          <div
+            role="tablist"
+            aria-label="Skill categories"
+            onKeyDown={onKeyTabs}
+            className="flex gap-4 md:gap-8 relative overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 md:overflow-x-visible scrollbar-hide"
+          >
             {tabs.map((category) => {
               const isActive = activeCategory === category
               return (
@@ -81,7 +86,7 @@ export default function SkillsCreative() {
                   aria-controls={`panel-${category}`}
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => setActiveCategory(category)}
-                  className={`pb-3 px-3 -mx-3 text-[14px] font-medium tracking-wide rounded-t-lg transition-colors ${isActive ? 'text-text-primary' : 'text-text-muted hover:bg-bg-accent hover:text-text-primary'}`}
+                  className={`pb-3 px-3 -mx-3 text-[14px] font-medium tracking-wide rounded-t-lg transition-colors whitespace-nowrap flex-shrink-0 min-h-[44px] flex items-center ${isActive ? 'text-text-primary' : 'text-text-muted hover:bg-bg-accent hover:text-text-primary'}`}
                   style={{ color: isActive ? activeColor : undefined }}
                 >
                   {skillCategories[category].label}
