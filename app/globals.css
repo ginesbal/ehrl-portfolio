@@ -87,7 +87,10 @@
     --shadow-lg:0 8px 32px rgba(0,0,0,0.55);
   }
 
-  html { @apply antialiased; }
+  html {
+    @apply antialiased;
+    overflow-x: hidden; /* Prevent horizontal scroll on entire page */
+  }
 
   body{
     background:var(--bg-primary);
@@ -99,6 +102,7 @@
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
     overscroll-behavior-y: none; /* prevent background bounce under modals */
+    overflow-x: hidden; /* Prevent horizontal scroll on body */
   }
 
   ::selection{ background:var(--accent-tertiary); color:#fff; }
