@@ -38,7 +38,7 @@ export default function Footer() {
             {/* Email - Rose Taupe */}
             <a
               href="mailto:ehrl.balquin@gmail.com"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
               style={{
                 background: 'var(--bg-accent)',
                 border: '1px solid var(--border-light)',
@@ -67,7 +67,7 @@ export default function Footer() {
               href="https://linkedin.com/in/ehrlbalquin"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
               style={{
                 background: 'var(--bg-accent)',
                 border: '1px solid var(--border-light)',
@@ -97,7 +97,7 @@ export default function Footer() {
               href="https://github.com/ehrlbalquin"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:-translate-y-1"
               style={{
                 background: 'var(--bg-accent)',
                 border: '1px solid var(--border-light)',

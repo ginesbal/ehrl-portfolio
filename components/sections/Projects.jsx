@@ -85,7 +85,7 @@ function ViewAllLink() {
     <div className="mt-20 text-center">
       <a
         href="/projects"
-        className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-border-light text-xs text-rose-taupe transition-all duration-300 hover:-translate-y-0.5 hover:bg-rose-taupe hover:border-rose-taupe hover:text-anti-flash-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-taupe/60 focus:ring-offset-2"
+        className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-border-light text-xs text-rose-taupe transition-all duration-300 hover:-translate-y-0.5 hover:bg-rose-taupe hover:border-rose-taupe hover:text-anti-flash-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-taupe/60 focus:ring-offset-2"
       >
         <span className="font-semibold tracking-wide">View All Projects</span>
         <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
