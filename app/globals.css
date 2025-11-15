@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- BASE ---------- */
 @layer base {
   :root {
-    /* ===== Core Palette ===== */
     --anti-flash-white:#eef0f2;
     --silver:#9ea09d;
     --rose-quartz:#7d6d75;
@@ -14,63 +12,54 @@
     --reseda-green:#71816d;
     --bistre:#342a21;
 
-    /* ===== Semantic Colors ===== */
     --bg-primary:#fafafa;
     --bg-secondary:#ffffff;
     --bg-accent:#f5f5f4;
     --bg-dark:#252525;
 
-    --text-primary:#342a21;       /* bistre */
+    --text-primary:#342a21;
     --text-secondary:#4a4a4a;
-    /* AA-compliant muted on #fafafa */
-    --text-muted:#5a6a5f;         /* deepened reseda for small text */
+    --text-muted:#5a6a5f;
     --text-light:#fafafa;
 
-    --accent-primary:#6b4f4f;     /* rose-taupe */
-    --accent-secondary:#7d6d75;   /* rose-quartz */
-    --accent-tertiary:#71816d;    /* reseda-green */
+    --accent-primary:#6b4f4f;
+    --accent-secondary:#7d6d75;
+    --accent-tertiary:#71816d;
 
     --border-light:#d7d7d7;
     --border-dark:#71816d;
 
-    /* State tokens */
     --success:#2e7d32;
     --success-weak: color-mix(in oklab, var(--success) 10%, white);
     --warning:#b26a00;
     --warning-weak: color-mix(in oklab, var(--warning) 10%, white);
-    --danger:#c62828;
+    --danger:#8b4f4f;
     --danger-weak: color-mix(in oklab, var(--danger) 10%, white);
 
-    /* Motion & easing */
     --hover-overlay:rgba(113,129,109,0.08);
     --focus-ring:rgba(113,129,109,0.25);
     --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
     --ease-out-quart:cubic-bezier(0.165,0.84,0.44,1);
     --ease-in-out-quart:cubic-bezier(0.77,0,0.175,1);
 
-    /* Elevation */
     --shadow-sm:0 2px 8px rgba(52,42,33,0.08);
     --shadow-md:0 4px 16px rgba(52,42,33,0.12);
     --shadow-lg:0 8px 32px rgba(52,42,33,0.16);
 
-    /* Radii */
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 16px;
     --radius-pill: 999px;
 
-    /* Durations */
     --dur-1: 120ms;
     --dur-2: 200ms;
     --dur-3: 320ms;
 
-    /* Z-index scale */
     --z-modal: 1000;
     --z-popover: 900;
     --z-sticky: 800;
   }
 
-  /* Optional dark theme (opt-in with [data-theme="dark"]) */
   [data-theme="dark"] {
     color-scheme: dark;
     --bg-primary:#101111;
@@ -87,35 +76,60 @@
     --shadow-lg:0 8px 32px rgba(0,0,0,0.55);
   }
 
-  html { @apply antialiased; }
+   html {
 
-  body{
-    background:var(--bg-primary);
-    color:var(--text-primary);
-    font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    font-size:16px;
-    line-height:1.55;
-    letter-spacing:0;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    overscroll-behavior-y: none; /* prevent background bounce under modals */
+    @apply antialiased;
+
+    overflow-x: hidden !important;
+    overflow-y: scroll;
+    max-width: 100vw;
+    scroll-padding-top: 80px;
+
   }
 
+ 
+
+  body{
+
+    background:var(--bg-primary);
+
+    color:var(--text-primary);
+
+    font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+    font-size:16px;
+
+    line-height:1.55;
+
+    letter-spacing:0;
+
+    -webkit-font-smoothing:antialiased;
+
+    -moz-osx-font-smoothing:grayscale;
+
+    overscroll-behavior-y: none;
+    overflow-x: hidden !important;
+    max-width: 100vw;
+    position: relative;
+
+  }
+
+  body.menu-open {
+    overflow: hidden !important;
+
+  }
   ::selection{ background:var(--accent-tertiary); color:#fff; }
 
-  /* Cross-browser scrollbar */
-  * { scrollbar-color: var(--rose-quartz) var(--bg-primary); } /* Firefox */
+  * { scrollbar-color: var(--rose-quartz) var(--bg-primary); }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--bg-primary); }
   ::-webkit-scrollbar-thumb { background: var(--rose-quartz); border-radius: 5px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--rose-taupe); }
 }
 
-/* ---------- COMPONENTS ---------- */
 @layer components {
   .container-custom { @apply max-w-[1200px] mx-auto px-5 md:px-10; }
 
-  /* Headings */
   .heading-1 { @apply text-[36px] md:text-[48px] lg:text-[56px] font-light leading-[1.05] tracking-[-0.02em]; color:var(--text-primary); }
   .heading-xl { @apply text-[32px] md:text-[48px] lg:text-[56px] font-light leading-[1.05]; color:var(--text-primary); }
   .heading-lg { @apply text-[28px] md:text-[36px] font-normal leading-[1.15]; color:var(--text-primary); }
@@ -126,7 +140,6 @@
 
   .section-spacing { @apply py-10 md:py-16; }
 
-  /* Forms */
   .label{ @apply text-[11px] tracking-[0.15em] uppercase font-medium block mb-3; color: var(--text-muted); }
   .text-input{
     @apply w-full pb-3 border-b-2 text-[20px] placeholder-gray-400 focus:outline-none bg-transparent transition-colors;
@@ -142,7 +155,6 @@
   .text-area::placeholder{ color: color-mix(in oklab, var(--text-secondary) 65%, white); }
   .text-area:focus{ border-color: var(--accent-primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
-  /* Buttons */
   .btn{ @apply inline-flex items-center gap-3 px-8 py-4 text-[16px] font-medium rounded-lg transition-all duration-300; }
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 text-[14px] font-medium;
@@ -170,7 +182,6 @@
 
   .btn-disabled{ @apply opacity-50 cursor-not-allowed; }
 
-  /* Utility surface */
   .card-surface {
     background: var(--bg-secondary);
     border: 1px solid var(--border-light);
@@ -179,7 +190,6 @@
   }
 }
 
-/* ---------- UTILITIES & ANIMATION ---------- */
 @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
 .stagger-item{ animation: fadeInUp .6s var(--ease-out-quart) forwards; opacity:0; }
 .stagger-item:nth-child(1){ animation-delay:.1s } .stagger-item:nth-child(2){ animation-delay:.2s }
@@ -202,7 +212,6 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
   *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
 
-/* Semantic helpers */
 .text-rose-taupe{ color:var(--rose-taupe); }
 .text-rose-quartz{ color:var(--rose-quartz); }
 .text-silver{ color:var(--silver); }
@@ -225,24 +234,22 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
 
 /* ===== Modal Panel & Scroll ===== */
 .modal-panel {
-  max-height: 92dvh;           /* leave breathing room so header/close never clip */
+  max-height: 92dvh;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  overflow: hidden;            /* clip content to panel */
+  overflow: hidden;
 }
 
-/* The *scrollable* area inside the panel */
 .modal-body {
   flex: 1 1 auto;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch; /* iOS momentum */
+  -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
 }
 
-/* Sticky header so close button stays visible while body scrolls */
 .modal-header {
   position: sticky;
   top: 0;
@@ -251,7 +258,6 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
   border-bottom: 1px solid var(--border-light);
 }
 
-/* Optional: Sticky footer if you show CTAs */
 .modal-footer {
   position: sticky;
   bottom: 0;
@@ -292,3 +298,47 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
 .modal-w-960  { width: min(100%, 960px); }
 .modal-w-1040 { width: min(100%, 1040px); }
 .modal-w-1120 { width: min(100%, 1120px); }
+
+
+/* Mobile-only improvements - Desktop unchanged */
+@media (max-width: 767px) {
+  /* Reduce section spacing on mobile only */
+  .section-spacing {
+    @apply py-10;
+  }
+
+  /* Smaller container padding on mobile */
+  .container-custom {
+    @apply px-4;
+  }
+
+  /* Prevent iOS zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Hide horizontal scrollbar on tabs */
+  [role="tablist"]::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Ensure touch targets on mobile */
+@media (max-width: 767px) and (hover: none) {
+  a, button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
