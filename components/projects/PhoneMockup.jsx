@@ -2,12 +2,6 @@
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-/**
- * Responsive phone mock that scales a fixed viewport to its container.
- * - No hardcoded transform constants
- * - Loading overlay + graceful error fallback to screenshots
- * - Better a11y (aria-busy, aria-live)
- */
 export default function PhoneMockup({
     demoUrl,
     screenshots = [],
@@ -24,7 +18,7 @@ export default function PhoneMockup({
     const containerRef = useRef(null)
     const timer = useRef(null)
 
-    // Auto-rotate screenshots (respects reduced-motion)
+    // auto-rotate screenshots (respects reduced-motion)
     useEffect(() => {
         const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
         if (screenshots.length > 1 && autoRotate && !showDemo && !reduce) {
@@ -35,7 +29,7 @@ export default function PhoneMockup({
         return () => { if (timer.current) clearInterval(timer.current) }
     }, [screenshots.length, autoRotate, showDemo])
 
-    // Responsive scaling: scale the fixed phone viewport to fit container width
+    // responsive scaling: scale the fixed phone viewport to fit container width
     useEffect(() => {
         if (!containerRef.current) return
         const ro = new ResizeObserver(([entry]) => {
@@ -60,7 +54,7 @@ export default function PhoneMockup({
                 style={containerStyle}
                 aria-busy={iframeLoading && showDemo && !failed}
             >
-                {/* Phone chrome (bezel) */}
+                {/* phone chrome (bezel) */}
                 <div
                     className="absolute inset-0 mx-auto shadow-2xl border border-border-light bg-bg-primary overflow-hidden"
                     style={{
@@ -73,10 +67,10 @@ export default function PhoneMockup({
                         boxShadow: '0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.08) inset'
                     }}
                 >
-                    {/* Notch */}
+                    {/* notch */}
                     <div className="absolute top-[10px] left-1/2 -translate-x-1/2 h-7 w-28 bg-black rounded-b-2xl z-10" />
 
-                    {/* Screen */}
+                    {/* screen */}
                     <div className="absolute rounded-[28px] overflow-hidden" style={{ inset: 12, top: 26, background: '#fff' }}>
                         <div className="relative w-full h-full">
                             {!showDemo && screenshots.map((s, idx) => (
@@ -133,7 +127,7 @@ export default function PhoneMockup({
                         </div>
                     </div>
 
-                    {/* Home indicator */}
+                    {/* home indicator */}
                     <div
                         className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full"
                         style={{ width: 120, height: 4, background: 'rgba(255,255,255,0.25)' }}
@@ -141,7 +135,7 @@ export default function PhoneMockup({
                 </div>
             </div>
 
-            {/* Controls */}
+            {/* controls */}
             <div className="flex flex-col items-center gap-4">
                 {!showDemo && screenshots.length > 1 && (
                     <div className="flex items-center gap-2">

@@ -3,19 +3,16 @@
 import CompactLayout from './layouts/CompactLayout'
 import StandardLayout from './layouts/StandardLayout'
 
-/**
- * Smart Modal Router
- * Decides which layout to use based on project properties
- */
+/* smart modal router - pick layout based on project properties */
 export default function ProjectModal({ project, onClose, variant = 'auto' }) {
   if (!project) return null
 
-  // Auto-detect variant if not specified
+  // auto-detect variant
   const modalVariant = variant === 'auto'
     ? detectVariant(project)
     : variant
 
-  // Route to appropriate layout
+  // route to layout
   switch (modalVariant) {
     case 'compact':
       return <CompactLayout project={project} onClose={onClose} />
@@ -26,17 +23,16 @@ export default function ProjectModal({ project, onClose, variant = 'auto' }) {
   }
 }
 
-/**
- * Auto-detect which variant to use
- */
+/* auto-detect variant */
 function detectVariant(project) {
   if (project.variant === 'compact') return 'compact'
   if (project.variant === 'full') return 'standard'
 
-  // Default logic: compact if minimal data, standard otherwise
+  // default: compact if minimal data
   const hasRichContent = project.details || project.features || project.metrics
   return hasRichContent ? 'standard' : 'compact'
 }
 
-// Backwards compatibility
+// backwards compatibility
 export { ProjectModal as ProjectModalWrapper }
+

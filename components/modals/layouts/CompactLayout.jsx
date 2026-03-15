@@ -1,12 +1,9 @@
 'use client'
 
 import { useModalBehaviour } from '../hooks/useModalBehaviour'
-import ModalHeader from '../sections/ModalHeader'
-import PreviewSection from '../sections/PreviewSection'
-import MetricsSection from '../sections/MetricsSection'
-import DetailsSection from '../sections/DetailsSection'
-import TechStack from '../sections/TechStack'
 import ModalFooter from '../sections/ModalFooter'
+import PreviewSection from '../sections/PreviewSection'
+import TechStack from '../sections/TechStack'
 
 export default function CompactLayout({ project, onClose }) {
     const { dialogRef } = useModalBehaviour(onClose)
@@ -35,7 +32,7 @@ export default function CompactLayout({ project, onClose }) {
                         flexDirection: 'column'
                     }}
                 >
-                    {/* Compact Header */}
+                    {/* compact header */}
                     <div className="p-6 border-b flex justify-between items-start" style={{ borderColor: 'var(--border-light)' }}>
                         <div>
                             <p className="text-xs mb-2" style={{ color: 'var(--rose-quartz)' }}>
@@ -59,7 +56,7 @@ export default function CompactLayout({ project, onClose }) {
                         </button>
                     </div>
 
-                    {/* Body */}
+                    {/* body */}
                     <div className="flex-1 overflow-y-auto p-6">
                         <PreviewSection project={project} />
                         <div className="mt-6">

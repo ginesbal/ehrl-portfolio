@@ -1,7 +1,7 @@
 'use client'
 
 export default function ModalFooter({ project }) {
-    // Check for demo OR github - your projects use these fields
+    // return early if no demo or github
     if (!project.github && !project.demo) return null
 
     return (
@@ -34,12 +34,12 @@ export default function ModalFooter({ project }) {
 
 function ActionButton({ href, variant = 'primary', children }) {
     const isPrimary = variant === 'primary'
-    
-    // Handle internal routes (like /parkpal/index.html) vs external URLs
+
+    // handle internal vs external links
     const isExternal = href.startsWith('http')
-    
+
     if (!isExternal) {
-        // For internal demo routes, open in same tab
+        // internal links open in same tab
         return (
             <a
                 href={href}

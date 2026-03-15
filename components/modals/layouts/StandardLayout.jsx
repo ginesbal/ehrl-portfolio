@@ -1,28 +1,26 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useModalBehaviour } from '../hooks/useModalBehaviour'
+import DetailsSection from '../sections/DetailsSection'
+import MetricsSection from '../sections/MetricsSection'
+import ModalFooter from '../sections/ModalFooter'
 import ModalHeader from '../sections/ModalHeader'
 import PreviewSection from '../sections/PreviewSection'
-import MetricsSection from '../sections/MetricsSection'
-import DetailsSection from '../sections/DetailsSection'
 import TechStack from '../sections/TechStack'
-import ModalFooter from '../sections/ModalFooter'
-import { useEffect, useState } from 'react'
 
 export default function StandardLayout({ project, onClose }) {
     const { dialogRef, scrollProgress, handleScroll } = useModalBehaviour(onClose)
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
-        // Trigger entrance animation after mount
-        requestAnimationFrame(() => {
-            setIsVisible(true)
-        })
+        // trigger entrance animation after mount
+        requestAnimationFrame(() => setIsVisible(true))
     }, [])
 
     return (
         <div className="fixed inset-0 z-[1000]">
-            {/* Backdrop with fade in */}
+            {/* backdrop */}
             <div
                 className="fixed inset-0 transition-all duration-300"
                 onClick={onClose}
@@ -32,7 +30,7 @@ export default function StandardLayout({ project, onClose }) {
                 }}
             />
 
-            {/* Modal with scale animation */}
+            {/* modal container */}
             <div
                 ref={dialogRef}
                 className="relative z-[1001] h-full flex items-center justify-center p-4 md:p-8"

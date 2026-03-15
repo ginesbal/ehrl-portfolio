@@ -1,4 +1,4 @@
-// components/SplineScene.js
+// spline 3d scene wrapper
 'use client'
 
 import Spline from '@splinetool/react-spline'
@@ -27,7 +27,7 @@ export default function SplineScene({
         setIsLoading(false)
     }
 
-    // Don't render on server
+    // don't render on server
     if (!isClient) {
         return (
             <div className={`w-full h-full flex items-center justify-center ${className}`}>
@@ -42,7 +42,7 @@ export default function SplineScene({
         )
     }
 
-    // Error state
+    // error state
     if (hasError) {
         return fallbackContent || (
             <div className={`w-full h-full flex items-center justify-center ${className}`}>
@@ -70,7 +70,7 @@ export default function SplineScene({
                 scene={sceneUrl}
                 onLoad={handleLoad}
                 onError={handleError}
-                style={{ width: '100%', height: '100%', borderRadius: '8px', border: '1px solid var(--border-light)' }}
+                style={{ width: '100%', height: '100%', borderRadius: '8px', border: '1px solid var(--border-light)', pointerEvents: 'none' }}
 
             />
         </div>

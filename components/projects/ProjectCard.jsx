@@ -48,7 +48,7 @@ function ProjectImage({ project, index, isHovered }) {
                 <div className={`absolute inset-0 transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`} style={{ background: `linear-gradient(135deg, ${project.gradient})` }} />
             )}
 
-            <div className={`hidden lg:flex absolute inset-0 items-center justify-center transition-all duration-300 ${isHovered ? 'bg-black/40 backdrop-blur-[1px]' : 'bg-transparent opacity-0 pointer-events-none'}`}>
+            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${isHovered ? 'bg-black/40 backdrop-blur-[1px]' : 'bg-transparent opacity-0 pointer-events-none'}`}>
                 {isHovered && (
                     <div className="text-white text-center space-y-2 px-6">
                         <div className="text-[13px] font-medium tracking-wider opacity-90">VIEW DETAILS</div>

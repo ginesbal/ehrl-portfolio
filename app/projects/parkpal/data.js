@@ -1,29 +1,24 @@
 export const parkpalData = {
     title: 'ParkPal',
-    subtitle: 'Smart Parking Finder',
     description: 'A location-based parking finder for downtown Calgary, demonstrating advanced spatial database optimization, React Native architecture, and performance-focused development.',
-    tagline: 'Capstone Project → Individual Redesign',
-    
+
     metrics: [
         { value: '~120ms', label: 'Query Time', detail: 'PostGIS spatial queries' },
         { value: '200+', label: 'Locations', detail: 'Downtown Calgary' },
         { value: '100%', label: 'Coverage', detail: 'Jest + Supertest' }
     ],
-    
-    tech: ['React Native', 'Node.js', 'PostgreSQL', 'PostGIS', 'Google Maps API', 'Expo', 'Supabase'],
-    
+
     links: {
         github: 'https://github.com/ginesbal/parkpal',
-        demo: '/parkpal/index.html',
-        linkedin: 'https://www.linkedin.com/in/ehrlbalquin/'
+        demo: '/parkpal/index.html'
     },
-    
+
     screenshots: [
         { src: '/screenshots/parkpal-home.png', alt: 'Real-time availability with distance calculations' },
         { src: '/screenshots/parkpal-map.png', alt: 'Interactive markers with spatial clustering' },
         { src: '/screenshots/parkpal-session.png', alt: 'Live session tracking with zone-based rates' }
     ],
-    
+
     overview: {
         summary: [
             'ParkPal addresses the challenge of finding available parking in downtown Calgary by providing real-time, location-aware search across 200+ parking spots.',
@@ -42,7 +37,7 @@ export const parkpalData = {
             'Session tracking & cost calculation'
         ]
     },
-    
+
     technicalHighlights: [
         {
             title: 'Spatial Database Architecture',
@@ -63,7 +58,7 @@ export const parkpalData = {
             outcome: 'Improved code maintainability and achieved 100% test coverage'
         }
     ],
-    
+
     contributions: [
         {
             category: 'Architecture & Design',
@@ -89,7 +84,5 @@ export const parkpalData = {
                 'Established comprehensive test suite achieving 100% coverage with Jest and Supertest'
             ]
         }
-    ],
-    
-    context: 'This project began as a five-person capstone project. I subsequently redesigned and rebuilt it independently to demonstrate advanced mobile development capabilities, focusing on performance optimization, clean architecture, and production-ready code quality.'
+    ]
 }

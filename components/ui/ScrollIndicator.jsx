@@ -36,7 +36,7 @@ export default function ScrollIndicator() {
         }
 
         const updateOpacity = (next) => {
-            // prevent extra re-renders on tiny changes
+            // reduce noisy updates: only set when change is noticeable
             if (Math.abs(next - lastOpacity.current) > 0.01) {
                 lastOpacity.current = next
                 setOpacity(next)
