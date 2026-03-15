@@ -87,8 +87,6 @@ export default function ResumeModal({ isOpen, onClose }) {
                             </svg>
                         </a>
 
-<<<<<<< Updated upstream
-=======
                         {/* download button (mobile) */}
                         <a
                             href={pdfPath}
@@ -105,7 +103,6 @@ export default function ResumeModal({ isOpen, onClose }) {
                             </svg>
                         </a>
 
->>>>>>> Stashed changes
                         {/* close button */}
                         <button
                             onClick={onClose}

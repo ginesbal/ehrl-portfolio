@@ -54,8 +54,6 @@ export default function Navigation() {
         }
     }, [mobileMenuOpen])
 
-<<<<<<< Updated upstream
-=======
     // close menu on route change
     useEffect(() => {
         setMobileMenuOpen(false)
@@ -90,7 +88,6 @@ export default function Navigation() {
         return () => mq.removeListener(handleChange)
     }, [])
 
->>>>>>> Stashed changes
     const hrefFor = (item) => {
         const key = item.toLowerCase()
         if (key === 'projects') {
@@ -231,8 +228,6 @@ export default function Navigation() {
                 </div>
             )}
 
-<<<<<<< Updated upstream
-=======
             {/* mobile menu overlay */}
             {mobileMenuOpen && (
                 <div
@@ -279,7 +274,6 @@ export default function Navigation() {
                 </div>
             )}
 
->>>>>>> Stashed changes
             <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
         </>
     )
