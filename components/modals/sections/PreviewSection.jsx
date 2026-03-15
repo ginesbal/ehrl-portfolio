@@ -8,7 +8,7 @@ export default function PreviewSection({ project }) {
     const isMobile = project.category?.toLowerCase().includes('mobile')
     const isExternal = project.demo?.startsWith('http')
 
-    // Mobile projects get phone mockup
+    // mobile: phone mockup
     if (isMobile) {
         return (
             <div className="flex justify-center py-4">
@@ -20,7 +20,7 @@ export default function PreviewSection({ project }) {
         )
     }
 
-    // External URLs that might block iframe
+    // external demos handling
     if (isExternal && iframeError) {
         return (
             <div
@@ -37,7 +37,7 @@ export default function PreviewSection({ project }) {
                             External Demo Available
                         </h3>
                         <p className="text-sm max-w-md" style={{ color: 'var(--text-secondary)' }}>
-                            This project is hosted externally and cannot be embedded. 
+                            This project is hosted externally and cannot be embedded.
                             Click below to view it in a new tab.
                         </p>
                         <a
@@ -52,7 +52,7 @@ export default function PreviewSection({ project }) {
                         >
                             Open Live Demo
                             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M7 3h7v7M14 3L8 9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M7 3h7v7M14 3L8 9" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </a>
                     </div>
@@ -61,7 +61,7 @@ export default function PreviewSection({ project }) {
         )
     }
 
-    // iframe first for all demos
+    // iframe preview
     if (project.demo) {
         return (
             <div
@@ -84,7 +84,7 @@ export default function PreviewSection({ project }) {
                                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
                             />
                             {/* Overlay hint for external demos */}
-                            <div 
+                            <div
                                 className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium"
                                 style={{
                                     background: 'rgba(107, 79, 79, 0.9)',
@@ -92,7 +92,7 @@ export default function PreviewSection({ project }) {
                                     backdropFilter: 'blur(4px)'
                                 }}
                             >
-                                EXTERNAL SITE
+                                overlay: external site hint
                             </div>
                         </>
                     ) : (
@@ -109,7 +109,7 @@ export default function PreviewSection({ project }) {
         )
     }
 
-    // No demo available
+    // no demo available
     return (
         <div
             className="rounded-2xl overflow-hidden border"

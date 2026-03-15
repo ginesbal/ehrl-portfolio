@@ -48,7 +48,31 @@ function ProjectImage({ project, index, isHovered }) {
                 <div className={`absolute inset-0 transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`} style={{ background: `linear-gradient(135deg, ${project.gradient})` }} />
             )}
 
+<<<<<<< Updated upstream
             <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${isHovered ? 'bg-black/40 backdrop-blur-[1px]' : 'bg-transparent opacity-0 pointer-events-none'}`}>
+=======
+            {index === 0 && (
+                <>
+                    <div
+                        className="absolute inset-3 rounded-[18px] pointer-events-none opacity-70"
+                        style={{
+                            backgroundImage:
+                                'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to top, rgba(255,255,255,0.08) 1px, transparent 1px)',
+                            backgroundSize: '32px 32px',
+                            mixBlendMode: 'screen'
+                        }}
+                    />
+                    <div className="absolute bottom-4 left-4 text-[10px] tracking-[0.4em] uppercase text-white/80">
+                        N51°02 · W114°04
+                    </div>
+                    <div className="absolute top-6 right-6 px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase text-white/80 border border-white/30 backdrop-blur-sm">
+                        field study
+                    </div>
+                </>
+            )}
+
+            <div className={`hidden lg:flex absolute inset-0 items-center justify-center transition-all duration-300 ${isHovered ? 'bg-black/40 backdrop-blur-[1px]' : 'bg-transparent opacity-0 pointer-events-none'}`}>
+>>>>>>> Stashed changes
                 {isHovered && (
                     <div className="text-white text-center space-y-2 px-6">
                         <div className="text-[13px] font-medium tracking-wider opacity-90">VIEW DETAILS</div>

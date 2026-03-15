@@ -2,7 +2,7 @@
 
 export default function ModalHeader({ project, onClose, showProgress = true, scrollProgress = 0 }) {
   return (
-    <div 
+    <div
       className="relative px-8 py-6 border-b"
       style={{ borderColor: 'var(--border-light)' }}
     >
@@ -16,7 +16,7 @@ export default function ModalHeader({ project, onClose, showProgress = true, scr
               </span>
             )}
           </div>
-          <h2 
+          <h2
             id="modal-title"
             className="text-3xl font-semibold mb-2"
             style={{ color: 'var(--text-primary)' }}
@@ -33,9 +33,9 @@ export default function ModalHeader({ project, onClose, showProgress = true, scr
         <CloseButton onClick={onClose} />
       </div>
 
-      {/* Progress indicator */}
+      {/* progress indicator */}
       {showProgress && (
-        <div 
+        <div
           className="absolute bottom-0 left-0 h-0.5 transition-all duration-150"
           style={{
             width: `${scrollProgress * 100}%`,
@@ -49,9 +49,9 @@ export default function ModalHeader({ project, onClose, showProgress = true, scr
 
 function CategoryBadge({ category }) {
   const primaryCategory = category?.split(',')[0].trim() || 'PROJECT'
-  
+
   return (
-    <span 
+    <span
       className="text-[10px] font-bold tracking-widest px-3 py-1 rounded-full"
       style={{
         background: 'rgba(229, 152, 155, 0.12)',

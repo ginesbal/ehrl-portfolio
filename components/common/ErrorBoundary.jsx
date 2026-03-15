@@ -10,8 +10,8 @@ export default class ErrorBoundary extends React.Component {
         return { hasError: true }
     }
     componentDidCatch(err, info) {
-        // Optional: log to an error service
-        // console.error('PhoneMockup error:', err, info)
+        // optional: log to an error service
+        // console.error(err, info)
     }
     render() {
         if (this.state.hasError) {

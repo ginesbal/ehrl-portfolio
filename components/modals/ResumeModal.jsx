@@ -17,7 +17,7 @@ export default function ResumeModal({ isOpen, onClose }) {
             document.body.style.overflow = 'unset';
         }
 
-        // Always clean up both the listener and the scroll lock
+        // always clean up both the listener and the scroll lock
         return () => {
             window.removeEventListener('keydown', handleEsc);
             document.body.style.overflow = 'unset';
@@ -56,8 +56,13 @@ export default function ResumeModal({ isOpen, onClose }) {
                         </p>
                     </div>
 
+<<<<<<< Updated upstream
                     <div className="flex items-center gap-4">
                         {/* Download Button */}
+=======
+                    <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+                        {/* download button (desktop) */}
+>>>>>>> Stashed changes
                         <a
                             href={pdfPath}
                             download="Ehrl_Balquin_Resume.pdf"
@@ -71,6 +76,25 @@ export default function ResumeModal({ isOpen, onClose }) {
                             Download PDF
                         </a>
 
+<<<<<<< Updated upstream
+=======
+                        {/* download button (mobile) */}
+                        <a
+                            href={pdfPath}
+                            download="Ehrl_Balquin_Resume.pdf"
+                            className="md:hidden p-2 rounded-lg transition-colors active:bg-gray-100"
+                            style={{ color: 'var(--rose-taupe)' }}
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="Download resume"
+                        >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
+                                <polyline points="7 10 12 15 17 10" strokeLinecap="round" strokeLinejoin="round" />
+                                <line x1="12" y1="15" x2="12" y2="3" strokeLinecap="round" />
+                            </svg>
+                        </a>
+
+>>>>>>> Stashed changes
                         {/* close button */}
                         <button
                             onClick={onClose}
@@ -99,7 +123,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                             style={{ border: '1px solid var(--border-light)' }}
                         />
 
-                        {/* Fallback for mobile or if iframe doesn't work */}
+                        {/* fallback for mobile */}
                         <div className="hidden">
                             <p className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
                                 Unable to display PDF preview.
@@ -117,7 +141,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                     </div>
                 </div>
 
-                {/* Footer with Quick Actions */}
+                {/* footer actions */}
                 <div
                     className="p-6 border-t flex items-center justify-between"
                     style={{ borderColor: 'var(--border-light)' }}

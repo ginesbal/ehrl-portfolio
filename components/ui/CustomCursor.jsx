@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -15,12 +15,12 @@ export default function CustomCursor() {
 
     const handleMouseOver = (e) => {
       const target = e.target
-      const isInteractive = 
-        target.tagName === 'A' || 
+      const isInteractive =
+        target.tagName === 'A' ||
         target.tagName === 'BUTTON' ||
         target.getAttribute('role') === 'button' ||
         target.classList.contains('cursor-pointer')
-      
+
       setIsHovering(isInteractive)
     }
 
@@ -73,7 +73,7 @@ export default function CustomCursor() {
         variants={variants}
         transition={springConfig}
       />
-      
+
       {/* Cursor outline */}
       <motion.div
         className="fixed top-0 left-0 w-10 h-10 border-2 border-purple-500/50 rounded-full pointer-events-none z-[9998]"

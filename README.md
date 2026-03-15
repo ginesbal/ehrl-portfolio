@@ -84,7 +84,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ehrl-portfolio/
@@ -108,7 +108,7 @@ ehrl-portfolio/
     └── files/             # Resume PDF
 ```
 
-## 🎨 Design System
+## Design System
 
 The portfolio uses a custom CSS variable system for consistent theming:
 
@@ -119,7 +119,7 @@ The portfolio uses a custom CSS variable system for consistent theming:
 
 See `app/globals.css` for full variable definitions.
 
-## 🧪 Key Features
+## Key Features
 
 - **Custom Modal System:** Project showcases can use standard modal or custom full-screen layouts
 - **Performance Optimized:** Lazy loading, optimized images, minimal bundle size
@@ -127,7 +127,7 @@ See `app/globals.css` for full variable definitions.
 - **Contact Form:** Server-side validation with Resend email integration
 - **Scroll-based Navigation:** Active section detection with hash routing
 
-## 📧 Contact Form Setup
+## Contact Form Setup
 
 The contact form uses [Resend](https://resend.com) for email delivery:
 
@@ -138,7 +138,7 @@ The contact form uses [Resend](https://resend.com) for email delivery:
 
 See `CONTACT_SETUP.md` for detailed instructions.
 
-## 🚀 Deployment
+## Deployment
 
 ### Deploy to Vercel (Recommended)
 
@@ -156,12 +156,12 @@ npm run build
 npm run start
 ```
 
-## 📝 License
+## License
 
 © 2024-2025 Ehrl Balquin. All rights reserved.
 
-## 🤝 Connect
+## Connect
 
-- **Email:** <ehrl.balquin@gmail.com>
+- **Email:** <ehrlbalquin@gmail.com>
 - **LinkedIn:** [linkedin.com/in/ehrlbalquin](https://linkedin.com/in/ehrlbalquin)
 - **GitHub:** [github.com/ehrlbalquin](https://github.com/ehrlbalquin)
