@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- BASE ---------- */
 @layer base {
   :root {
-<<<<<<< Updated upstream
     /* ===== Core Palette ===== */
     --anti-flash-white:#eef0f2;
     --silver:#9ea09d;
@@ -15,205 +13,52 @@
     --reseda-green:#71816d;
     --bistre:#342a21;
 
-    /* ===== Semantic Colors ===== */
     --bg-primary:#fafafa;
     --bg-secondary:#ffffff;
     --bg-accent:#f5f5f4;
     --bg-dark:#252525;
 
-    --text-primary:#342a21;       /* bistre */
+    --text-primary:#342a21;
     --text-secondary:#4a4a4a;
-    /* AA-compliant muted on #fafafa */
-    --text-muted:#5a6a5f;         /* deepened reseda for small text */
+    --text-muted:#5a6a5f;
     --text-light:#fafafa;
 
     --accent-primary:#6b4f4f;     /* rose-taupe */
     --accent-secondary:#7d6d75;   /* rose-quartz */
     --accent-tertiary:#71816d;    /* reseda-green */
-=======
-    /* ═══════════════════════════════════════════════════════════════
-       COLOR SYSTEM
-       Unified palette with legacy aliases for backward compatibility
-    ═══════════════════════════════════════════════════════════════ */
 
-    /* --- Taupe Scale (Primary neutrals & dark tones) --- */
-    --taupe-50: #f3f2f1;
-    --taupe-100: #e8e5e3;
-    --taupe-200: #d1cbc7;
-    --taupe-300: #b9b1ac;
-    --taupe-400: #a29790;
-    --taupe-500: #8b7e74;
-    --taupe-600: #6f645d;
-    --taupe-700: #534b46;
-    --taupe-800: #38322e;
-    --taupe-900: #1c1917;
-    --taupe-950: #131210;
+    --border-light:#d7d7d7;
+    --border-dark:#71816d;
 
-    /* --- Grey-Olive Scale (Borders & subtle backgrounds) --- */
-    --grey-olive-50: #f3f2f1;
-    --grey-olive-100: #e7e5e4;
-    --grey-olive-200: #cfcbc9;
-    --grey-olive-300: #b7b1ae;
-    --grey-olive-400: #9f9793;
-    --grey-olive-500: #877d78;
-    --grey-olive-600: #6c6460;
-    --grey-olive-700: #514b48;
-    --grey-olive-800: #363230;
-    --grey-olive-900: #1b1918;
-    --grey-olive-950: #131211;
-
-    /* --- Silver Scale (Surface elevation) --- */
-    --silver-50: #f3f3f1;
-    --silver-100: #e8e6e3;
-    --silver-200: #d0cdc8;
-    --silver-300: #b9b4ac;
-    --silver-400: #a19b91;
-    --silver-500: #8a8275;
-    --silver-600: #6e685e;
-    --silver-700: #534e46;
-    --silver-800: #37342f;
-    --silver-900: #1c1a17;
-    --silver-950: #131210;
->>>>>>> Stashed changes
-
-    /* --- Parchment Scale (Secondary accent & warmth) --- */
-    --parchment-50: #f5f4f0;
-    --parchment-100: #ebe9e0;
-    --parchment-200: #d7d3c1;
-    --parchment-300: #c3bda2;
-    --parchment-400: #aea784;
-    --parchment-500: #9a9165;
-    --parchment-600: #7b7451;
-    --parchment-700: #5d573c;
-    --parchment-800: #3e3a28;
-    --parchment-900: #1f1d14;
-    --parchment-950: #16140e;
-
-<<<<<<< Updated upstream
     /* State tokens */
     --success:#2e7d32;
     --success-weak: color-mix(in oklab, var(--success) 10%, white);
     --warning:#b26a00;
     --warning-weak: color-mix(in oklab, var(--warning) 10%, white);
-    --danger:#c62828;
+    --danger:#8b4f4f;
     --danger-weak: color-mix(in oklab, var(--danger) 10%, white);
 
-    /* Motion & easing */
     --hover-overlay:rgba(113,129,109,0.08);
     --focus-ring:rgba(113,129,109,0.25);
     --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
     --ease-out-quart:cubic-bezier(0.165,0.84,0.44,1);
     --ease-in-out-quart:cubic-bezier(0.77,0,0.175,1);
 
-    /* Elevation */
     --shadow-sm:0 2px 8px rgba(52,42,33,0.08);
     --shadow-md:0 4px 16px rgba(52,42,33,0.12);
     --shadow-lg:0 8px 32px rgba(52,42,33,0.16);
 
-    /* Radii */
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 16px;
     --radius-pill: 999px;
 
     /* Durations */
-=======
-    /* --- Powder Blush Scale (Primary accent) --- */
-    --powder-blush-50: #f9efec;
-    --powder-blush-100: #f3dfd8;
-    --powder-blush-200: #e6beb2;
-    --powder-blush-300: #da9e8b;
-    --powder-blush-400: #cd7d65;
-    --powder-blush-500: #c15d3e;
-    --powder-blush-600: #9a4a32;
-    --powder-blush-700: #743825;
-    --powder-blush-800: #4d2519;
-    --powder-blush-900: #27130c;
-    --powder-blush-950: #1b0d09;
-
-    /* --- Legacy Aliases (mapped to new palette) --- */
-    --anti-flash-white: var(--taupe-50);
-    --silver: var(--silver-400);
-    --rose-quartz: var(--taupe-500);
-    --rose-taupe: var(--powder-blush-600);
-    --onyx: var(--taupe-950);
-    --reseda-green: var(--parchment-600);
-    --bistre: var(--taupe-800);
-
-    /* ═══════════════════════════════════════════════════════════════
-       SEMANTIC TOKENS
-       Functional color mappings for consistent theming
-    ═══════════════════════════════════════════════════════════════ */
-
-    /* Backgrounds */
-    --bg-primary: var(--taupe-50);
-    --bg-secondary: #ffffff;
-    --bg-accent: var(--silver-100);
-    --bg-dark: var(--taupe-950);
-
-    /* Text */
-    --text-primary: var(--taupe-900);
-    --text-secondary: var(--taupe-800);
-    --text-muted: var(--grey-olive-600);
-    --text-light: var(--taupe-50);
-
-    /* Accents */
-    --accent-primary: var(--powder-blush-600);
-    --accent-secondary: var(--parchment-600);
-    --accent-tertiary: var(--parchment-500);
-
-    /* Borders */
-    --border-light: var(--grey-olive-200);
-    --border-medium: var(--grey-olive-300);
-    --border-dark: var(--taupe-600);
-
-    /* Status */
-    --success: #2e7d32;
-    --success-bg: var(--parchment-100);
-    --warning: #b26a00;
-    --warning-bg: var(--parchment-200);
-    --danger: var(--powder-blush-700);
-    --danger-bg: var(--powder-blush-100);
-
-    /* Interactive */
-    --hover-overlay: rgba(193, 93, 62, 0.08);
-    --focus-ring: rgba(193, 93, 62, 0.25);
-
-    /* ═══════════════════════════════════════════════════════════════
-       DESIGN TOKENS
-       Spacing, timing, shadows, and other system values
-    ═══════════════════════════════════════════════════════════════ */
-
-    /* Transitions */
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-    --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
->>>>>>> Stashed changes
     --dur-1: 120ms;
     --dur-2: 200ms;
     --dur-3: 320ms;
 
-<<<<<<< Updated upstream
     /* Z-index scale */
-=======
-    /* Shadows */
-    --shadow-xs: 0 1px 3px rgba(28, 25, 23, 0.06);
-    --shadow-sm: 0 2px 8px rgba(28, 25, 23, 0.08);
-    --shadow-md: 0 4px 16px rgba(28, 25, 23, 0.12);
-    --shadow-lg: 0 8px 32px rgba(28, 25, 23, 0.16);
-    --shadow-xl: 0 16px 48px rgba(28, 25, 23, 0.20);
-    --shadow-primary: 0 4px 16px rgba(193, 93, 62, 0.25);
-    --shadow-inset: inset 0 2px 4px rgba(28, 25, 23, 0.06);
-
-    /* Border Radius */
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --radius-pill: 999px;
-
-    /* Z-index */
->>>>>>> Stashed changes
     --z-modal: 1000;
     --z-popover: 900;
     --z-sticky: 800;
@@ -222,11 +67,7 @@
     --sidebar-offset: 0px;
   }
 
-<<<<<<< Updated upstream
   /* Optional dark theme (opt-in with [data-theme="dark"]) */
-=======
-  /* Dark Theme Override */
->>>>>>> Stashed changes
   [data-theme="dark"] {
     color-scheme: dark;
     --bg-primary: var(--taupe-950);
@@ -244,74 +85,47 @@
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
   }
 
-<<<<<<< Updated upstream
   html { @apply antialiased; }
 
   body{
+
     background:var(--bg-primary);
+
     color:var(--text-primary);
+
     font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
     font-size:16px;
+
     line-height:1.55;
+
     letter-spacing:0;
+
     -webkit-font-smoothing:antialiased;
+
     -moz-osx-font-smoothing:grayscale;
-    overscroll-behavior-y: none; /* prevent background bounce under modals */
-  }
 
-  ::selection{ background:var(--accent-tertiary); color:#fff; }
-
-  /* Cross-browser scrollbar */
-  * { scrollbar-color: var(--rose-quartz) var(--bg-primary); } /* Firefox */
-=======
-  /* ═══════════════════════════════════════════════════════════════
-     BASE STYLES
-  ═══════════════════════════════════════════════════════════════ */
-
-  html {
-    @apply antialiased;
-    overflow-x: hidden !important;
-    overflow-y: scroll;
-    max-width: 100vw;
-    scroll-padding-top: 80px;
-  }
-
-  body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 16px;
-    line-height: 1.55;
-    letter-spacing: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
     overflow-x: hidden !important;
-    overflow-y: auto;
     max-width: 100vw;
     position: relative;
-    touch-action: pan-y;
+
   }
 
   body.menu-open {
     overflow: hidden !important;
-  }
 
-  ::selection {
-    background: var(--accent-secondary);
-    color: #fff;
   }
+  ::selection{ background:var(--accent-tertiary); color:#fff; }
 
-  /* Scrollbar */
-  * { scrollbar-color: var(--parchment-500) var(--bg-primary); }
->>>>>>> Stashed changes
+  /* Cross-browser scrollbar */
+  * { scrollbar-color: var(--rose-quartz) var(--bg-primary); } /* Firefox */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--bg-primary); }
   ::-webkit-scrollbar-thumb { background: var(--parchment-500); border-radius: 5px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--powder-blush-600); }
 }
 
-/* ---------- COMPONENTS ---------- */
 @layer components {
   /* ═══════════════════════════════════════════════════════════════
      LAYOUT
@@ -320,7 +134,6 @@
   .container-custom { @apply max-w-[1200px] mx-auto px-5 md:px-10; }
 <<<<<<< Updated upstream
 
-  /* Headings */
   .heading-1 { @apply text-[36px] md:text-[48px] lg:text-[56px] font-light leading-[1.05] tracking-[-0.02em]; color:var(--text-primary); }
   .heading-xl { @apply text-[32px] md:text-[48px] lg:text-[56px] font-light leading-[1.05]; color:var(--text-primary); }
   .heading-lg { @apply text-[28px] md:text-[36px] font-normal leading-[1.15]; color:var(--text-primary); }
@@ -331,7 +144,6 @@
 
   .section-spacing { @apply py-10 md:py-16; }
 
-  /* Forms */
   .label{ @apply text-[11px] tracking-[0.15em] uppercase font-medium block mb-3; color: var(--text-muted); }
   .text-input{
 =======
@@ -381,20 +193,6 @@
   .text-area::placeholder { color: color-mix(in oklab, var(--text-secondary) 65%, white); }
   .text-area:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
-  /* ═══════════════════════════════════════════════════════════════
-     BUTTONS
-  ═══════════════════════════════════════════════════════════════ */
-
-  .btn-base {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-[14px] font-semibold;
-    border-radius: var(--radius-pill);
-    min-height: 48px;
-    transition: all var(--dur-2) var(--ease-out-quart);
-  }
-  .btn-base:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring), 0 0 0 1px var(--accent-primary); }
-  .btn-base:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-
-<<<<<<< Updated upstream
   /* Buttons */
   .btn{ @apply inline-flex items-center gap-3 px-8 py-4 text-[16px] font-medium rounded-lg transition-all duration-300; }
 =======
@@ -473,7 +271,6 @@
      SURFACES
   ═══════════════════════════════════════════════════════════════ */
 
-  /* Utility surface */
   .card-surface {
     background: var(--bg-secondary);
     border: 1px solid var(--border-light);
@@ -482,24 +279,29 @@
   }
 }
 
-<<<<<<< Updated upstream
 /* ---------- UTILITIES & ANIMATION ---------- */
 @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
 .stagger-item{ animation: fadeInUp .6s var(--ease-out-quart) forwards; opacity:0; }
 .stagger-item:nth-child(1){ animation-delay:.1s } .stagger-item:nth-child(2){ animation-delay:.2s }
 .stagger-item:nth-child(3){ animation-delay:.3s } .stagger-item:nth-child(4){ animation-delay:.4s } .stagger-item:nth-child(5){ animation-delay:.5s }
-=======
-/* ═══════════════════════════════════════════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════════════════════════════════════════ */
->>>>>>> Stashed changes
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: none; }
+@keyframes scroll-indicator{ 0%{transform:translateY(0);opacity:1} 50%{transform:translateY(4px);opacity:.5} 100%{transform:translateY(0);opacity:1} }
+.animate-scroll-indicator{ animation:scroll-indicator 1.5s ease-in-out infinite }
+
+@keyframes fadeIn{ from{opacity:0; transform:translateX(-10px)} to{opacity:1; transform:none} }
+.animate-fadeIn{ animation:fadeIn .5s ease-out forwards }
+
+/* One place only for interactive transitions */
+a, button { transition: all var(--dur-2) var(--ease-out-quart); }
+
+/* Focus */
+:focus-visible { outline:2px solid var(--accent-primary); outline-offset:2px; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
 
-<<<<<<< Updated upstream
 /* Semantic helpers */
 .text-rose-taupe{ color:var(--rose-taupe); }
 .text-rose-quartz{ color:var(--rose-quartz); }
@@ -589,24 +391,22 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .modal-panel {
-  max-height: 92dvh;           /* leave breathing room so header/close never clip */
+  max-height: 92dvh;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  overflow: hidden;            /* clip content to panel */
+  overflow: hidden;
 }
 
-/* The *scrollable* area inside the panel */
 .modal-body {
   flex: 1 1 auto;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch; /* iOS momentum */
+  -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
 }
 
-/* Sticky header so close button stays visible while body scrolls */
 .modal-header {
   position: sticky;
   top: 0;
@@ -615,7 +415,6 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
   border-bottom: 1px solid var(--border-light);
 }
 
-/* Optional: Sticky footer if you show CTAs */
 .modal-footer {
   position: sticky;
   bottom: 0;
@@ -687,3 +486,47 @@ a, button { transition: all var(--dur-2) var(--ease-out-quart); }
   }
 }
 >>>>>>> Stashed changes
+
+
+/* Mobile-only improvements - Desktop unchanged */
+@media (max-width: 767px) {
+  /* Reduce section spacing on mobile only */
+  .section-spacing {
+    @apply py-10;
+  }
+
+  /* Smaller container padding on mobile */
+  .container-custom {
+    @apply px-4;
+  }
+
+  /* Prevent iOS zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Hide horizontal scrollbar on tabs */
+  [role="tablist"]::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Ensure touch targets on mobile */
+@media (max-width: 767px) and (hover: none) {
+  a, button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}

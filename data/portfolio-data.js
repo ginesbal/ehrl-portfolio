@@ -10,7 +10,7 @@ export const projects = [
         duration: '3 months',
         role: 'Full Stack Developer',
 
-        description: 'Parking app for downtown Calgary. Helps you find parking spots without circling blocks. Built with React Native and uses PostGIS to find available spots within walking distance.',
+        description: 'Mobile parking finder for downtown Calgary built with React Native and PostGIS. Shows available parking spots within walking distance using GPS-based radius searches.',
 
         demo: '/parkpal/index.html',
         github: 'https://github.com/ginesbal/parkpal',
@@ -37,13 +37,13 @@ export const projects = [
         ],
 
         details: {
-            challenge: 'The map was painfully slow - taking 800ms+ to load 200 parking spots. Users had to wait every time they moved the map, which made the app feel broken.',
+            challenge: 'Initial version took 800ms+ to load parking spots every time the map moved, making the app feel unresponsive during the core use case of finding parking quickly.',
 
-            solution: 'Added PostGIS spatial indexes and switched to ST_DWithin for radius searches instead of calculating distances in JavaScript. Also added 300ms debouncing so the map does not fire off requests while users are still dragging.',
+            solution: 'Replaced client-side distance calculations with PostGIS spatial indexes using ST_DWithin for radius-based queries. Added 300ms debouncing to reduce redundant API calls during map panning.',
 
-            approach: 'Built this as my SAIT capstone with a team. After graduation, I was not happy with how it looked or performed, so I rebuilt it solo. Learned PostGIS during this process - turned out spatial databases are way faster than doing geography math in JS.',
+            approach: 'Started as a SAIT capstone project with a team. After graduating, I rebuilt it from scratch to improve the UI and address the performance issues. This is where I learned PostGIS — databases handle spatial calculations much more efficiently than JavaScript.',
 
-            impact: 'Got queries down to ~120ms average. The map feels instant now. Also made components easier to test by splitting business logic into custom hooks instead of jamming everything into one massive component.'
+            impact: 'Brought average query times down to around 120ms. Also refactored components into testable custom hooks, separating business logic from UI rendering.'
         },
 
         features: [
@@ -78,7 +78,7 @@ export const projects = [
         category: 'Web Development, Machine Learning',
         year: '2025',
 
-        description: 'Browse & semantically search EVs with filters, saved lists, caching, and rate limits.',
+        description: 'Electric vehicle search tool using natural language processing. Built with FastAPI and sentence-transformers to handle semantic queries like "affordable sedan with long range" alongside traditional filters.',
 
         demo: 'https://evision.up.railway.app/',
         github: 'https://github.com/ginesbal/ev_chatbotmodel',
@@ -96,6 +96,16 @@ export const projects = [
             'Railway',
             'Jinja2'
         ],
+
+        details: {
+            challenge: 'Traditional car search requires users to know exact specifications upfront. Many people search in natural language terms rather than rigid filter categories.',
+
+            solution: 'Implemented semantic search using sentence-transformers to encode vehicle descriptions and user queries as vectors, matching them with cosine similarity. Kept traditional filters available as an alternative search method.',
+
+            approach: 'Built with FastAPI and deployed on Railway. Added in-memory caching to avoid re-encoding vectors on every request, and implemented IP-based rate limiting.',
+
+            impact: 'Search responds in under 200ms. Users can search using natural descriptions or switch to structured filters based on their preference.'
+        },
 
         features: [
             {
