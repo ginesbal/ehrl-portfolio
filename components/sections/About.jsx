@@ -1,18 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SplineScene from '../ui/SplineScene'
+import dynamic from 'next/dynamic'
+import FloatingCircles from '../ui/FloatingCircles.jsx'
+
+const SplineScene = dynamic(() => import('../ui/SplineScene'), { ssr: false })
 
 export default function About() {
   return (
-    <section className="relative bg-bg-primary pt-8 md:pt-0 pb-16 md:pb-24 overflow-hidden">
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute -left-32 top-[20%] w-[400px] h-[400px] rounded-full border opacity-[0.03] hidden md:block"
-        style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -25, 0], x: [0, 15, 0] }}
-        transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
-      />
+    <section className="relative bg-bg-primary pt-8 md:pt-0 pb-12 overflow-hidden">
+      <FloatingCircles section="about" />
 
       <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24">
@@ -30,7 +27,7 @@ export default function About() {
             </motion.div>
 
             <motion.h2
-              className="text-[clamp(2rem,5vw,4rem)] font-bold text-text-primary mb-8 md:mb-12"
+              className="text-[clamp(2rem,5vw,4rem)] font-bold text-text-primary mb-4 md:mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -39,25 +36,18 @@ export default function About() {
               About
             </motion.h2>
 
-            <div className="space-y-6 max-w-xl">
+            <div className="space-y-4 max-w-xl">
               <motion.p
-                className="text-[16px] md:text-[17px] lg:text-[19px] leading-relaxed text-text-primary"
+                className="text-[12px] md:text-[14px] lg:text-[16px] leading-relaxed text-text-primary"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Software development graduate from SAIT, 2024. I build interfaces and focus on how things feel when you interact with them.
-              </motion.p>
+                Hey there! <br />
 
-              <motion.p
-                className="text-[16px] md:text-[17px] lg:text-[19px] leading-relaxed text-text-primary"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                React, Next.js, TypeScript. I care about spacing, transitions, typography. Looking for teams that value craft.
+                <br />
+                I’m a SAIT Software Development graduate interested in front-end development and UI/UX design. I like building interfaces that feel clean, intuitive, and purposeful. A lot of my time goes into prototyping, refining details, and finding simple ways to make products easier to use while still keeping them visually engaging.
               </motion.p>
 
               <motion.div

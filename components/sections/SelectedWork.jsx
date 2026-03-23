@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { ArrowUpRight, CheckCircle, ExternalLink, Github } from 'lucide-react'
+import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 export default function SelectedWork() {
     const projects = [
@@ -21,21 +21,7 @@ export default function SelectedWork() {
 
     return (
         <section id="work" className="relative overflow-hidden bg-bg-primary pt-12 pb-20">
-            {/* floating background circles to match front page */}
-            <motion.span
-                aria-hidden
-                className="pointer-events-none absolute -right-20 top-[8%] w-80 h-80 rounded-full opacity-[0.03]"
-                style={{ background: 'var(--rose-taupe)' }}
-                animate={{ y: [0, 16, 0], x: [0, -8, 0] }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.span
-                aria-hidden
-                className="pointer-events-none absolute left-[4%] top-[6%] w-48 h-48 rounded-full border opacity-[0.04]"
-                style={{ borderColor: 'var(--rose-taupe)' }}
-                animate={{ y: [0, -12, 0], x: [0, 6, 0] }}
-                transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-            />
+            <FloatingCircles section="selectedWork" />
 
             <div className="container-custom relative z-10">
                 <div className="mb-12">

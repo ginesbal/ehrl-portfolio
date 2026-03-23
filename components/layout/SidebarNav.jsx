@@ -1,9 +1,11 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import ResumeModal from '../modals/ResumeModal.jsx'
+
+const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
 
 export default function SidebarNav() {
   const [activeSection, setActiveSection] = useState('hero')
@@ -84,7 +86,7 @@ export default function SidebarNav() {
     <>
       {/* main sidebar */}
       <aside
-        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] flex-col justify-between py-10 px-8 bg-bg-primary border-r border-border-light z-40 transition-transform duration-500"
+        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] flex-col justify-between py-10 px-8 bg-bg-secondary border-r border-border-light z-40 transition-transform duration-500"
         style={{ transform: collapsed ? 'translateX(-100%)' : 'translateX(0)' }}
       >
         <div>
@@ -116,7 +118,7 @@ export default function SidebarNav() {
                   className="group flex items-baseline gap-3 transition-all duration-300"
                 >
                   <span
-                    className="font-light tracking-wider transition-all duration-300"
+                    className="font-semibold tracking-wider transition-all duration-300"
                     style={{
                       fontSize: isActive ? '14px' : '11px',
                       color: isActive || isHovered ? 'var(--rose-taupe)' : 'var(--text-muted)'
@@ -215,7 +217,9 @@ export default function SidebarNav() {
         </button>
       )}
 
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      {isResumeOpen && (
+        <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      )}
     </>
   )
 }

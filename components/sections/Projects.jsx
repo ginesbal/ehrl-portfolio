@@ -5,6 +5,7 @@ import { projects } from '@/data/portfolio-data'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
+import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 export default function Projects() {
   const router = useRouter()
@@ -38,6 +39,8 @@ export default function Projects() {
 
   return (
     <section className="relative bg-bg-primary pt-8 md:pt-0 pb-16 md:pb-24">
+      <FloatingCircles section="projects" />
+
       <div className="container-custom">
         <div className="mb-12 md:mb-16">
           <motion.div
@@ -140,9 +143,9 @@ export default function Projects() {
         >
           <a
             href="/projects"
-            className="group inline-flex items-center gap-3 text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-text-secondary transition-colors hover:text-rose-taupe"
+            className="group inline-flex items-center gap-3 text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-text-secondary font-semibold transition-colors hover:text-rose-taupe"
           >
-            All projects
+            <span className="group-hover:underline underline-offset-4">All projects</span>
             <span className="transition-transform group-hover:translate-x-2">→</span>
           </a>
         </motion.div>

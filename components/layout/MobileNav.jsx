@@ -1,9 +1,11 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import ResumeModal from '../modals/ResumeModal.jsx'
+
+const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
 
 export default function MobileNav() {
     const [scrolled, setScrolled] = useState(false)
@@ -95,7 +97,7 @@ export default function MobileNav() {
             {/* mobile top nav */}
             <nav
                 className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 shadow-sm backdrop-blur ${scrolled ? 'bg-bg-accent/90' : 'bg-bg-accent/95'}`}
-                style={{ borderBottom: '1px solid var(--border-light)' }}
+                style={{ borderBottom: '2px solid var(--border-light)' }}
             >
                 <div className="container-custom">
                     <div className="flex items-center justify-between">
@@ -138,7 +140,7 @@ export default function MobileNav() {
                     className="lg:hidden fixed left-0 right-0 z-40 bg-bg-secondary border-b border-border-light"
                     style={{ top: '76px' }}
                 >
-                    <div className="container-custom py-3 max-h-[calc(100vh-80px)] overflow-y-auto">
+                    <div className="container-custom py-2 max-h-[calc(100vh-80px)] overflow-y-auto">
                         {['Projects', 'About', 'Contact'].map((item, index) => {
                             const href = hrefFor(item)
                             const active = isItemActive(item)
@@ -148,7 +150,7 @@ export default function MobileNav() {
                                     href={href}
                                     prefetch={false}
                                     onClick={(e) => handleMobileLinkClick(e, item)}
-                                    className={`block py-3 text-[15px] font-medium transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
+                                    className={`block py-3 text-[15px] font-bold transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
                                     style={{
                                         animation: `fadeIn 0.3s ease-out ${index * 0.05}s both`,
                                     }}
@@ -157,7 +159,7 @@ export default function MobileNav() {
                                 </Link>
                             )
                         })}
-                        <div className="h-[1px] bg-border-light my-2" />
+                        <div className="h-[2px] bg-border-light my-2" />
                         <button
                             onClick={() => {
                                 setIsResumeOpen(true)
@@ -171,7 +173,9 @@ export default function MobileNav() {
                 </div>
             )}
 
-            <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+            {isResumeOpen && (
+                <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+            )}
         </>
     )
 }
