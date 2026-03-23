@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.70",
     "@tailwindcss/postcss": "^4.1.13",
     "clsx": "^2.0.0",
     "framer-motion": "^12.23.12",
