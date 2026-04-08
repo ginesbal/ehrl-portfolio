@@ -1,12 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import ResumeModal from '../modals/ResumeModal.jsx'
 import ScrollIndicator from '../ui/ScrollIndicator.jsx'
 
 export default function Hero() {
   const [isResumeOpen, setIsResumeOpen] = useState(false)
+  const reduceMotion = useReducedMotion() ?? false
 
   return (
     <section className="min-h-[100svh] md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
@@ -15,22 +16,22 @@ export default function Hero() {
         aria-hidden
         className="pointer-events-none absolute top-[12%] left-[6%] w-64 h-64 rounded-full border opacity-[0.05] hidden sm:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        animate={reduceMotion ? undefined : { y: [0, -20, 0], x: [0, 10, 0] }}
+        transition={reduceMotion ? undefined : { duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.span
         aria-hidden
         className="pointer-events-none absolute bottom-[18%] left-[8%] w-80 h-80 rounded-full opacity-[0.03] hidden sm:block"
         style={{ background: 'var(--rose-taupe)' }}
-        animate={{ y: [0, 15, 0], x: [0, -8, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        animate={reduceMotion ? undefined : { y: [0, 15, 0], x: [0, -8, 0] }}
+        transition={reduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
       />
       <motion.span
         aria-hidden
         className="pointer-events-none absolute bottom-[22%] right-[12%] w-56 h-56 rounded-full border opacity-[0.05] hidden sm:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -12, 0], x: [0, -6, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        animate={reduceMotion ? undefined : { y: [0, -12, 0], x: [0, -6, 0] }}
+        transition={reduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
       />
 
       <div className="container-custom relative w-full flex flex-col md:block">
@@ -58,7 +59,7 @@ export default function Hero() {
         </motion.div>
 
         {/* main content area */}
-        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-24 md:pb-0">
+        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-32 md:pb-0">
           {/* mobile name badge */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -87,7 +88,14 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(3rem,12vw,7rem)] font-bold leading-[0.9] tracking-[-0.03em] text-onyx"
           >
-            portfolio<span className="text-rose-taupe">.</span>
+            portfolio
+            <motion.span
+              className="text-rose-taupe inline-block origin-bottom"
+              whileHover={reduceMotion ? undefined : { scale: [1, 1.25, 1] }}
+              transition={reduceMotion ? undefined : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              .
+            </motion.span>
           </motion.h1>
 
           {/* CTA buttons */}
@@ -95,7 +103,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 md:mt-0 flex items-center gap-6 md:absolute md:bottom-8 md:right-20"
+            className="mt-6 md:mt-10 flex items-center gap-6"
           >
             <a
               href="#projects"
@@ -114,9 +122,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator />
-      </div>
+      <ScrollIndicator />
 
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </section>

@@ -436,8 +436,8 @@
 /* Interactive Transitions */
 a, button { transition: all var(--dur-2) var(--ease-out-quart); }
 
-/* Focus States 
-:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; } */
+/* Focus States */
+:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; border-radius: 2px; }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

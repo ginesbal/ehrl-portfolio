@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+
 export default function Projects() {
   const router = useRouter()
   const [selectedProject, setSelectedProject] = useState(null)
@@ -45,7 +47,7 @@ export default function Projects() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
           >
             <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted">02</span>
             <div className="h-[1px] w-12 bg-border-light" />
@@ -55,7 +57,7 @@ export default function Projects() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT_EXPO }}
           >
             Projects
           </motion.h2>
@@ -68,20 +70,18 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: index * 0.05 }}
+              transition={{ duration: 0.7, delay: index * 0.05, ease: EASE_OUT_EXPO }}
               onMouseEnter={() => canHover && setHoveredIndex(index)}
               onMouseLeave={() => canHover && setHoveredIndex(null)}
               onClick={() => handleProjectClick(project)}
-              className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay"
+              className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay transition-[opacity,background-color] duration-[400ms,150ms] ease-[var(--ease-out-quart)]"
               style={{
                 opacity: canHover && hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                transition: 'opacity 0.4s ease, background-color 0.15s ease',
               }}
             >
               {/* Left accent — CSS only */}
               <div
-                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
-                style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms] ease-[var(--ease-out-expo)]"
               />
 
               <div className="pl-4 md:pl-6 py-6 md:py-7 grid lg:grid-cols-[1fr_auto] gap-x-8 items-start">
@@ -136,7 +136,7 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT_EXPO }}
         >
           <a
             href="/projects"

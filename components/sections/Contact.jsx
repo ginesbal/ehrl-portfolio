@@ -1,7 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useRef, useState } from 'react'
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
 
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
 
@@ -42,11 +44,12 @@ function InputField({ id, label, type = 'text', value, onChange, focused, onFocu
           autoComplete={autoComplete}
           rows={rows}
           required
+          aria-invalid={showNameError || showEmailError || showMessageError || undefined}
           value={value}
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
-          className="w-full px-0 py-3 text-[16px] bg-transparent border-b-2 transition-colors duration-200 outline-none resize-none"
+          className="w-full px-0 py-3 text-[16px] bg-transparent border-b-2 transition-colors duration-200 resize-none"
           style={{ borderBottomColor: isFocused ? 'transparent' : 'var(--border-light)' }}
         />
         {isFocused && (
@@ -61,11 +64,19 @@ function InputField({ id, label, type = 'text', value, onChange, focused, onFocu
       {helperText && isFocused && (
         <p className="text-[12px] text-text-muted mt-2 italic">{helperText}</p>
       )}
-      {showNameError && <p className="text-[12px] text-text-muted mt-2">Name is required</p>}
-      {showEmailError && <p className="text-[12px] text-text-muted mt-2">Valid email required</p>}
+      {showNameError && (
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> Name is required
+        </p>
+      )}
+      {showEmailError && (
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> Valid email required
+        </p>
+      )}
       {showMessageError && (
-        <p className="text-[12px] text-text-muted mt-2">
-          {10 - value.trim().length} more characters needed
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> {10 - value.trim().length} more characters needed
         </p>
       )}
     </div>
@@ -78,6 +89,7 @@ export default function Contact() {
   const [status, setStatus] = useState(null)
   const [focusedField, setFocusedField] = useState(null)
   const statusRef = useRef(null)
+  const reduceMotion = useReducedMotion() ?? false
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -122,8 +134,8 @@ export default function Contact() {
         aria-hidden
         className="pointer-events-none absolute top-[15%] left-[5%] w-[350px] h-[350px] rounded-full border opacity-[0.04] hidden md:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+        animate={reduceMotion ? undefined : { y: [0, -20, 0], x: [0, 10, 0] }}
+        transition={reduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* left - dark panel */}
@@ -133,7 +145,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
         >
           <div className="flex items-center gap-4 mb-4">
             <span className="text-[11px] tracking-[0.3em] uppercase opacity-60">04</span>
@@ -150,7 +162,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
           <div className="space-y-10">
             <div>
@@ -185,7 +197,7 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
           <a href="mailto:ehrlbalquin@gmail.com" className="text-[13px] opacity-70 hover:opacity-100 transition-opacity">
             ehrlbalquin@gmail.com
@@ -210,7 +222,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
           >
             <div className="flex items-center justify-between">
               <p className="text-[10px] tracking-[0.2em] uppercase text-text-muted">Send a message</p>
@@ -226,7 +238,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
           >
             <input type="text" name="_hp" value={form._hp} onChange={(e) => setForm(p => ({ ...p, _hp: e.target.value }))} className="hidden" tabIndex={-1} aria-hidden="true" />
 
@@ -282,9 +294,17 @@ export default function Contact() {
               </p>
             )}
 
-            <div ref={statusRef} tabIndex={-1} aria-live="polite" className="outline-none">
-              {status === 'success' && <p className="text-[14px] text-rose-taupe">Sent. I'll reply soon.</p>}
-              {status === 'error' && <p className="text-[14px] text-text-muted">Error. Try emailing directly.</p>}
+            <div ref={statusRef} tabIndex={-1} role="status" aria-live="polite">
+              {status === 'success' && (
+                <p className="text-[14px] flex items-center gap-2" style={{ color: 'var(--success)' }}>
+                  <span aria-hidden="true">✓</span> Sent. I'll reply soon.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="text-[14px] flex items-center gap-2" style={{ color: 'var(--danger)' }}>
+                  <span aria-hidden="true">⚠</span> Error. Try emailing directly.
+                </p>
+              )}
             </div>
           </motion.form>
         </div>
