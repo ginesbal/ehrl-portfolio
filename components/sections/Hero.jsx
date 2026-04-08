@@ -59,7 +59,7 @@ export default function Hero() {
         </motion.div>
 
         {/* main content area */}
-        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-24 md:pb-0">
+        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-32 md:pb-0">
           {/* mobile name badge */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -96,7 +96,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 md:mt-0 flex items-center gap-6 md:absolute md:bottom-8 md:right-20"
+            className="mt-6 md:mt-10 flex items-center gap-6"
           >
             <a
               href="#projects"
@@ -115,9 +115,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator />
-      </div>
+      <ScrollIndicator />
 
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </section>
