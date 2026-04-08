@@ -3,6 +3,8 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { useRef, useState } from 'react'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
 
 function InputField({ id, label, type = 'text', value, onChange, focused, onFocus, onBlur, rows, autoComplete }) {
@@ -143,7 +145,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
         >
           <div className="flex items-center gap-4 mb-4">
             <span className="text-[11px] tracking-[0.3em] uppercase opacity-60">04</span>
@@ -160,7 +162,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
           <div className="space-y-10">
             <div>
@@ -195,7 +197,7 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
         >
           <a href="mailto:ehrlbalquin@gmail.com" className="text-[13px] opacity-70 hover:opacity-100 transition-opacity">
             ehrlbalquin@gmail.com
@@ -220,7 +222,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
           >
             <div className="flex items-center justify-between">
               <p className="text-[10px] tracking-[0.2em] uppercase text-text-muted">Send a message</p>
@@ -236,7 +238,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
           >
             <input type="text" name="_hp" value={form._hp} onChange={(e) => setForm(p => ({ ...p, _hp: e.target.value }))} className="hidden" tabIndex={-1} aria-hidden="true" />
 

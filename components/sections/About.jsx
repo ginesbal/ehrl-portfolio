@@ -1,17 +1,21 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import SplineScene from '../ui/SplineScene'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+
 export default function About() {
+  const reduceMotion = useReducedMotion() ?? false
+
   return (
     <section className="relative bg-bg-primary pt-8 md:pt-0 pb-16 md:pb-24 overflow-hidden">
       <motion.span
         aria-hidden
         className="pointer-events-none absolute -left-32 top-[20%] w-[400px] h-[400px] rounded-full border opacity-[0.03] hidden md:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -25, 0], x: [0, 15, 0] }}
-        transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
+        animate={reduceMotion ? undefined : { y: [0, -25, 0], x: [0, 15, 0] }}
+        transition={reduceMotion ? undefined : { duration: 13, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <div className="container-custom relative z-10">
@@ -23,7 +27,7 @@ export default function About() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
             >
               <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted">03</span>
               <div className="h-[1px] w-12 bg-border-light" />
@@ -34,7 +38,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT_EXPO }}
             >
               About
             </motion.h2>
@@ -45,7 +49,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
               >
                 Software development graduate from SAIT, 2024. I build interfaces and focus on how things feel when you interact with them.
               </motion.p>
@@ -55,7 +59,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
               >
                 React, Next.js, TypeScript. I care about spacing, transitions, typography. Looking for teams that value craft.
               </motion.p>
@@ -65,7 +69,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.35 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: EASE_OUT_EXPO }}
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                   <div className="pl-3 border-l-[2px]" style={{ borderLeftColor: 'var(--rose-taupe)' }}>
@@ -108,7 +112,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: EASE_OUT_EXPO }}
               >
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -130,7 +134,7 @@ export default function About() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT_EXPO }}
           >
             <div className="h-[1px] flex-1 bg-border-light" />
             <span className="text-[10px] tracking-[0.3em] uppercase text-text-muted">03</span>
@@ -142,7 +146,7 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_EXPO }}
           >
             <div className="relative w-full aspect-square max-w-[400px]">
               <div className="absolute inset-0 rounded-full border border-border-light" />

@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+
 export default function Projects() {
   const router = useRouter()
   const [selectedProject, setSelectedProject] = useState(null)
@@ -45,7 +47,7 @@ export default function Projects() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
           >
             <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted">02</span>
             <div className="h-[1px] w-12 bg-border-light" />
@@ -55,7 +57,7 @@ export default function Projects() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT_EXPO }}
           >
             Projects
           </motion.h2>
@@ -68,7 +70,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: index * 0.05 }}
+              transition={{ duration: 0.7, delay: index * 0.05, ease: EASE_OUT_EXPO }}
               onMouseEnter={() => canHover && setHoveredIndex(index)}
               onMouseLeave={() => canHover && setHoveredIndex(null)}
               onClick={() => handleProjectClick(project)}
@@ -134,7 +136,7 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT_EXPO }}
         >
           <a
             href="/projects"
