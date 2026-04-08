@@ -72,16 +72,14 @@ export default function Projects() {
               onMouseEnter={() => canHover && setHoveredIndex(index)}
               onMouseLeave={() => canHover && setHoveredIndex(null)}
               onClick={() => handleProjectClick(project)}
-              className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay"
+              className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay transition-[opacity,background-color] duration-[400ms,150ms] ease-[var(--ease-out-quart)]"
               style={{
                 opacity: canHover && hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                transition: 'opacity 0.4s ease, background-color 0.15s ease',
               }}
             >
               {/* Left accent — CSS only */}
               <div
-                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
-                style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms] ease-[var(--ease-out-expo)]"
               />
 
               <div className="pl-4 md:pl-6 py-6 md:py-7 grid lg:grid-cols-[1fr_auto] gap-x-8 items-start">
