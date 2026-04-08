@@ -42,11 +42,12 @@ function InputField({ id, label, type = 'text', value, onChange, focused, onFocu
           autoComplete={autoComplete}
           rows={rows}
           required
+          aria-invalid={showNameError || showEmailError || showMessageError || undefined}
           value={value}
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
-          className="w-full px-0 py-3 text-[16px] bg-transparent border-b-2 transition-colors duration-200 outline-none resize-none"
+          className="w-full px-0 py-3 text-[16px] bg-transparent border-b-2 transition-colors duration-200 resize-none"
           style={{ borderBottomColor: isFocused ? 'transparent' : 'var(--border-light)' }}
         />
         {isFocused && (
@@ -61,11 +62,19 @@ function InputField({ id, label, type = 'text', value, onChange, focused, onFocu
       {helperText && isFocused && (
         <p className="text-[12px] text-text-muted mt-2 italic">{helperText}</p>
       )}
-      {showNameError && <p className="text-[12px] text-text-muted mt-2">Name is required</p>}
-      {showEmailError && <p className="text-[12px] text-text-muted mt-2">Valid email required</p>}
+      {showNameError && (
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> Name is required
+        </p>
+      )}
+      {showEmailError && (
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> Valid email required
+        </p>
+      )}
       {showMessageError && (
-        <p className="text-[12px] text-text-muted mt-2">
-          {10 - value.trim().length} more characters needed
+        <p className="text-[12px] mt-2 flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
+          <span aria-hidden="true">⚠</span> {10 - value.trim().length} more characters needed
         </p>
       )}
     </div>
@@ -282,9 +291,17 @@ export default function Contact() {
               </p>
             )}
 
-            <div ref={statusRef} tabIndex={-1} aria-live="polite" className="outline-none">
-              {status === 'success' && <p className="text-[14px] text-rose-taupe">Sent. I'll reply soon.</p>}
-              {status === 'error' && <p className="text-[14px] text-text-muted">Error. Try emailing directly.</p>}
+            <div ref={statusRef} tabIndex={-1} role="status" aria-live="polite">
+              {status === 'success' && (
+                <p className="text-[14px] flex items-center gap-2" style={{ color: 'var(--success)' }}>
+                  <span aria-hidden="true">✓</span> Sent. I'll reply soon.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="text-[14px] flex items-center gap-2" style={{ color: 'var(--danger)' }}>
+                  <span aria-hidden="true">⚠</span> Error. Try emailing directly.
+                </p>
+              )}
             </div>
           </motion.form>
         </div>
