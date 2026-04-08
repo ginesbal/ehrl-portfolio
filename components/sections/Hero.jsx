@@ -88,7 +88,14 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(3rem,12vw,7rem)] font-bold leading-[0.9] tracking-[-0.03em] text-onyx"
           >
-            portfolio<span className="text-rose-taupe">.</span>
+            portfolio
+            <motion.span
+              className="text-rose-taupe inline-block origin-bottom"
+              whileHover={reduceMotion ? undefined : { scale: [1, 1.25, 1] }}
+              transition={reduceMotion ? undefined : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              .
+            </motion.span>
           </motion.h1>
 
           {/* CTA buttons */}
