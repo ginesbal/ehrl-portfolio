@@ -1,12 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import ResumeModal from '../modals/ResumeModal.jsx'
 import ScrollIndicator from '../ui/ScrollIndicator.jsx'
 
 export default function Hero() {
   const [isResumeOpen, setIsResumeOpen] = useState(false)
+  const reduceMotion = useReducedMotion() ?? false
 
   return (
     <section className="min-h-[100svh] md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
@@ -15,22 +16,22 @@ export default function Hero() {
         aria-hidden
         className="pointer-events-none absolute top-[12%] left-[6%] w-64 h-64 rounded-full border opacity-[0.05] hidden sm:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        animate={reduceMotion ? undefined : { y: [0, -20, 0], x: [0, 10, 0] }}
+        transition={reduceMotion ? undefined : { duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.span
         aria-hidden
         className="pointer-events-none absolute bottom-[18%] left-[8%] w-80 h-80 rounded-full opacity-[0.03] hidden sm:block"
         style={{ background: 'var(--rose-taupe)' }}
-        animate={{ y: [0, 15, 0], x: [0, -8, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        animate={reduceMotion ? undefined : { y: [0, 15, 0], x: [0, -8, 0] }}
+        transition={reduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
       />
       <motion.span
         aria-hidden
         className="pointer-events-none absolute bottom-[22%] right-[12%] w-56 h-56 rounded-full border opacity-[0.05] hidden sm:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -12, 0], x: [0, -6, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        animate={reduceMotion ? undefined : { y: [0, -12, 0], x: [0, -6, 0] }}
+        transition={reduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
       />
 
       <div className="container-custom relative w-full flex flex-col md:block">

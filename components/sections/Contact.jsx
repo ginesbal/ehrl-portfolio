@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useRef, useState } from 'react'
 
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
@@ -87,6 +87,7 @@ export default function Contact() {
   const [status, setStatus] = useState(null)
   const [focusedField, setFocusedField] = useState(null)
   const statusRef = useRef(null)
+  const reduceMotion = useReducedMotion() ?? false
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -131,8 +132,8 @@ export default function Contact() {
         aria-hidden
         className="pointer-events-none absolute top-[15%] left-[5%] w-[350px] h-[350px] rounded-full border opacity-[0.04] hidden md:block"
         style={{ borderColor: 'var(--rose-taupe)' }}
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+        animate={reduceMotion ? undefined : { y: [0, -20, 0], x: [0, 10, 0] }}
+        transition={reduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* left - dark panel */}
