@@ -53,6 +53,8 @@ module.exports = {
         'out-expo': 'var(--ease-out-expo)',
         'out-quart': 'var(--ease-out-quart)',
         'in-out-quart': 'var(--ease-in-out-quart)',
+        'out-emil': 'var(--ease-out-emil)',
+        'drawer': 'var(--ease-drawer)',
       },
     },
   },

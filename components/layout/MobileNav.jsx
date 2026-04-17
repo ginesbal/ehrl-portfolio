@@ -1,5 +1,6 @@
 'use client'
 
+import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -113,7 +114,7 @@ export default function MobileNav() {
 
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none z-50"
+                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-accent z-50"
                             aria-label="Toggle menu"
                             aria-expanded={mobileMenuOpen}
                         >
@@ -125,53 +126,65 @@ export default function MobileNav() {
                 </div>
             </nav>
 
-            {/* mobile menu overlay */}
-            {mobileMenuOpen && (
-                <div
-                    className="lg:hidden fixed inset-0 z-40 bg-black/5"
-                    onClick={() => setMobileMenuOpen(false)}
-                    aria-hidden="true"
-                />
-            )}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        key="mobile-menu-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}
+                        className="lg:hidden fixed inset-0 z-40 bg-black/5"
+                        onClick={() => setMobileMenuOpen(false)}
+                        aria-hidden="true"
+                    />
+                )}
+            </AnimatePresence>
 
-            {/* mobile menu dropdown */}
-            {mobileMenuOpen && (
-                <div
-                    className="lg:hidden fixed left-0 right-0 z-40 bg-bg-secondary border-b border-border-light"
-                    style={{ top: '76px' }}
-                >
-                    <div className="container-custom py-2 max-h-[calc(100vh-80px)] overflow-y-auto">
-                        {['Projects', 'About', 'Contact'].map((item, index) => {
-                            const href = hrefFor(item)
-                            const active = isItemActive(item)
-                            return (
-                                <Link
-                                    key={item}
-                                    href={href}
-                                    prefetch={false}
-                                    onClick={(e) => handleMobileLinkClick(e, item)}
-                                    className={`block py-3 text-[15px] font-bold transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
-                                    style={{
-                                        animation: `fadeIn 0.3s ease-out ${index * 0.05}s both`,
-                                    }}
-                                >
-                                    {item}
-                                </Link>
-                            )
-                        })}
-                        <div className="h-[2px] bg-border-light my-2" />
-                        <button
-                            onClick={() => {
-                                setIsResumeOpen(true)
-                                setMobileMenuOpen(false)
-                            }}
-                            className="w-full text-left py-3 text-[15px] font-medium text-text-primary transition-colors min-h-[48px] flex items-center"
-                        >
-                            Resume
-                        </button>
-                    </div>
-                </div>
-            )}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        key="mobile-menu-dropdown"
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                        className="lg:hidden fixed left-0 right-0 z-40 bg-bg-secondary border-b border-border-light"
+                        style={{ top: '76px' }}
+                    >
+                        <div className="container-custom py-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+                            {['Projects', 'About', 'Contact'].map((item, index) => {
+                                const href = hrefFor(item)
+                                const active = isItemActive(item)
+                                return (
+                                    <Link
+                                        key={item}
+                                        href={href}
+                                        prefetch={false}
+                                        onClick={(e) => handleMobileLinkClick(e, item)}
+                                        className={`block py-3 text-[15px] font-bold transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
+                                        style={{
+                                            animation: `fadeIn 0.24s var(--ease-out-emil) ${index * 0.04}s both`,
+                                        }}
+                                    >
+                                        {item}
+                                    </Link>
+                                )
+                            })}
+                            <div className="h-[2px] bg-border-light my-2" />
+                            <button
+                                onClick={() => {
+                                    setIsResumeOpen(true)
+                                    setMobileMenuOpen(false)
+                                }}
+                                className="w-full text-left py-3 text-[15px] font-medium text-text-primary transition-colors min-h-[48px] flex items-center"
+                            >
+                                Resume
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {isResumeOpen && (
                 <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />

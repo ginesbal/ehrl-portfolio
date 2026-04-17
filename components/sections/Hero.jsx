@@ -25,8 +25,8 @@ export default function Hero() {
           className="hidden md:flex absolute top-8 right-24 items-stretch gap-5"
         >
           <motion.div
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
+            initial={{ scaleY: 0.1, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="w-[3px] bg-rose-taupe origin-top"
             style={{ minHeight: '90px' }}

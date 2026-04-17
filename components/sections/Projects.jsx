@@ -78,7 +78,7 @@ export default function Projects() {
               className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay"
               style={{
                 opacity: canHover && hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                transition: 'opacity 0.4s ease, background-color 0.15s ease',
+                transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms cubic-bezier(0.23, 1, 0.32, 1)',
               }}
             >
               {/* Left accent — CSS only */}
