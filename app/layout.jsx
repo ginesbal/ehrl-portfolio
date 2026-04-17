@@ -2,7 +2,7 @@
 
 // app/layout.jsx
 import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx'
-import { Inter, Fraunces } from 'next/font/google'
+import { Inter, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
@@ -13,9 +13,9 @@ const inter = Inter({
   display: 'swap',
 })
 
-const fraunces = Fraunces({
+const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-serif',
   display: 'swap',
@@ -23,7 +23,7 @@ const fraunces = Fraunces({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceSerif.variable}`}>
       <head>
         <title>Ehrl Balquin - Portfolio</title>
         <meta name="description" content="Junior Software Developer Portfolio" />
