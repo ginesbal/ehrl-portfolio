@@ -54,7 +54,7 @@ export default function Projects() {
             <div className="h-[1px] w-12 bg-border-light" />
           </motion.div>
           <motion.h2
-            className="text-[clamp(2rem,5vw,4rem)] font-bold text-text-primary"
+            className="font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal tracking-[-0.01em] leading-[0.95] text-text-primary"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

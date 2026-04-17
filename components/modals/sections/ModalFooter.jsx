@@ -46,7 +46,7 @@ function ActionButton({ href, variant = 'primary', children }) {
                 className="flex-1 px-6 py-3 rounded-xl text-center text-sm font-semibold transition-all duration-200 hover:scale-105"
                 style={isPrimary ? {
                     background: 'var(--rose-taupe)',
-                    color: '#fff',
+                    color: 'var(--text-light)',
                     boxShadow: '0 4px 12px rgba(107, 79, 79, 0.25)'
                 } : {
                     border: '1px solid var(--border-light)',
@@ -66,7 +66,7 @@ function ActionButton({ href, variant = 'primary', children }) {
             className="flex-1 px-6 py-3 rounded-xl text-center text-sm font-semibold transition-all duration-200 hover:scale-105"
             style={isPrimary ? {
                 background: 'var(--rose-taupe)',
-                color: '#fff',
+                color: 'var(--text-light)',
                 boxShadow: '0 4px 12px rgba(107, 79, 79, 0.25)'
             } : {
                 border: '1px solid var(--border-light)',

@@ -216,7 +216,7 @@
 
   ::selection {
     background: var(--accent-secondary);
-    color: #fff;
+    color: var(--text-light);
   }
 
   /* Scrollbar */
@@ -374,7 +374,7 @@
   .btn-primary {
     @apply btn-base;
     background: var(--accent-primary);
-    color: #fff;
+    color: var(--text-light);
     box-shadow: 0 2px 8px rgba(193, 93, 62, 0.2);
   }
   @media (hover: hover) {
@@ -391,7 +391,7 @@
   .btn-secondary {
     @apply btn-base;
     background: var(--accent-secondary);
-    color: #fff;
+    color: var(--text-light);
     box-shadow: 0 2px 8px rgba(123, 116, 81, 0.2);
   }
   @media (hover: hover) {
@@ -414,7 +414,7 @@
   @media (hover: hover) {
     .btn-outline:not(:disabled):hover {
       background: var(--accent-primary);
-      color: #fff;
+      color: var(--text-light);
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(193, 93, 62, 0.2);
     }
