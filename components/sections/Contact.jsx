@@ -134,8 +134,8 @@ export default function Contact() {
             <span className="text-[11px] tracking-[0.3em] uppercase opacity-60">04</span>
             <div className="h-[1px] w-12 bg-white/20" />
           </div>
-          <h2 className="text-[clamp(2rem,6vw,4.5rem)] font-bold leading-[1.1]">
-            Let's talk
+          <h2 className="font-serif text-[clamp(2.25rem,6.5vw,5rem)] font-normal tracking-[-0.01em] leading-[0.98]">
+            Let&apos;s <span className="italic">talk</span>
           </h2>
         </motion.div>
 

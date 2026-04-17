@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useModalBehaviour } from '../hooks/useModalBehaviour'
 import ModalFooter from '../sections/ModalFooter'
 import PreviewSection from '../sections/PreviewSection'
@@ -7,13 +8,21 @@ import TechStack from '../sections/TechStack'
 
 export default function CompactLayout({ project, onClose }) {
     const { dialogRef } = useModalBehaviour(onClose)
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        requestAnimationFrame(() => setIsVisible(true))
+    }, [])
 
     return (
         <div className="fixed inset-0 z-[1000]">
             <div
-                className="fixed inset-0"
+                className="fixed inset-0 transition-opacity duration-200 ease-out-emil"
                 onClick={onClose}
-                style={{ background: 'rgba(0, 0, 0, 0.85)' }}
+                style={{
+                    background: isVisible ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0)',
+                    backdropFilter: 'blur(12px)'
+                }}
             />
 
             <div
@@ -29,7 +38,11 @@ export default function CompactLayout({ project, onClose }) {
                         border: '1px solid var(--border-light)',
                         maxHeight: '85vh',
                         display: 'flex',
-                        flexDirection: 'column'
+                        flexDirection: 'column',
+                        transformOrigin: 'center',
+                        transform: isVisible ? 'scale(1)' : 'scale(0.96)',
+                        opacity: isVisible ? 1 : 0,
+                        transition: 'transform 240ms var(--ease-out-emil), opacity 200ms var(--ease-out-emil)'
                     }}
                 >
                     {/* compact header */}

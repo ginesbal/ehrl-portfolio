@@ -25,8 +25,8 @@ export default function Hero() {
           className="hidden md:flex absolute top-8 right-24 items-stretch gap-5"
         >
           <motion.div
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
+            initial={{ scaleY: 0.1, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="w-[3px] bg-rose-taupe origin-top"
             style={{ minHeight: '90px' }}
@@ -69,9 +69,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(3rem,12vw,7rem)] font-bold leading-[0.9] tracking-[-0.03em] text-onyx"
+            className="font-serif text-[clamp(3.5rem,13vw,8rem)] font-normal leading-[0.92] tracking-[-0.02em] text-onyx"
           >
-            portfolio<span className="text-rose-taupe">.</span>
+            portfolio<span className="italic text-rose-taupe">.</span>
           </motion.h1>
 
           {/* CTA buttons */}

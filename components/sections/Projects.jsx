@@ -54,7 +54,7 @@ export default function Projects() {
             <div className="h-[1px] w-12 bg-border-light" />
           </motion.div>
           <motion.h2
-            className="text-[clamp(2rem,5vw,4rem)] font-bold text-text-primary"
+            className="font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal tracking-[-0.01em] leading-[0.95] text-text-primary"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -78,7 +78,7 @@ export default function Projects() {
               className="group relative border-t border-border-light cursor-pointer active:bg-hover-overlay"
               style={{
                 opacity: canHover && hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                transition: 'opacity 0.4s ease, background-color 0.15s ease',
+                transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms cubic-bezier(0.23, 1, 0.32, 1)',
               }}
             >
               {/* Left accent — CSS only */}

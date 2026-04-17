@@ -132,6 +132,8 @@
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
     --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-out-emil: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
     --dur-1: 120ms;
     --dur-2: 200ms;
     --dur-3: 320ms;
@@ -214,7 +216,7 @@
 
   ::selection {
     background: var(--accent-secondary);
-    color: #fff;
+    color: var(--text-light);
   }
 
   /* Scrollbar */
@@ -350,7 +352,12 @@
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-[14px] font-semibold;
     border-radius: var(--radius-pill);
     min-height: 48px;
-    transition: all var(--dur-2) var(--ease-out-quart);
+    transition:
+      background-color var(--dur-2) var(--ease-out-quart),
+      color var(--dur-2) var(--ease-out-quart),
+      border-color var(--dur-2) var(--ease-out-quart),
+      transform var(--dur-1) var(--ease-out-emil),
+      box-shadow var(--dur-2) var(--ease-out-quart);
   }
   .btn-base:focus-visible {
     outline: none;
@@ -367,7 +374,7 @@
   .btn-primary {
     @apply btn-base;
     background: var(--accent-primary);
-    color: #fff;
+    color: var(--text-light);
     box-shadow: 0 2px 8px rgba(193, 93, 62, 0.2);
   }
   @media (hover: hover) {
@@ -378,13 +385,13 @@
     }
   }
   .btn-primary:not(:disabled):active {
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(0.97);
   }
 
   .btn-secondary {
     @apply btn-base;
     background: var(--accent-secondary);
-    color: #fff;
+    color: var(--text-light);
     box-shadow: 0 2px 8px rgba(123, 116, 81, 0.2);
   }
   @media (hover: hover) {
@@ -393,6 +400,9 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(123, 116, 81, 0.3);
     }
+  }
+  .btn-secondary:not(:disabled):active {
+    transform: scale(0.97);
   }
 
   .btn-outline {
@@ -404,10 +414,13 @@
   @media (hover: hover) {
     .btn-outline:not(:disabled):hover {
       background: var(--accent-primary);
-      color: #fff;
+      color: var(--text-light);
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(193, 93, 62, 0.2);
     }
+  }
+  .btn-outline:not(:disabled):active {
+    transform: scale(0.97);
   }
 
   .btn-ghost {
@@ -420,18 +433,26 @@
       background: var(--hover-overlay);
     }
   }
+  .btn-ghost:not(:disabled):active {
+    transform: scale(0.97);
+  }
 
   .btn-link {
     @apply inline-flex items-center gap-2 text-[14px] font-semibold;
     color: var(--accent-primary);
     min-height: 44px;
-    transition: color var(--dur-2) var(--ease-out-quart);
+    transition:
+      color var(--dur-2) var(--ease-out-quart),
+      transform var(--dur-1) var(--ease-out-emil);
   }
   .btn-link:hover {
     color: var(--powder-blush-700);
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
+  }
+  .btn-link:active {
+    transform: scale(0.97);
   }
 
   /* Legacy aliases */
@@ -497,23 +518,23 @@
 }
 
 .stagger-item {
-  animation: fadeInUp 0.6s var(--ease-out-quart) forwards;
+  animation: fadeInUp 0.5s var(--ease-out-emil) forwards;
   opacity: 0;
 }
 .stagger-item:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: 0.04s;
 }
 .stagger-item:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.1s;
 }
 .stagger-item:nth-child(3) {
-  animation-delay: 0.3s;
+  animation-delay: 0.16s;
 }
 .stagger-item:nth-child(4) {
-  animation-delay: 0.4s;
+  animation-delay: 0.22s;
 }
 .stagger-item:nth-child(5) {
-  animation-delay: 0.5s;
+  animation-delay: 0.28s;
 }
 
 .animate-scroll-indicator {
@@ -584,23 +605,31 @@
   border-color: var(--silver);
 }
 
-/* Interactive Transitions */
+/* Interactive Transitions
+   Narrow default so components can own their own transform timing.
+   Explicit component rules (e.g. .btn-base) take precedence. */
 a,
 button {
-  transition: all var(--dur-2) var(--ease-out-quart);
+  transition:
+    color var(--dur-2) var(--ease-out-quart),
+    background-color var(--dur-2) var(--ease-out-quart),
+    border-color var(--dur-2) var(--ease-out-quart),
+    opacity var(--dur-2) var(--ease-out-quart);
 }
 
 /* Focus States 
 :focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; } */
 
-/* Reduced Motion */
+/* Reduced Motion
+   Keep opacity/color transitions — they aid comprehension. Kill movement. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 200ms !important;
+    transition-property: opacity, color, background-color, border-color !important;
   }
 }
 

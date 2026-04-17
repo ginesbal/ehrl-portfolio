@@ -8,7 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Source Sans 3', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        display: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
       },
       colors: {
         // Map CSS variables to Tailwind colors for consistency
@@ -53,6 +55,8 @@ module.exports = {
         'out-expo': 'var(--ease-out-expo)',
         'out-quart': 'var(--ease-out-quart)',
         'in-out-quart': 'var(--ease-in-out-quart)',
+        'out-emil': 'var(--ease-out-emil)',
+        'drawer': 'var(--ease-drawer)',
       },
     },
   },
