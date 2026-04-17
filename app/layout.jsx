@@ -2,11 +2,11 @@
 
 // app/layout.jsx
 import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx'
-import { Inter, Source_Serif_4 } from 'next/font/google'
+import { Source_Sans_3, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
-const inter = Inter({
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-sans',
@@ -23,7 +23,7 @@ const sourceSerif = Source_Serif_4({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceSerif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <head>
         <title>Ehrl Balquin - Portfolio</title>
         <meta name="description" content="Junior Software Developer Portfolio" />
@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={sourceSans.className} suppressHydrationWarning>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
