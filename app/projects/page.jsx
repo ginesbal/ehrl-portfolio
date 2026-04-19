@@ -13,7 +13,8 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
 const EASE_OUT_EMIL = [0.23, 1, 0.32, 1]
 
 export default function ProjectsArchive() {
-    const [hoveredProject, setHoveredProject] = useState(null)
+    const [hoveredId, setHoveredId] = useState(null)
+    const [activeId, setActiveId] = useState(null)
     const [canHover, setCanHover] = useState(true)
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function ProjectsArchive() {
         return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
     }, [])
 
-    const activeProject = projects.find((p) => p.id === hoveredProject) ?? projects[0] ?? null
+    const activeProject = projects.find((p) => p.id === activeId) ?? projects[0] ?? null
     const liveCount = projects.filter((p) => p.demo).length
 
     return (
@@ -108,10 +109,17 @@ export default function ProjectsArchive() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-80px' }}
                                         transition={{ duration: 0.6, delay: index * 0.05, ease: EASE_OUT_EXPO }}
-                                        onMouseEnter={() => canHover && setHoveredProject(project.id)}
-                                        onMouseLeave={() => canHover && setHoveredProject(null)}
+                                        onMouseEnter={() => {
+                                            if (!canHover) return
+                                            setHoveredId(project.id)
+                                            setActiveId(project.id)
+                                        }}
+                                        onMouseLeave={() => {
+                                            if (!canHover) return
+                                            setHoveredId(null)
+                                        }}
                                         style={{
-                                            opacity: canHover && hoveredProject !== null && hoveredProject !== project.id ? 0.35 : 1,
+                                            opacity: canHover && hoveredId !== null && hoveredId !== project.id ? 0.35 : 1,
                                             transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1)',
                                         }}
                                     >
