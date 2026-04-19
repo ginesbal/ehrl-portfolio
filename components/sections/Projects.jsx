@@ -136,17 +136,27 @@ export default function Projects() {
 
         <motion.div
           className="mt-12 md:mt-16 flex justify-center md:justify-end"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           <a
             href="/projects"
-            className="group inline-flex items-center gap-3 text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-text-secondary font-semibold transition-colors hover:text-rose-taupe"
+            aria-label={`View all ${projects.length} projects`}
+            className="group relative inline-flex items-center gap-4 pl-6 pr-2 py-2 rounded-full border border-text-primary/15 bg-bg-primary text-text-primary hover:border-rose-taupe/60 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,transform] duration-300 ease-[var(--ease-out-expo)]"
           >
-            <span className="group-hover:underline underline-offset-4">All projects</span>
-            <span className="transition-transform group-hover:translate-x-2">→</span>
+            <span className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold">
+              View all {projects.length} projects
+            </span>
+            <span
+              aria-hidden
+              className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-taupe text-white overflow-hidden transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:scale-[1.06]"
+            >
+              <span className="inline-block text-[14px] leading-none transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-[2px]">
+                →
+              </span>
+            </span>
           </a>
         </motion.div>
       </div>

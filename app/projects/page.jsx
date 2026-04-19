@@ -1,178 +1,311 @@
 'use client'
 
+import Footer from '@/components/layout/Footer.jsx'
 import MobileNav from '@/components/layout/MobileNav.jsx'
 import SidebarNav from '@/components/layout/SidebarNav.jsx'
+import FloatingCircles from '@/components/ui/FloatingCircles.jsx'
 import { projects } from '@/data/portfolio-data'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+const EASE_OUT_EMIL = [0.23, 1, 0.32, 1]
 
 export default function ProjectsArchive() {
-    const [hoveredProject, setHoveredProject] = useState(null)
+    const [hoveredId, setHoveredId] = useState(null)
+    const [activeId, setActiveId] = useState(null)
+    const [canHover, setCanHover] = useState(true)
 
-    const activeProject = projects.find((p) => p.id === hoveredProject) ?? projects[0]
+    useEffect(() => {
+        const mq = window.matchMedia('(hover: hover)')
+        setCanHover(mq.matches)
+        const handler = (e) => setCanHover(e.matches)
+        mq.addEventListener?.('change', handler) || mq.addListener?.(handler)
+        return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
+    }, [])
+
+    const activeProject = projects.find((p) => p.id === activeId) ?? projects[0] ?? null
+    const liveCount = projects.filter((p) => p.demo).length
 
     return (
-        <>
+        <div className="min-h-screen bg-bg-primary">
             <MobileNav />
             <SidebarNav />
 
             <main
-                className="min-h-screen relative transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
-                style={{ marginLeft: 'var(--sidebar-offset, 0px)' }}
+                className="relative transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
+                style={{ marginLeft: 'var(--sidebar-offset, 0px)', minHeight: '100vh' }}
+                tabIndex={0}
             >
-                {/* Grain texture overlay */}
-                <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-50">
-                    <svg width="100%" height="100%">
-                        <filter id="grain">
-                            <feTurbulence baseFrequency="0.65" />
-                        </filter>
-                        <rect width="100%" height="100%" filter="url(#grain)" />
-                    </svg>
-                </div>
+                <section className="relative bg-bg-primary pt-16 md:pt-20 pb-16 md:pb-24 overflow-hidden">
+                    <FloatingCircles section="projects" />
 
-                <div className="relative z-10 px-8 md:px-12 lg:px-20 py-20 md:py-24">
-                    {/* Back to Home */}
-                    <Link
-                        href="/"
-                        className="inline-block text-sm opacity-60 hover:opacity-100 transition-opacity mb-12"
-                    >
-                        ← Back to Home
-                    </Link>
+                    <div className="container-custom relative z-10">
+                        {/* Back link */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
+                            className="mb-12 md:mb-16"
+                        >
+                            <Link
+                                href="/"
+                                className="group inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-text-muted transition-colors duration-300 hover:text-rose-taupe"
+                            >
+                                <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+                                <span>Back to home</span>
+                            </Link>
+                        </motion.div>
 
-                    {/* Header */}
-                    <header className="mb-20">
-                        <div className="flex items-baseline justify-between mb-8">
-                            <h1 className="text-[clamp(1.5rem,3vw,2rem)] font-light">
-                                Selected Work
-                                <span className="text-[0.6em] opacity-50 ml-2">({projects.length})</span>
-                            </h1>
-                            <p className="text-sm opacity-60 max-w-xs text-right">
-                                A piece from my selection of favorites
-                            </p>
-                        </div>
-                    </header>
+                        {/* Header — mirrors the Projects section pattern, scaled up */}
+                        <header className="mb-16 md:mb-24">
+                            <motion.div
+                                className="flex items-center gap-4 mb-6"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+                            >
+                                <span className="inline-flex w-2 h-2 rounded-full bg-rose-taupe" />
+                                <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted">Archive</span>
+                                <div className="h-px w-12 bg-border-light" />
+                                <span className="text-[11px] tracking-[0.25em] uppercase text-text-muted tabular-nums">
+                                    {String(projects.length).padStart(2, '0')} works
+                                </span>
+                            </motion.div>
 
-                    {/* Two-column layout on desktop */}
-                    <div className="lg:grid lg:grid-cols-[1fr_380px] lg:gap-16 lg:items-start">
+                            <motion.h1
+                                className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.02em] text-text-primary"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.7, delay: 0.1, ease: EASE_OUT_EXPO }}
+                            >
+                                Selected work<span className="italic text-rose-taupe">.</span>
+                            </motion.h1>
 
-                        {/* Projects List */}
-                        <div className="relative">
-                            {projects.map((project, index) => (
-                                <Link
-                                    key={project.id}
-                                    href={`/projects/${project.id}`}
-                                    className="group block border-t border-gray-200 py-8 md:py-10 relative"
-                                    onMouseEnter={() => setHoveredProject(project.id)}
-                                    onMouseLeave={() => setHoveredProject(null)}
-                                    style={{
-                                        opacity: hoveredProject !== null && hoveredProject !== project.id ? 0.3 : 1,
-                                        transition: 'opacity 0.3s ease',
-                                    }}
-                                >
-                                    {/* Left bar */}
+                            <motion.p
+                                className="mt-6 md:mt-8 max-w-md text-[14px] leading-relaxed text-text-secondary"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
+                            >
+                                A few things I&apos;ve built over the past couple of years.
+                            </motion.p>
+                        </header>
+
+                        {/* Two-column body */}
+                        <div className="lg:grid lg:grid-cols-[1fr_360px] lg:gap-16 lg:items-start">
+
+                            {/* Project list */}
+                            <div className="relative">
+                                {projects.map((project, index) => (
                                     <motion.div
-                                        className="absolute left-0 top-0 w-[2px] bg-black"
-                                        initial={{ height: 0 }}
-                                        animate={{ height: hoveredProject === project.id ? '100%' : 0 }}
-                                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                    />
+                                        key={project.id}
+                                        initial={{ opacity: 0, y: 16 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: '-80px' }}
+                                        transition={{ duration: 0.6, delay: index * 0.05, ease: EASE_OUT_EXPO }}
+                                        onMouseEnter={() => {
+                                            if (!canHover) return
+                                            setHoveredId(project.id)
+                                            setActiveId(project.id)
+                                        }}
+                                        onMouseLeave={() => {
+                                            if (!canHover) return
+                                            setHoveredId(null)
+                                        }}
+                                        style={{
+                                            opacity: canHover && hoveredId !== null && hoveredId !== project.id ? 0.35 : 1,
+                                            transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1)',
+                                        }}
+                                    >
+                                        <Link
+                                            href={`/projects/${project.id}`}
+                                            className="group relative block border-t border-border-light active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-4 focus-visible:ring-offset-bg-primary transition-transform duration-150 ease-out"
+                                        >
+                                            {/* Left accent bar */}
+                                            <div
+                                                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
+                                                style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                                            />
 
-                                    <div className="pl-5 flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.9]">
-                                                {project.title}
-                                            </h2>
-                                            <div className="mt-3 flex items-center gap-4">
-                                                <p className="text-sm opacity-60 tracking-wide">
-                                                    {project.category.split(',')[0].trim()}
-                                                </p>
-                                                {project.role && (
-                                                    <>
-                                                        <span className="opacity-30 text-xs">·</span>
-                                                        <p className="text-sm opacity-40 tracking-wide">{project.role}</p>
-                                                    </>
+                                            <div className="pl-5 md:pl-6 py-8 md:py-10 grid lg:grid-cols-[1fr_auto] gap-x-8 items-start">
+                                                <div className="min-w-0">
+                                                    <h2 className="font-serif text-[clamp(2rem,5vw,4rem)] font-normal leading-[0.95] tracking-[-0.015em] text-text-primary">
+                                                        {project.title}
+                                                    </h2>
+
+                                                    <div className="mt-3 md:mt-4 flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1">
+                                                        <span className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                                            {project.category.split(',')[0].trim()}
+                                                        </span>
+                                                        {project.role && (
+                                                            <>
+                                                                <span className="text-text-muted/40">·</span>
+                                                                <span className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                                                    {project.role}
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </div>
+
+                                                    {project.description && (
+                                                        <p className="mt-3 md:mt-4 max-w-xl text-[13px] md:text-[14px] leading-relaxed text-text-secondary line-clamp-2">
+                                                            {project.description}
+                                                        </p>
+                                                    )}
+
+                                                    {project.tech?.length > 0 && (
+                                                        <div className="mt-3 md:mt-4 flex flex-wrap gap-3 md:gap-4">
+                                                            {project.tech.slice(0, 3).map((tech) => (
+                                                                <span
+                                                                    key={tech}
+                                                                    className="text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-text-muted"
+                                                                >
+                                                                    {tech}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Right column — desktop */}
+                                                <div className="hidden md:flex flex-col items-end gap-1.5 shrink-0">
+                                                    <span className="text-[11px] tracking-[0.25em] tabular-nums text-text-muted">
+                                                        {String(index + 1).padStart(2, '0')}
+                                                    </span>
+                                                    <span className="text-[11px] tracking-[0.2em] text-text-muted">
+                                                        {project.year}
+                                                    </span>
+                                                    <span className="mt-1 text-[18px] text-text-muted transition-colors duration-300 group-hover:text-rose-taupe">
+                                                        →
+                                                    </span>
+                                                </div>
+
+                                                {/* Mobile inline meta */}
+                                                <div className="md:hidden flex items-center justify-between mt-4 pt-3 border-t border-border-light/50">
+                                                    <span className="text-[10px] tracking-[0.2em] text-text-muted">
+                                                        {project.year}
+                                                    </span>
+                                                    <span className="text-[16px] text-rose-taupe">→</span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+
+                                <div className="border-t border-border-light" />
+                            </div>
+
+                            {/* Sticky preview panel — desktop only */}
+                            <aside className="hidden lg:block sticky top-24 self-start">
+                                <AnimatePresence mode="wait">
+                                    {activeProject && <motion.div
+                                        key={activeProject.id}
+                                        initial={{ opacity: 0, y: 6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -6 }}
+                                        transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
+                                    >
+                                        <Link
+                                            href={`/projects/${activeProject.id}`}
+                                            aria-label={`View ${activeProject.title} project`}
+                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
+                                        >
+                                            <div className="aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
+                                                {activeProject.image ? (
+                                                    <img
+                                                        src={activeProject.image}
+                                                        alt={activeProject.title}
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div
+                                                        className="w-full h-full"
+                                                        style={{ background: `linear-gradient(135deg, ${activeProject.gradient})` }}
+                                                    />
                                                 )}
                                             </div>
-                                        </div>
 
-                                        <div className="text-right ml-6 shrink-0">
-                                            <span className="text-[clamp(1.5rem,3vw,2rem)] font-thin opacity-40">
-                                                /{String(index + 1).padStart(2, '0')}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))}
-
-                            <div className="border-t border-gray-200" />
-                        </div>
-
-                        {/* Sticky Preview Panel — desktop only */}
-                        <div className="hidden lg:block sticky top-24 self-start">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeProject.id}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -8 }}
-                                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                                >
-                                    {/* Image */}
-                                    <div className="aspect-[4/3] overflow-hidden bg-bg-accent mb-5">
-                                        {activeProject.image ? (
-                                            <img
-                                                src={activeProject.image}
-                                                alt={activeProject.title}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        ) : (
-                                            <div
-                                                className="w-full h-full"
-                                                style={{ background: `linear-gradient(135deg, ${activeProject.gradient})` }}
-                                            />
-                                        )}
-                                    </div>
-
-                                    {/* Meta */}
-                                    <div className="space-y-3">
-                                        <div className="flex items-baseline justify-between">
-                                            <h3 className="text-[15px] font-medium">{activeProject.title}</h3>
-                                            <span className="text-[12px] opacity-50">{activeProject.year}</span>
-                                        </div>
-                                        <p className="text-[13px] leading-relaxed opacity-60 line-clamp-3">
-                                            {activeProject.description}
-                                        </p>
-                                        {activeProject.tech?.length > 0 && (
-                                            <div className="flex flex-wrap gap-3 pt-1">
-                                                {activeProject.tech.slice(0, 4).map((tech) => (
-                                                    <span key={tech} className="text-[11px] tracking-wide opacity-50">
-                                                        {tech}
+                                            <div className="space-y-3">
+                                                <div className="flex items-baseline justify-between gap-3">
+                                                    <h3 className="text-[15px] font-medium text-text-primary truncate">
+                                                        {activeProject.title}
+                                                    </h3>
+                                                    <span className="text-[12px] text-text-muted tabular-nums">
+                                                        {activeProject.year}
                                                     </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                    </div>
+                                                </div>
 
-                    {/* Footer stats */}
-                    <footer className="mt-24 pt-12 border-t border-gray-200">
-                        <div className="flex justify-end items-center">
-                            <div className="flex gap-8">
-                                {projects.filter((p) => p.demo).length > 0 && (
-                                    <p className="text-sm opacity-60">
-                                        {projects.filter((p) => p.demo).length} Live Projects
-                                    </p>
-                                )}
-                                <p className="text-sm opacity-60">{projects.length} Total Works</p>
-                            </div>
+                                                <p className="text-[13px] leading-relaxed text-text-secondary line-clamp-3">
+                                                    {activeProject.description}
+                                                </p>
+
+                                                {activeProject.tech?.length > 0 && (
+                                                    <div className="flex flex-wrap gap-x-3 gap-y-1 pt-1">
+                                                        {activeProject.tech.slice(0, 4).map((tech) => (
+                                                            <span
+                                                                key={tech}
+                                                                className="text-[10px] tracking-[0.15em] uppercase text-text-muted"
+                                                            >
+                                                                {tech}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                <div className="pt-4 mt-2 border-t border-border-light/60">
+                                                    <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-rose-taupe">
+                                                        View project
+                                                        <span
+                                                            aria-hidden
+                                                            className="inline-block transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-1"
+                                                        >
+                                                            →
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </motion.div>}
+                                </AnimatePresence>
+                            </aside>
                         </div>
-                    </footer>
-                </div>
+
+                        {/* Footer stats */}
+                        <motion.footer
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, ease: EASE_OUT_EMIL }}
+                            className="mt-20 md:mt-28 pt-8 border-t border-border-light"
+                        >
+                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <span className="text-[11px] tracking-[0.25em] uppercase text-text-muted">
+                                    End of archive
+                                </span>
+                                <div className="flex items-center gap-6">
+                                    {liveCount > 0 && (
+                                        <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                            <span className="text-rose-taupe">{liveCount}</span> live
+                                        </span>
+                                    )}
+                                    <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                        <span className="text-text-primary">{projects.length}</span> total
+                                    </span>
+                                </div>
+                            </div>
+                        </motion.footer>
+                    </div>
+                </section>
+
+                <Footer />
             </main>
-        </>
+        </div>
     )
 }
