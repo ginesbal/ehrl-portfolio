@@ -24,7 +24,7 @@ export default function ProjectsArchive() {
         return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
     }, [])
 
-    const activeProject = projects.find((p) => p.id === hoveredProject) ?? projects[0]
+    const activeProject = projects.find((p) => p.id === hoveredProject) ?? projects[0] ?? null
     const liveCount = projects.filter((p) => p.demo).length
 
     return (
@@ -117,7 +117,7 @@ export default function ProjectsArchive() {
                                     >
                                         <Link
                                             href={`/projects/${project.id}`}
-                                            className="group relative block border-t border-border-light active:scale-[0.995] transition-transform duration-150 ease-out"
+                                            className="group relative block border-t border-border-light active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-4 focus-visible:ring-offset-bg-primary transition-transform duration-150 ease-out"
                                         >
                                             {/* Left accent bar */}
                                             <div
@@ -196,64 +196,76 @@ export default function ProjectsArchive() {
                             {/* Sticky preview panel — desktop only */}
                             <aside className="hidden lg:block sticky top-24 self-start">
                                 <AnimatePresence mode="wait">
-                                    <motion.div
+                                    {activeProject && <motion.div
                                         key={activeProject.id}
                                         initial={{ opacity: 0, y: 6 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -6 }}
                                         transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
-                                        className="rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)]"
                                     >
-                                        <div className="aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
-                                            {activeProject.image ? (
-                                                <img
-                                                    src={activeProject.image}
-                                                    alt={activeProject.title}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            ) : (
-                                                <div
-                                                    className="w-full h-full"
-                                                    style={{ background: `linear-gradient(135deg, ${activeProject.gradient})` }}
-                                                />
-                                            )}
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <div className="flex items-baseline justify-between gap-3">
-                                                <h3 className="text-[15px] font-medium text-text-primary truncate">
-                                                    {activeProject.title}
-                                                </h3>
-                                                <span className="text-[12px] text-text-muted tabular-nums">
-                                                    {activeProject.year}
-                                                </span>
+                                        <Link
+                                            href={`/projects/${activeProject.id}`}
+                                            aria-label={`View ${activeProject.title} project`}
+                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
+                                        >
+                                            <div className="aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
+                                                {activeProject.image ? (
+                                                    <img
+                                                        src={activeProject.image}
+                                                        alt={activeProject.title}
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div
+                                                        className="w-full h-full"
+                                                        style={{ background: `linear-gradient(135deg, ${activeProject.gradient})` }}
+                                                    />
+                                                )}
                                             </div>
 
-                                            <p className="text-[13px] leading-relaxed text-text-secondary line-clamp-3">
-                                                {activeProject.description}
-                                            </p>
-
-                                            {activeProject.tech?.length > 0 && (
-                                                <div className="flex flex-wrap gap-x-3 gap-y-1 pt-1">
-                                                    {activeProject.tech.slice(0, 4).map((tech) => (
-                                                        <span
-                                                            key={tech}
-                                                            className="text-[10px] tracking-[0.15em] uppercase text-text-muted"
-                                                        >
-                                                            {tech}
-                                                        </span>
-                                                    ))}
+                                            <div className="space-y-3">
+                                                <div className="flex items-baseline justify-between gap-3">
+                                                    <h3 className="text-[15px] font-medium text-text-primary truncate">
+                                                        {activeProject.title}
+                                                    </h3>
+                                                    <span className="text-[12px] text-text-muted tabular-nums">
+                                                        {activeProject.year}
+                                                    </span>
                                                 </div>
-                                            )}
 
-                                            <div className="pt-4 mt-2 border-t border-border-light/60">
-                                                <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-rose-taupe">
-                                                    View project
-                                                    <span aria-hidden>→</span>
-                                                </span>
+                                                <p className="text-[13px] leading-relaxed text-text-secondary line-clamp-3">
+                                                    {activeProject.description}
+                                                </p>
+
+                                                {activeProject.tech?.length > 0 && (
+                                                    <div className="flex flex-wrap gap-x-3 gap-y-1 pt-1">
+                                                        {activeProject.tech.slice(0, 4).map((tech) => (
+                                                            <span
+                                                                key={tech}
+                                                                className="text-[10px] tracking-[0.15em] uppercase text-text-muted"
+                                                            >
+                                                                {tech}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                <div className="pt-4 mt-2 border-t border-border-light/60">
+                                                    <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-rose-taupe">
+                                                        View project
+                                                        <span
+                                                            aria-hidden
+                                                            className="inline-block transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-1"
+                                                        >
+                                                            →
+                                                        </span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </motion.div>
+                                        </Link>
+                                    </motion.div>}
                                 </AnimatePresence>
                             </aside>
                         </div>
