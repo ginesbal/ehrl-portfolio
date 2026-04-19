@@ -92,8 +92,7 @@ export default function ProjectsArchive() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
                             >
-                                An archive of recent projects — full-stack builds, spatial systems, and small experiments
-                                from the last couple of years.
+                                A few things I&apos;ve built over the past couple of years.
                             </motion.p>
                         </header>
 
