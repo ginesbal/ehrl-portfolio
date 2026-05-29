@@ -18,6 +18,9 @@ export default function SidebarNav() {
   const onProjectsRoute = pathname?.startsWith('/projects')
   const onParkPal = pathname === '/projects/parkpal'
   const onEVision = pathname === '/projects/evision'
+  const onAim = pathname === '/projects/aim'
+  const onProjectsArchive = pathname === '/projects'
+  const onCaseStudy = onParkPal || onEVision || onAim
 
   const sections = [
     { id: 'hero', label: 'Home', num: '01' },
@@ -141,6 +144,21 @@ export default function SidebarNav() {
           </nav>
         </div>
 
+        {/* in-sidebar collapse button — shown on case study + archive pages since
+            their floating pill is reserved for the back button */}
+        {(onCaseStudy || onProjectsArchive) && (
+          <button
+            type="button"
+            onClick={() => setCollapsed((prev) => !prev)}
+            className="group absolute bottom-10 left-8"
+            aria-label="Hide sidebar"
+          >
+            <span className="text-[13px] font-extrabold tracking-[0.15em] uppercase text-text-muted transition-colors duration-300 group-hover:text-rose-taupe">
+              ←
+            </span>
+          </button>
+        )}
+
         {/* resume button */}
         <button
           onClick={() => setIsResumeOpen(true)}
@@ -158,8 +176,8 @@ export default function SidebarNav() {
         </button>
       </aside>
 
-      {/* sidebar toggle button - minimizes on scroll / back button on project pages */}
-      {(onParkPal || onEVision) ? (
+      {/* floating pill — back button on case study / archive pages, toggle elsewhere */}
+      {onCaseStudy ? (
         <Link
           href="/projects"
           className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
@@ -169,11 +187,23 @@ export default function SidebarNav() {
         >
           <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
           {!toggleMinimized && (
-            <span
-              className="text-[8px] tracking-[0.15em] uppercase font-semibold"
-              style={{ color: 'var(--text-secondary)' }}
-            >
+            <span className="text-[8px] tracking-[0.15em] uppercase font-semibold" style={{ color: 'var(--text-secondary)' }}>
               Back
+            </span>
+          )}
+        </Link>
+      ) : onProjectsArchive ? (
+        <Link
+          href="/"
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
+          aria-label="Back to home"
+          title="Back to home"
+        >
+          <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
+          {!toggleMinimized && (
+            <span className="text-[8px] tracking-[0.15em] uppercase font-semibold" style={{ color: 'var(--text-secondary)' }}>
+              Home
             </span>
           )}
         </Link>

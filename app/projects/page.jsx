@@ -42,12 +42,12 @@ export default function ProjectsArchive() {
                     <FloatingCircles section="projects" />
 
                     <div className="container-custom relative z-10">
-                        {/* Back link */}
+                        {/* Back link — mobile only; desktop uses the sidebar pill */}
                         <motion.div
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-                            className="mb-12 md:mb-16"
+                            className="lg:hidden mb-12 md:mb-16"
                         >
                             <Link
                                 href="/"
