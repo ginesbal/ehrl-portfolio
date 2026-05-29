@@ -69,8 +69,6 @@ export const projects = [
         ]
     },
 
-    // Add this object to your data/portfolio-data.js array
-    // Place it within the first 3 items to appear in Featured grid
     {
         id: 'evision',
         title: 'EVision Advisor',
@@ -121,12 +119,64 @@ export const projects = [
                 description: 'In-memory caching and IP rate limiting'
             }
         ]
+    },
+
+    {
+        id: 'aim',
+        title: 'aim',
+        subtitle: 'Study Planner',
+        category: 'Web Development, Productivity',
+        year: '2025',
+
+        description: 'A calm, purposeful study planner for building focus habits. Tracks daily goals with a custom SVG progress indicator shaped from the product\'s own letterform, manages tasks with subject tagging, and surfaces a streak to keep momentum.',
+
+        demo: null,
+        github: 'https://github.com/ginesbal/aim',
+        featured: true,
+
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%231e2a3d;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%232d3f5a;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-style="italic" font-weight="300" fill="white" opacity="0.85"%3Eaim%3C/text%3E%3C/svg%3E',
+
+        gradient: '#1e2a3d, #2d3f5a',
+        accentColor: '#3d4f6e',
+
+        tech: [
+            'Next.js 14',
+            'TypeScript',
+            'Tailwind CSS',
+            'React Context',
+            'localStorage'
+        ],
+
+        details: {
+            challenge: 'Study planning apps often feel heavy—packed with features that don\'t serve the core need of showing up and focusing.',
+
+            solution: 'Designed around a single daily metric: focus time. The dashboard greets you, shows your progress inside the "a" letterform, and surfaces one task to start.',
+
+            approach: 'Built with a client-only architecture using four localStorage-backed React contexts. No backend, no accounts—just a calm space that starts immediately.',
+
+            impact: 'Five views (Dashboard, Focus, Tasks, Journal, Settings) powered by four contexts, with zero server round-trips and sub-millisecond state reads.'
+        },
+
+        features: [
+            {
+                title: 'Focus Goal',
+                description: 'Daily target tracked in the "a" letterform—fills as you work'
+            },
+            {
+                title: 'Task Manager',
+                description: 'Subject-tagged tasks with due dates and overdue detection'
+            },
+            {
+                title: 'Streak Tracking',
+                description: '7-day dot trail showing your focus consistency'
+            }
+        ]
     }
 ]
 
 // Utility functions
 export const getProjectById = (id) => projects.find(p => p.id === id)
-export const getFeaturedProjects = () => projects.filter(p => p.demo !== null)
+export const getFeaturedProjects = () => projects.filter(p => p.featured)
 export const getProjectsByYear = (year) => projects.filter(p => p.year === year)
 export const getProjectsByCategory = (category) => projects.filter(p => p.category.includes(category))
 

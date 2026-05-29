@@ -8,18 +8,18 @@ export default function ProjectNavigation() {
                 <div className="max-w-6xl mx-auto">
                     <div className="flex justify-between items-center">
                         <Link
-                            href="/projects/parkpal"
+                            href="/projects/evision"
                             className="group flex items-center gap-2.5 transition-opacity hover:opacity-50"
                         >
                             <span className="text-lg text-text-muted font-bold">←</span>
-                            <span className="text-sm text-text-secondary font-semibold">Previous: ParkPal</span>
+                            <span className="text-sm text-text-secondary font-semibold">Previous: EVision</span>
                         </Link>
 
                         <Link
-                            href="/projects/aim"
+                            href="/projects"
                             className="group flex items-center gap-2.5 transition-opacity hover:opacity-50"
                         >
-                            <span className="text-sm text-text-secondary font-semibold">Next: aim</span>
+                            <span className="text-sm text-text-secondary font-semibold">All Projects</span>
                             <span className="text-lg text-text-muted font-bold">→</span>
                         </Link>
                     </div>

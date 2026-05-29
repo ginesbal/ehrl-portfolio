@@ -28,7 +28,7 @@ export default function Projects() {
   }, [])
 
   const handleProjectClick = (project) => {
-    const dedicatedPages = ['parkpal', 'evision']
+    const dedicatedPages = ['parkpal', 'evision', 'aim']
     if (dedicatedPages.includes(project.id)) {
       router.push(`/projects/${project.id}`)
     } else {
