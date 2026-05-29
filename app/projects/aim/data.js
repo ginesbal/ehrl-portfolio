@@ -7,7 +7,7 @@ export const aimData = {
         github: 'https://github.com/ginesbal/aim'
     },
 
-    year: '2025',
+    year: '2026',
     category: 'Web Development',
 
     summary: [

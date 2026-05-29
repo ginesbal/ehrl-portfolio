@@ -2,6 +2,110 @@
 
 export const projects = [
     {
+        id: 'aim',
+        title: 'aim',
+        subtitle: 'Study Planner',
+        category: 'Web Development, Productivity',
+        year: '2026',
+
+        description: 'A calm, purposeful study planner for building focus habits. Tracks daily goals with a custom SVG progress indicator shaped from the product\'s own letterform, manages tasks with subject tagging, and surfaces a streak to keep momentum.',
+
+        demo: 'https://aim-eb-project.vercel.app/dashboard',
+        github: 'https://github.com/ginesbal/aim',
+        featured: true,
+
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%231e2a3d;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%232d3f5a;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-style="italic" font-weight="300" fill="white" opacity="0.85"%3Eaim%3C/text%3E%3C/svg%3E',
+
+        gradient: '#1e2a3d, #2d3f5a',
+        accentColor: '#3d4f6e',
+
+        tech: [
+            'Next.js 14',
+            'TypeScript',
+            'Tailwind CSS',
+            'React Context',
+            'localStorage'
+        ],
+
+        details: {
+            challenge: 'Study planning apps often feel heavy—packed with features that don\'t serve the core need of showing up and focusing.',
+
+            solution: 'Designed around a single daily metric: focus time. The dashboard greets you, shows your progress inside the "a" letterform, and surfaces one task to start.',
+
+            approach: 'Built with a client-only architecture using four localStorage-backed React contexts. No backend, no accounts—just a calm space that starts immediately.',
+
+            impact: 'Five views (Dashboard, Focus, Tasks, Journal, Settings) powered by four contexts, with zero server round-trips and sub-millisecond state reads.'
+        },
+
+        features: [
+            {
+                title: 'Focus Goal',
+                description: 'Daily target tracked in the "a" letterform—fills as you work'
+            },
+            {
+                title: 'Task Manager',
+                description: 'Subject-tagged tasks with due dates and overdue detection'
+            },
+            {
+                title: 'Streak Tracking',
+                description: '7-day dot trail showing your focus consistency'
+            }
+        ]
+    },
+
+    {
+        id: 'evision',
+        title: 'EVision Advisor',
+        subtitle: 'NLP-powered EV search',
+        category: 'Web Development, Machine Learning',
+        year: '2025',
+
+        description: 'Electric vehicle search tool using natural language processing. Built with FastAPI and sentence-transformers to handle semantic queries like "affordable sedan with long range" alongside traditional filters.',
+
+        demo: 'https://evision.up.railway.app/',
+        github: 'https://github.com/ginesbal/ev_chatbotmodel',
+        featured: true,
+
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23111827;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%234b5563;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="600" fill="white" opacity="0.9"%3EEVision%3C/text%3E%3C/svg%3E',
+
+        gradient: '#111827, #4b5563',
+        accentColor: '#111827',
+
+        tech: [
+            'FastAPI',
+            'Python',
+            'Sentence-Transformers',
+            'Railway',
+            'Jinja2'
+        ],
+
+        details: {
+            challenge: 'Traditional car search requires users to know exact specifications upfront. Many people search in natural language terms rather than rigid filter categories.',
+
+            solution: 'Implemented semantic search using sentence-transformers to encode vehicle descriptions and user queries as vectors, matching them with cosine similarity. Kept traditional filters available as an alternative search method.',
+
+            approach: 'Built with FastAPI and deployed on Railway. Added in-memory caching to avoid re-encoding vectors on every request, and implemented IP-based rate limiting.',
+
+            impact: 'Search responds in under 200ms. Users can search using natural descriptions or switch to structured filters based on their preference.'
+        },
+
+        features: [
+            {
+                title: 'Semantic Search',
+                description: 'Natural language search with keyword fallback'
+            },
+            {
+                title: 'Advanced Filtering',
+                description: 'Filter by price, range, body, drivetrain, seats'
+            },
+            {
+                title: 'Performance Optimization',
+                description: 'In-memory caching and IP rate limiting'
+            }
+        ]
+    },
+
+    {
         id: 'parkpal',
         title: 'ParkPal',
         subtitle: 'Smart Parking Finder',
@@ -66,110 +170,6 @@ export const projects = [
             { label: 'Spots Retrieved', value: '100+' },
             { label: 'Test Coverage', value: '7 passing' },
             { label: 'Spatial Accuracy', value: '100%' }
-        ]
-    },
-
-    {
-        id: 'evision',
-        title: 'EVision Advisor',
-        subtitle: 'NLP-powered EV search',
-        category: 'Web Development, Machine Learning',
-        year: '2025',
-
-        description: 'Electric vehicle search tool using natural language processing. Built with FastAPI and sentence-transformers to handle semantic queries like "affordable sedan with long range" alongside traditional filters.',
-
-        demo: 'https://evision.up.railway.app/',
-        github: 'https://github.com/ginesbal/ev_chatbotmodel',
-        featured: true,
-
-        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23111827;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%234b5563;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="600" fill="white" opacity="0.9"%3EEVision%3C/text%3E%3C/svg%3E',
-
-        gradient: '#111827, #4b5563',
-        accentColor: '#111827',
-
-        tech: [
-            'FastAPI',
-            'Python',
-            'Sentence-Transformers',
-            'Railway',
-            'Jinja2'
-        ],
-
-        details: {
-            challenge: 'Traditional car search requires users to know exact specifications upfront. Many people search in natural language terms rather than rigid filter categories.',
-
-            solution: 'Implemented semantic search using sentence-transformers to encode vehicle descriptions and user queries as vectors, matching them with cosine similarity. Kept traditional filters available as an alternative search method.',
-
-            approach: 'Built with FastAPI and deployed on Railway. Added in-memory caching to avoid re-encoding vectors on every request, and implemented IP-based rate limiting.',
-
-            impact: 'Search responds in under 200ms. Users can search using natural descriptions or switch to structured filters based on their preference.'
-        },
-
-        features: [
-            {
-                title: 'Semantic Search',
-                description: 'Natural language search with keyword fallback'
-            },
-            {
-                title: 'Advanced Filtering',
-                description: 'Filter by price, range, body, drivetrain, seats'
-            },
-            {
-                title: 'Performance Optimization',
-                description: 'In-memory caching and IP rate limiting'
-            }
-        ]
-    },
-
-    {
-        id: 'aim',
-        title: 'aim',
-        subtitle: 'Study Planner',
-        category: 'Web Development, Productivity',
-        year: '2025',
-
-        description: 'A calm, purposeful study planner for building focus habits. Tracks daily goals with a custom SVG progress indicator shaped from the product\'s own letterform, manages tasks with subject tagging, and surfaces a streak to keep momentum.',
-
-        demo: 'https://aim-eb-project.vercel.app/dashboard',
-        github: 'https://github.com/ginesbal/aim',
-        featured: true,
-
-        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%231e2a3d;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%232d3f5a;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-style="italic" font-weight="300" fill="white" opacity="0.85"%3Eaim%3C/text%3E%3C/svg%3E',
-
-        gradient: '#1e2a3d, #2d3f5a',
-        accentColor: '#3d4f6e',
-
-        tech: [
-            'Next.js 14',
-            'TypeScript',
-            'Tailwind CSS',
-            'React Context',
-            'localStorage'
-        ],
-
-        details: {
-            challenge: 'Study planning apps often feel heavy—packed with features that don\'t serve the core need of showing up and focusing.',
-
-            solution: 'Designed around a single daily metric: focus time. The dashboard greets you, shows your progress inside the "a" letterform, and surfaces one task to start.',
-
-            approach: 'Built with a client-only architecture using four localStorage-backed React contexts. No backend, no accounts—just a calm space that starts immediately.',
-
-            impact: 'Five views (Dashboard, Focus, Tasks, Journal, Settings) powered by four contexts, with zero server round-trips and sub-millisecond state reads.'
-        },
-
-        features: [
-            {
-                title: 'Focus Goal',
-                description: 'Daily target tracked in the "a" letterform—fills as you work'
-            },
-            {
-                title: 'Task Manager',
-                description: 'Subject-tagged tasks with due dates and overdue detection'
-            },
-            {
-                title: 'Streak Tracking',
-                description: '7-day dot trail showing your focus consistency'
-            }
         ]
     }
 ]
