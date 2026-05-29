@@ -130,7 +130,7 @@ export const projects = [
 
         description: 'A calm, purposeful study planner for building focus habits. Tracks daily goals with a custom SVG progress indicator shaped from the product\'s own letterform, manages tasks with subject tagging, and surfaces a streak to keep momentum.',
 
-        demo: null,
+        demo: 'https://aim-eb-project.vercel.app/dashboard',
         github: 'https://github.com/ginesbal/aim',
         featured: true,
 
