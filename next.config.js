@@ -17,7 +17,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/parkpal/:path*',
+        source: '/parkaid/:path*',
         headers: [
           {
             key: 'X-Frame-Options',
@@ -35,6 +35,13 @@ const nextConfig = {
           { key: "Cache-Control", value: "no-store" }
         ]
       },
+    ];
+  },
+  // ParkPal was renamed parkaid; keep old links working
+  async redirects() {
+    return [
+      { source: '/projects/parkpal', destination: '/projects/parkaid', permanent: true },
+      { source: '/parkpal/:path*', destination: '/parkaid/:path*', permanent: true },
     ];
   },
   async rewrites() {

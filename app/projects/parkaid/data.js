@@ -1,8 +1,8 @@
 // Every figure here is checkable in ginesbal/parkaid (branch claude/map-pin-radius-redesign):
 // counts and timings come from running its setup script and Jest suite against PostGIS.
-export const parkpalData = {
-    id: 'parkpal',
-    title: 'ParkPal',
+export const parkaidData = {
+    id: 'parkaid',
+    title: 'parkaid',
     description: 'A parking finder for downtown Calgary: a React Native (Expo) app over an Express API that searches about 2,700 spots from the city\'s open data with PostGIS.',
 
     metrics: [
@@ -13,17 +13,17 @@ export const parkpalData = {
 
     links: {
         github: 'https://github.com/ginesbal/parkaid',
-        demo: '/parkpal/index.html'
+        demo: '/parkaid/index.html'
     },
 
     screenshots: [
-        { src: '/screenshots/parkpal-map.png', alt: 'Map of nearby spots inside the search radius' },
-        { src: '/screenshots/parkpal-session.png', alt: 'Starting a demo parking session: plate, duration and hourly rate' }
+        { src: '/screenshots/parkaid-map.png', alt: 'Map of nearby spots inside the search radius' },
+        { src: '/screenshots/parkaid-session.png', alt: 'Starting a demo parking session: plate, duration and hourly rate' }
     ],
 
     overview: {
         summary: [
-            'ParkPal finds parking near you in downtown Calgary. It searches the city\'s published inventory of street, lot, residential and school-zone parking and lists the closest spots with distance and walking time.',
+            'parkaid finds parking near you in downtown Calgary. It searches the city\'s published inventory of street, lot, residential and school-zone parking and lists the closest spots with distance and walking time.',
             'It began as a five-person SAIT capstone. I redesigned the interface, rebuilt the map screen, wrote the location, parking and session hooks, and took the backend from laptop-only to a push-to-deploy service on Render.'
         ],
         technicalFocus: [

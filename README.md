@@ -6,7 +6,7 @@ A modern, performance-optimized portfolio showcasing full-stack development proj
 
 ## 🚀 Featured Project
 
-### ParkPal - Smart Parking Finder
+### parkaid - Parking Finder
 
 Mobile-first parking finder for downtown Calgary. Built with React Native (Expo), Node.js/Express, and PostgreSQL with PostGIS.
 
@@ -16,7 +16,7 @@ Mobile-first parking finder for downtown Calgary. Built with React Native (Expo)
 - Closest 100 spots in ~36ms on average (the repo's performance test, local PostGIS)
 - 7 backend tests (Jest + Supertest), passing; 300ms debounced search in the app
 
-[View Live Demo](/projects/parkpal) | [GitHub](https://github.com/ginesbal/parkaid)
+[View Live Demo](/projects/parkaid) | [GitHub](https://github.com/ginesbal/parkaid)
 
 ## 🛠️ Tech Stack
 
@@ -102,7 +102,7 @@ ehrl-portfolio/
 ├── data/
 │   └── portfolio-data.js  # Single source of truth for project data
 └── public/
-    ├── parkpal/           # Embedded ParkPal demo
+    ├── parkaid/           # Embedded parkaid demo
     ├── screenshots/       # Project images
     └── files/             # Resume PDF
 ```

@@ -85,12 +85,12 @@ See `.env.local.example` for configuration template.
 
 ### Public Directory Structure
 - `/files/resume.pdf`: Resume for download
-- `/screenshots/parkpal-*.png`: Project gallery images
-- `/parkpal/index.html`: Embedded Expo web build for live demo
+- `/screenshots/parkaid-*.png`: Project gallery images
+- `/parkaid/index.html`: Embedded Expo web build for live demo (its API is app/api/parking/nearby)
 - `/images/projects/`: Project thumbnails and assets
 
 ### Embedded Demos
-ParkPal uses iframe to `/parkpal/index.html` (Expo web export). Future mobile projects should follow this pattern.
+parkaid uses an iframe to `/parkaid/index.html` (Expo web export). Future mobile projects should follow this pattern.
 
 ## Key Conventions
 

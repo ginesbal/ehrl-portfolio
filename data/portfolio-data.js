@@ -2,21 +2,21 @@
 
 export const projects = [
     {
-        id: 'parkpal',
-        title: 'ParkPal',
+        id: 'parkaid',
+        title: 'parkaid',
         category: 'Mobile Development, Spatial Databases',
         year: '2024',
         role: 'Full Stack Developer',
 
         description: 'Mobile parking finder for downtown Calgary built with React Native and PostGIS. Lists the closest of about 2,700 city parking spots with distance and walking time.',
 
-        demo: '/parkpal/index.html',
+        demo: '/parkaid/index.html',
         github: 'https://github.com/ginesbal/parkaid',
         featured: true,
 
         gallery: [
-            '/screenshots/parkpal-map.png',
-            '/screenshots/parkpal-session.png'
+            '/screenshots/parkaid-map.png',
+            '/screenshots/parkaid-session.png'
         ],
 
 

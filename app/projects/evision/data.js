@@ -13,7 +13,7 @@ export const evisionData = {
     metrics: [
         { value: '231', label: 'EV models', detail: 'evtable.com catalog, 34 makes' },
         { value: '60/min', label: 'Rate limit', detail: 'per IP, sliding window' },
-        { value: '20 min', label: 'Result cache', detail: 'TTL, up to 1,024 queries' }
+        { value: '20 min', label: 'Result cache', detail: 'TTL, up to 1,024 result pages' }
     ],
 
     overview: {

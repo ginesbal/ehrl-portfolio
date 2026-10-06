@@ -16,7 +16,7 @@ export default function ProjectHero({ project }) {
         setDemoSource(null)
         // the demo's API route says whether it's serving live data or the Calgary snapshot
         fetch('/api/parking/nearby?lat=51.0447&lng=-114.0719&radius=1')
-            .then((res) => setDemoSource(res.headers.get('x-parkpal-source')))
+            .then((res) => setDemoSource(res.headers.get('x-parkaid-source')))
             .catch(() => {})
     }
 
@@ -40,14 +40,14 @@ export default function ProjectHero({ project }) {
             />
 
             {demoOpen && (
-                <Dialog onClose={() => setDemoOpen(false)} aria-label="ParkPal live demo" className="overflow-visible">
+                <Dialog onClose={() => setDemoOpen(false)} aria-label="parkaid live demo" className="overflow-visible">
                     <div className="flex flex-col items-center gap-4">
                         {/* fit the phone to the viewport height; PhoneFrame keeps the app at a real 390px */}
                         <div style={{ width: 'min(390px, 90vw, calc(80dvh * 390 / 844))' }}>
                             <PhoneFrame>
                                 <iframe
                                     src={project.links.demo}
-                                    title="ParkPal live demo"
+                                    title="parkaid live demo"
                                     // the demo covers downtown Calgary; a visitor's real location would land on an empty list
                                     allow="geolocation 'none'"
                                     className="w-full h-full border-0"

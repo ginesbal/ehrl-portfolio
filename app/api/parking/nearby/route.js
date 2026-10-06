@@ -1,6 +1,6 @@
-import spots from '@/data/parkpal-snapshot.json'
+import spots from '@/data/parkaid-snapshot.json'
 
-// Backend for the embedded ParkPal demo (/parkpal). Forwards to the live API and,
+// Backend for the embedded parkaid demo (/parkaid). Forwards to the live API and,
 // when that's down, answers from a snapshot of City of Calgary Open Data
 // (datasets rhkg-vwwp, ggxk-g2u3, 2rmy-g65b, 9hbw-zj92; spots within 1km of
 // downtown, taken Oct 2026) in the response shape of backend/routes/parking.js
@@ -43,10 +43,10 @@ export async function GET(request) {
 
     try {
         const live = await fetch(`${LIVE_API}/api/parking/nearby${search}`, { cache: 'no-store', signal: AbortSignal.timeout(2500) })
-        // read the body inside the timeout, and only pass through a real ParkPal answer
+        // read the body inside the timeout, and only pass through a real parkaid answer
         const json = await live.json()
         if (live.ok && json?.success === true && Array.isArray(json.data)) {
-            return Response.json(json, { headers: { 'x-parkpal-source': 'live' } })
+            return Response.json(json, { headers: { 'x-parkaid-source': 'live' } })
         }
     } catch {
         // unreachable, timed out or not JSON: fall through to the snapshot
@@ -71,6 +71,6 @@ export async function GET(request) {
 
     return Response.json(
         { success: true, count: data.length, data },
-        { headers: { 'x-parkpal-source': 'snapshot' } }
+        { headers: { 'x-parkaid-source': 'snapshot' } }
     )
 }
