@@ -106,7 +106,7 @@ export default function MobileNav() {
                             <div
                                 className="w-10 h-10 rounded-full border-2 border-rose-taupe flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-rose-taupe"
                             >
-                                <span className="text-[14px] font-semibold text-text-primary group-hover:text-white transition-colors">
+                                <span className="text-[14px] font-semibold text-text-primary group-hover:text-text-light transition-colors">
                                     eb
                                 </span>
                             </div>
@@ -134,7 +134,7 @@ export default function MobileNav() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}
-                        className="lg:hidden fixed inset-0 z-40 bg-black/5"
+                        className="lg:hidden fixed inset-0 z-40 bg-onyx/10"
                         onClick={() => setMobileMenuOpen(false)}
                         aria-hidden="true"
                     />
@@ -187,7 +187,7 @@ export default function MobileNav() {
             </AnimatePresence>
 
             {isResumeOpen && (
-                <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+                <ResumeModal onClose={() => setIsResumeOpen(false)} />
             )}
         </>
     )

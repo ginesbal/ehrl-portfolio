@@ -2,6 +2,7 @@
 
 // app/layout.jsx
 import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx'
+import { MotionConfig } from 'framer-motion'
 import { Source_Sans_3, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <head>
         <title>Ehrl Balquin - Portfolio</title>
-        <meta name="description" content="Junior Software Developer Portfolio" />
+        <meta name="description" content="Ehrl Balquin, full-stack developer in Calgary. Selected work, background, and contact." />
         {/* Strip homepage hash on hard refresh only */}
         <Script id="strip-home-hash-on-reload" strategy="beforeInteractive">
           {`
@@ -49,7 +50,8 @@ export default function RootLayout({ children }) {
       </head>
       <body className={sourceSans.className} suppressHydrationWarning>
         <ErrorBoundary>
-          {children}
+          {/* framer ignores prefers-reduced-motion unless told to */}
+          <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </ErrorBoundary>
       </body>
     </html>

@@ -3,6 +3,9 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const escapeHtml = (s) =>
+    String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
+
 export async function POST(request) {
     try {
         const body = await request.json()
@@ -42,12 +45,12 @@ export async function POST(request) {
             subject: `Portfolio Contact: ${subject}`,
             html: `
                 <h2>New Contact Form Submission</h2>
-                <p><strong>From:</strong> ${sanitizedName} (${email})</p>
-                ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-                <p><strong>Subject:</strong> ${subject}</p>
+                <p><strong>From:</strong> ${escapeHtml(sanitizedName)} (${escapeHtml(email)})</p>
+                ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
+                <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
                 <hr />
                 <p><strong>Message:</strong></p>
-                <p>${sanitizedMessage.replace(/\n/g, '<br />').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                <p>${escapeHtml(sanitizedMessage).replace(/\n/g, '<br />')}</p>
             `,
         })
 

@@ -195,9 +195,7 @@
   body {
     background: var(--bg-primary);
     color: var(--text-primary);
-    font-family:
-      Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-      "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: 16px;
     line-height: 1.55;
     letter-spacing: 0;
@@ -517,6 +515,16 @@
   }
 }
 
+@keyframes drift {
+  50% {
+    transform: translate(var(--dx), var(--dy));
+  }
+}
+
+.drift {
+  animation: drift var(--dur, 10s) ease-in-out var(--delay, 0s) infinite;
+}
+
 .stagger-item {
   animation: fadeInUp 0.5s var(--ease-out-emil) forwards;
   opacity: 0;
@@ -548,63 +556,6 @@
    UTILITY CLASSES
 ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Text Colors */
-.text-rose-taupe {
-  color: var(--rose-taupe);
-}
-.text-rose-quartz {
-  color: var(--rose-quartz);
-}
-.text-silver {
-  color: var(--silver);
-}
-.text-onyx {
-  color: var(--onyx);
-}
-.text-text-primary {
-  color: var(--text-primary);
-}
-.text-text-secondary {
-  color: var(--text-secondary);
-}
-.text-text-muted {
-  color: var(--text-muted);
-}
-.text-text-light {
-  color: var(--text-light);
-}
-
-/* Background Colors */
-.bg-bg-primary {
-  background: var(--bg-primary);
-}
-.bg-bg-secondary {
-  background: var(--bg-secondary);
-}
-.bg-bg-accent {
-  background: var(--bg-accent);
-}
-.bg-bg-dark {
-  background: var(--bg-dark);
-}
-.bg-rose-quartz {
-  background: var(--rose-quartz);
-}
-.bg-rose-taupe {
-  background: var(--rose-taupe);
-}
-
-/* Border Colors */
-.border-border-light {
-  border-color: var(--border-light);
-}
-.border-border-dark {
-  border-color: var(--border-dark);
-}
-.border-silver {
-  border-color: var(--silver);
-}
-
 /* Interactive Transitions
    Narrow default so components can own their own transform timing.
    Explicit component rules (e.g. .btn-base) take precedence. */
@@ -617,8 +568,16 @@ button {
     opacity var(--dur-2) var(--ease-out-quart);
 }
 
-/* Focus States 
-:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; } */
+/* Focus States: one tinted ring for anything that doesn't style its own */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+/* Native <dialog> doesn't lock page scroll on its own */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
 
 /* Reduced Motion
    Keep opacity/color transitions — they aid comprehension. Kill movement. */
