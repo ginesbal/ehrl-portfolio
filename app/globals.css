@@ -246,101 +246,6 @@
   .container-custom {
     @apply max-w-[1200px] mx-auto px-5 md:px-10;
   }
-  .section-spacing {
-    @apply py-10 md:py-16;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     TYPOGRAPHY
-  ═══════════════════════════════════════════════════════════════ */
-
-  .display-xl {
-    @apply text-[48px] md:text-[64px] lg:text-[80px] font-light leading-[0.95] tracking-[-0.03em];
-    color: var(--text-primary);
-  }
-  .heading-1 {
-    @apply text-[32px] md:text-[48px] lg:text-[56px] font-light leading-[1.05] tracking-[-0.02em];
-    color: var(--text-primary);
-  }
-  .heading-2 {
-    @apply text-[28px] md:text-[40px] lg:text-[48px] font-normal leading-[1.1] tracking-[-0.015em];
-    color: var(--text-primary);
-  }
-  .heading-3 {
-    @apply text-[20px] md:text-[28px] lg:text-[32px] font-medium leading-[1.2];
-    color: var(--text-primary);
-  }
-  .heading-4 {
-    @apply text-[18px] md:text-[22px] font-semibold leading-[1.25];
-    color: var(--text-primary);
-  }
-
-  /* Legacy aliases */
-  .heading-xl {
-    @apply heading-1;
-  }
-  .heading-lg {
-    @apply heading-2;
-  }
-  .heading-md {
-    @apply heading-3;
-  }
-
-  .body-lg {
-    @apply text-[17px] md:text-[19px] leading-[1.65];
-    color: var(--text-secondary);
-  }
-  .body-text {
-    @apply text-[15px] md:text-[16px] leading-[1.7];
-    color: var(--text-secondary);
-  }
-  .body-sm {
-    @apply text-[14px] leading-[1.6];
-    color: var(--text-secondary);
-  }
-
-  .label-lg {
-    @apply text-[12px] md:text-[13px] uppercase font-semibold tracking-[0.08em];
-    color: var(--text-muted);
-  }
-  .label {
-    @apply text-[11px] tracking-[0.12em] uppercase font-semibold block mb-3;
-    color: var(--text-muted);
-  }
-
-  /* Legacy aliases */
-  .caption,
-  .caption-text {
-    @apply label-lg;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     FORM ELEMENTS
-  ═══════════════════════════════════════════════════════════════ */
-
-  .text-input {
-    @apply w-full pb-3 border-b-2 text-[20px] placeholder-gray-400 focus:outline-none bg-transparent transition-colors;
-    border-color: var(--border-light);
-  }
-  .text-input::placeholder {
-    color: color-mix(in oklab, var(--text-secondary) 65%, white);
-  }
-  .text-input:focus {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px var(--focus-ring);
-  }
-
-  .text-area {
-    @apply w-full pb-3 border-b-2 text-[18px] placeholder-gray-400 focus:outline-none bg-transparent resize-none transition-colors;
-    border-color: var(--border-light);
-  }
-  .text-area::placeholder {
-    color: color-mix(in oklab, var(--text-secondary) 65%, white);
-  }
-  .text-area:focus {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px var(--focus-ring);
-  }
 
   /* ═══════════════════════════════════════════════════════════════
      BUTTONS
@@ -386,55 +291,6 @@
     transform: translateY(-1px) scale(0.97);
   }
 
-  .btn-secondary {
-    @apply btn-base;
-    background: var(--accent-secondary);
-    color: var(--text-light);
-    box-shadow: 0 2px 8px rgba(123, 116, 81, 0.2);
-  }
-  @media (hover: hover) {
-    .btn-secondary:not(:disabled):hover {
-      background: var(--parchment-700);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(123, 116, 81, 0.3);
-    }
-  }
-  .btn-secondary:not(:disabled):active {
-    transform: scale(0.97);
-  }
-
-  .btn-outline {
-    @apply btn-base;
-    background: transparent;
-    border: 2px solid var(--accent-primary);
-    color: var(--accent-primary);
-  }
-  @media (hover: hover) {
-    .btn-outline:not(:disabled):hover {
-      background: var(--accent-primary);
-      color: var(--text-light);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(193, 93, 62, 0.2);
-    }
-  }
-  .btn-outline:not(:disabled):active {
-    transform: scale(0.97);
-  }
-
-  .btn-ghost {
-    @apply btn-base;
-    background: transparent;
-    color: var(--text-primary);
-  }
-  @media (hover: hover) {
-    .btn-ghost:not(:disabled):hover {
-      background: var(--hover-overlay);
-    }
-  }
-  .btn-ghost:not(:disabled):active {
-    transform: scale(0.97);
-  }
-
   .btn-link {
     @apply inline-flex items-center gap-2 text-[14px] font-semibold;
     color: var(--accent-primary);
@@ -452,42 +308,11 @@
   .btn-link:active {
     transform: scale(0.97);
   }
-
-  /* Legacy aliases */
-  .btn {
-    @apply btn-base;
-  }
-  .btn-disabled {
-    @apply opacity-50 cursor-not-allowed;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     SURFACES
-  ═══════════════════════════════════════════════════════════════ */
-
-  /* Utility surface */
-  .card-surface {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ANIMATIONS
 ═══════════════════════════════════════════════════════════════════════════ */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 
 @keyframes fadeIn {
   from {
@@ -525,31 +350,8 @@
   animation: drift var(--dur, 10s) ease-in-out var(--delay, 0s) infinite;
 }
 
-.stagger-item {
-  animation: fadeInUp 0.5s var(--ease-out-emil) forwards;
-  opacity: 0;
-}
-.stagger-item:nth-child(1) {
-  animation-delay: 0.04s;
-}
-.stagger-item:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.stagger-item:nth-child(3) {
-  animation-delay: 0.16s;
-}
-.stagger-item:nth-child(4) {
-  animation-delay: 0.22s;
-}
-.stagger-item:nth-child(5) {
-  animation-delay: 0.28s;
-}
-
 .animate-scroll-indicator {
   animation: scroll-indicator 1.5s ease-in-out infinite;
-}
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out forwards;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -592,111 +394,11 @@ html:has(dialog[open]) {
   }
 }
 
-/* Scrollbar Hide */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MODAL SYSTEM
-═══════════════════════════════════════════════════════════════════════════ */
-
-.modal-panel {
-  max-height: 92dvh; /* leave breathing room so header/close never clip */
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  overflow: hidden; /* clip content to panel */
-}
-
-/* The *scrollable* area inside the panel */
-.modal-body {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch; /* iOS momentum */
-  scrollbar-gutter: stable;
-}
-
-/* Sticky header so close button stays visible while body scrolls */
-.modal-header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-light);
-}
-
-/* Optional: Sticky footer if you show CTAs */
-.modal-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-light);
-}
-
-/* Modal Scaling */
-.modal-zoom {
-  --modal-scale: 0.94;
-  position: relative;
-}
-.modal-zoom > .modal-zoom__inner {
-  transform: scale(var(--modal-scale));
-  transform-origin: top center;
-  width: calc(100% / var(--modal-scale));
-}
-
-.modal-zoom.s-100 {
-  --modal-scale: 1;
-}
-.modal-zoom.s-98 {
-  --modal-scale: 0.98;
-}
-.modal-zoom.s-96 {
-  --modal-scale: 0.96;
-}
-.modal-zoom.s-94 {
-  --modal-scale: 0.94;
-}
-.modal-zoom.s-92 {
-  --modal-scale: 0.92;
-}
-.modal-zoom.s-90 {
-  --modal-scale: 0.9;
-}
-
-.modal-embed {
-  --embed-scale: 0.92;
-  transform: scale(var(--embed-scale));
-  transform-origin: center center;
-  width: calc(100% / var(--embed-scale));
-  height: calc(100% / var(--embed-scale));
-}
-
-.modal-w-960 {
-  width: min(100%, 960px);
-}
-.modal-w-1040 {
-  width: min(100%, 1040px);
-}
-.modal-w-1120 {
-  width: min(100%, 1120px);
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE ADJUSTMENTS
 ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 767px) {
-  .section-spacing {
-    @apply py-10;
-  }
   .container-custom {
     @apply px-4;
   }
@@ -706,11 +408,6 @@ html:has(dialog[open]) {
   input[type="email"],
   textarea {
     font-size: 16px;
-  }
-
-  /* Hide horizontal scrollbar on tabs */
-  [role="tablist"]::-webkit-scrollbar {
-    display: none;
   }
 }
 

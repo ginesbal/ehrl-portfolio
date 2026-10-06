@@ -93,15 +93,14 @@ ehrl-portfolio/
 │   ├── projects/          # Projects page
 │   └── page.js            # Homepage
 ├── components/
-│   ├── sections/          # Full-page sections (Hero, Projects, Contact)
-│   ├── projects/          # Project-specific components
-│   ├── modals/            # Modal system
-│   ├── layout/            # Navigation, Footer
-│   └── ui/                # Reusable UI components
+│   ├── sections/          # Home sections (Hero, Projects, About, Contact)
+│   ├── case-study/        # Shared blocks for /projects/[id] pages
+│   ├── projects/          # PhoneMockup / PhoneFrame
+│   ├── modals/            # ResumeModal
+│   ├── layout/            # SidebarNav, MobileNav, Footer
+│   └── ui/                # Dialog, PillCta, FloatingCircles, ...
 ├── data/
 │   └── portfolio-data.js  # Single source of truth for project data
-├── lib/
-│   └── animations.js      # Reusable Framer Motion variants
 └── public/
     ├── parkpal/           # Embedded ParkPal demo
     ├── screenshots/       # Project images
@@ -121,7 +120,7 @@ See `app/globals.css` for full variable definitions.
 
 ## Key Features
 
-- **Custom Modal System:** Project showcases can use standard modal or custom full-screen layouts
+- **Case studies:** each project has its own page at `/projects/[id]` built from `components/case-study`
 - **Performance Optimized:** Lazy loading, optimized images, minimal bundle size
 - **Accessibility:** Semantic HTML, keyboard navigation, ARIA labels
 - **Contact Form:** Server-side validation with Resend email integration
