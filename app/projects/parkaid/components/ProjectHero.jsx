@@ -31,7 +31,7 @@ export default function ProjectHero({ project }) {
                     </>
                 }
                 aside={
-                    <div className="lg:sticky lg:top-24 w-full max-w-[340px] mx-auto lg:mr-0">
+                    <div className="w-full max-w-[340px] mx-auto xl:mr-0">
                         <ErrorBoundary fallback={<p className="text-[14px] text-text-muted">Screenshots unavailable right now.</p>}>
                             <PhoneMockup screenshots={project.screenshots} />
                         </ErrorBoundary>

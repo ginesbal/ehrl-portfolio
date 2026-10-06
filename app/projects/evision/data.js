@@ -3,11 +3,26 @@
 export const evisionData = {
     id: 'evision',
     title: 'EVision Advisor',
-    description: 'Search 231 electric vehicles the way you would describe one, like "affordable SUV under 50000", with structured filters alongside and a list you can save.',
+    description: 'Search 231 electric vehicles the way you would describe one, like “affordable SUV under 50000”, with structured filters alongside and a list you can save.',
 
     links: {
         demo: 'https://evision.up.railway.app/',
         github: 'https://github.com/ginesbal/ev_chatbotmodel'
+    },
+
+    // Real output of the app's own parse_query -> filter_records -> rank_records ->
+    // sort_records('score_desc'), run offline on the evtable.com file it loads
+    // (all-manual-2024-03-09-1.js), semantic ranking off as deployed. Oct 2026.
+    specimen: {
+        query: 'affordable SUV under 50000',
+        readAs: ['SUV', 'under $50,000', 'ranked on \u201caffordable\u201d'],
+        matched: 34,
+        catalog: 231,
+        results: [
+            { name: 'Chevrolet Bolt EV', year: 2023, price: '$27,495', range: '417\u00a0km', score: '48.4' },
+            { name: 'Chevrolet Bolt EUV', year: 2023, price: '$28,795', range: '398\u00a0km', score: '47.4' },
+            { name: 'Kia EV6 Long Range RWD', year: 2024, price: '$47,325', range: '499\u00a0km', score: '44.1' },
+        ],
     },
 
     metrics: [
@@ -19,7 +34,7 @@ export const evisionData = {
     overview: {
         summary: [
             'EVision Advisor turns a plain-language request into filters and a ranked list of electric vehicles.',
-            'A query like "affordable SUV under 50000" is parsed into constraints (price, range, drivetrain, seats, SUV or not), the catalog is filtered, and what is left is ranked. It is a FastAPI app with server-rendered Jinja2 pages.'
+            'A query like “affordable SUV under 50000” is parsed into constraints (price, range, drivetrain, seats, SUV or not), the catalog is filtered, and what is left is ranked. It is a FastAPI app with server-rendered Jinja2 pages.'
         ],
         technicalFocus: [
             'Parsing free text into structured filters',
@@ -38,7 +53,7 @@ export const evisionData = {
     technicalHighlights: [
         {
             title: 'Ranking a plain-language query',
-            challenge: 'People describe a car ("affordable SUV under 50000") rather than set filters, but a catalog search needs numbers.',
+            challenge: 'People describe a car (“affordable SUV under 50000”) rather than set filters, but a catalog search needs numbers.',
             approach: 'parse_query pulls price, range, drivetrain, seats and SUV intent out of the text. The rest is scored by token match and, when the model is installed, all-MiniLM-L6-v2 similarity, then blended with spec fit and a tie-break into a 0–100 score.',
             tradeoff: 'The embedding model is optional and not in requirements.txt, so without it ranking falls back to token match and spec fit.',
             outcome: 'One query becomes hard filters plus a ranked list, and the semantic part degrades instead of failing.'

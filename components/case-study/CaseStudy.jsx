@@ -48,7 +48,7 @@ export function CaseStudyHero({ project, actions, aside }) {
     return (
         <section className="bg-bg-primary">
             <div className="container-custom pt-28 pb-16 md:pb-24">
-                <div className={aside ? 'grid lg:grid-cols-[1.15fr_0.85fr] gap-14 lg:gap-20 items-start' : ''}>
+                <div className={aside ? 'grid xl:grid-cols-[1.15fr_0.85fr] gap-14 xl:gap-20 items-start' : ''}>
                     <div className="max-w-2xl">
                         {meta && (
                             <div className="flex items-center gap-4 mb-6 text-[11px] tracking-[0.3em] uppercase text-text-muted">

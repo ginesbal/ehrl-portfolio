@@ -26,7 +26,7 @@ export default function AimPage() {
                         <PillCta href={aimData.links.github} target="_blank" rel="noopener noreferrer" arrow="↗">View the code</PillCta>
                     }
                     aside={
-                        <div className="space-y-6 lg:pt-4">
+                        <div className="space-y-6 max-w-2xl xl:pt-4">
                             {aimData.screenshots.map((s) => (
                                 <figure key={s.src}>
                                     <Image
@@ -34,7 +34,7 @@ export default function AimPage() {
                                         alt={s.alt}
                                         width={s.width}
                                         height={s.height}
-                                        sizes="(min-width: 1024px) 34vw, 100vw"
+                                        sizes="(min-width: 1280px) 34vw, (min-width: 768px) 672px, 100vw"
                                         className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
                                     />
                                 </figure>
