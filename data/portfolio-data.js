@@ -112,6 +112,35 @@ export const projects = [
                 description: 'In-memory caching and IP rate limiting'
             }
         ]
+    },
+    {
+        id: 'aim',
+        title: 'aim',
+        subtitle: 'Focus-session study planner',
+        category: 'Web Development, Product Design',
+        year: '2026',
+        role: 'Design & Front-end',
+
+        description: 'A calm study planner built around the focus session. Every finished session fills the "a" of the logo toward the day\'s goal, and nothing leaves the browser.',
+
+        demo: null,
+        github: 'https://github.com/ginesbal/aim',
+        featured: true,
+
+        // desktop screenshots, so the archive preview frames them landscape
+        screen: 'desktop',
+        gallery: [
+            '/screenshots/aim-dashboard.webp',
+            '/screenshots/aim-focus.webp'
+        ],
+
+        tech: [
+            'Next.js',
+            'TypeScript',
+            'Tailwind CSS',
+            'Vanta.js',
+            'Web Audio API'
+        ]
     }
 ]
 

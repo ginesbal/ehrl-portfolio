@@ -216,12 +216,12 @@ export default function ProjectsArchive() {
                                         >
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
                                                 {activeProject.gallery?.[0] ? (
-                                                    // phone screen peeking up from the bottom edge
+                                                    // screen peeking up from the bottom edge: a phone, or a wider desktop window
                                                     <img
                                                         src={activeProject.gallery[0]}
                                                         alt=""
                                                         decoding="async"
-                                                        className="absolute left-1/2 top-6 w-[46%] -translate-x-1/2 rounded-t-[18px] shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1"
+                                                        className={`absolute left-1/2 -translate-x-1/2 shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
                                                     />
                                                 ) : (
                                                     <span className="absolute inset-0 grid place-items-center px-6 text-center font-serif text-[32px] leading-[1.05] text-text-primary/80">
