@@ -3,11 +3,10 @@ import spots from '@/data/parkpal-snapshot.json'
 // Backend for the embedded ParkPal demo (/parkpal). Forwards to the live API and,
 // when that's down, answers from a snapshot of City of Calgary Open Data
 // (datasets rhkg-vwwp, ggxk-g2u3, 2rmy-g65b, 9hbw-zj92; spots within 1km of
-// downtown, taken Oct 2026). Response shape mirrors backend/routes/parking.js
-// in ginesbal/parkpal, so the app can't tell the difference.
+// downtown, taken Oct 2026) in the response shape of backend/routes/parking.js
+// in ginesbal/parkpal.
 const LIVE_API = 'https://parkpal-production.up.railway.app'
-const PRICE_BY_ZONE = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 }
-const ZONE_KEYS = ['permit_zone', 'price_zone', 'html_zone_rate', 'zone_type', 'parking_zone', 'enforceable_time']
+const ZONE_KEYS = ['permit_zone', 'price_zone', 'zone_type', 'parking_zone', 'enforceable_time']
 
 const metres = (lat1, lng1, lat2, lng2) => {
     const rad = Math.PI / 180
@@ -20,10 +19,6 @@ const toApiSpot = ({ id, spot_type, address_desc, lng, lat, ...fields }, distanc
     const zone_info = {}
     const metadata = {}
     for (const [key, value] of Object.entries(fields)) (ZONE_KEYS.includes(key) ? zone_info : metadata)[key] = value
-    const capacity = parseInt(fields.zone_cap) || parseInt(fields.seg_cap) || 0
-    // The backend's zone map predates Calgary's current zones (1-14, some with
-    // letter suffixes); an unknown paid zone says "Check signs" instead of free.
-    const price = fields.price_zone ? PRICE_BY_ZONE[fields.price_zone] ?? 'Check signs' : 0
 
     return {
         id,
@@ -32,12 +27,13 @@ const toApiSpot = ({ id, spot_type, address_desc, lng, lat, ...fields }, distanc
         coordinates: { type: 'Point', coordinates: [lng, lat] },
         distance: Math.round(distance),
         walkingTime: Math.ceil(distance / 80),
-        capacity,
-        available: capacity,
+        capacity: 0,
+        available: 0,
         zone_info,
         metadata,
-        price,
-        price_per_hour: price,
+        // The open data carries zones but no rates, so the snapshot never claims a price (or "free").
+        price: 'Check signs',
+        price_per_hour: 'Check signs',
         max_duration_minutes: fields.max_time ? parseFloat(fields.max_time) : null,
     }
 }
@@ -47,9 +43,13 @@ export async function GET(request) {
 
     try {
         const live = await fetch(`${LIVE_API}/api/parking/nearby${search}`, { cache: 'no-store', signal: AbortSignal.timeout(2500) })
-        if (live.ok) return new Response(live.body, { headers: { 'content-type': 'application/json', 'x-parkpal-source': 'live' } })
+        // read the body inside the timeout, and only pass through a real ParkPal answer
+        const json = await live.json()
+        if (live.ok && json?.success === true && Array.isArray(json.data)) {
+            return Response.json(json, { headers: { 'x-parkpal-source': 'live' } })
+        }
     } catch {
-        // unreachable or timed out: fall through to the snapshot
+        // unreachable, timed out or not JSON: fall through to the snapshot
     }
 
     const lat = parseFloat(searchParams.get('lat'))
@@ -57,13 +57,12 @@ export async function GET(request) {
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
         return Response.json({ error: 'lat and lng required' }, { status: 400 })
     }
-    const radius = Math.min(parseFloat(searchParams.get('radius')) || 500, 5000)
+    const r = parseFloat(searchParams.get('radius'))
+    const radius = Number.isFinite(r) ? Math.min(r, 5000) : 500
     const type = searchParams.get('type')
-    const freeOnly = searchParams.get('free') === 'true'
-
-    const data = spots
+    // no spot in the snapshot is known to be free
+    const data = searchParams.get('free') === 'true' ? [] : spots
         .filter((s) => !type || type === 'all' || s.spot_type === type)
-        .filter((s) => !freeOnly || !s.price_zone || s.price_zone === '0')
         .map((s) => [s, metres(lat, lng, s.lat, s.lng)])
         .filter(([, d]) => d <= radius)
         .sort((a, b) => a[1] - b[1])

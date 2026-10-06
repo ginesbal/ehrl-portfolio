@@ -287,11 +287,9 @@ export default function ProjectsArchive() {
                                 <span className="text-[11px] tracking-[0.25em] uppercase text-text-muted">
                                     End of archive
                                 </span>
-                                <div className="flex items-center gap-6">
-                                    <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
-                                        <span className="text-text-primary">{projects.length}</span> total
-                                    </span>
-                                </div>
+                                <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                    <span className="text-text-primary">{projects.length}</span> total
+                                </span>
                             </div>
                         </motion.footer>
                     </div>

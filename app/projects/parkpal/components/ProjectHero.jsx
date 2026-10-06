@@ -13,6 +13,7 @@ export default function ProjectHero({ project }) {
 
     const openDemo = () => {
         setDemoOpen(true)
+        setDemoSource(null)
         // the demo's API route says whether it's serving live data or the Calgary snapshot
         fetch('/api/parking/nearby?lat=51.0447&lng=-114.0719&radius=1')
             .then((res) => setDemoSource(res.headers.get('x-parkpal-source')))
@@ -47,14 +48,15 @@ export default function ProjectHero({ project }) {
                                 <iframe
                                     src={project.links.demo}
                                     title="ParkPal live demo"
-                                    allow="geolocation"
+                                    // the demo covers downtown Calgary; a visitor's real location would land on an empty list
+                                    allow="geolocation 'none'"
                                     className="w-full h-full border-0"
                                 />
                             </PhoneFrame>
                         </div>
                         {demoSource === 'snapshot' && (
                             <p className="max-w-[min(390px,90vw)] text-center text-[13px] leading-snug text-text-light/80">
-                                The live backend is offline, so this demo is running on a snapshot of City of Calgary open data.
+                                The live backend is offline, so this demo is running on a snapshot of downtown Calgary open data.
                             </p>
                         )}
                         <div className="flex items-center gap-8 text-[12px] tracking-[0.15em] uppercase">
