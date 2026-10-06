@@ -38,7 +38,7 @@ export default function ProjectsArchive() {
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)', minHeight: '100vh' }}
                 tabIndex={0}
             >
-                <section className="relative bg-bg-primary pt-16 md:pt-20 pb-16 md:pb-24 overflow-hidden">
+                <section className="relative bg-bg-primary pt-28 lg:pt-20 pb-16 md:pb-24 overflow-hidden">
                     <FloatingCircles section="projects" />
 
                     <div className="container-custom relative z-10">
@@ -139,13 +139,13 @@ export default function ProjectsArchive() {
                                                     </h2>
 
                                                     <div className="mt-3 md:mt-4 flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1">
-                                                        <span className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                                        <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
                                                             {project.category.split(',')[0].trim()}
                                                         </span>
                                                         {project.role && (
                                                             <>
-                                                                <span className="text-text-muted/40">·</span>
-                                                                <span className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-muted">
+                                                                <span aria-hidden className="text-text-muted/40">·</span>
+                                                                <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
                                                                     {project.role}
                                                                 </span>
                                                             </>
@@ -153,7 +153,7 @@ export default function ProjectsArchive() {
                                                     </div>
 
                                                     {project.description && (
-                                                        <p className="mt-3 md:mt-4 max-w-xl text-[13px] md:text-[14px] leading-relaxed text-text-secondary line-clamp-2">
+                                                        <p className="mt-3 md:mt-4 max-w-xl text-[15px] leading-relaxed text-text-secondary line-clamp-2">
                                                             {project.description}
                                                         </p>
                                                     )}
@@ -163,7 +163,7 @@ export default function ProjectsArchive() {
                                                             {project.tech.slice(0, 3).map((tech) => (
                                                                 <span
                                                                     key={tech}
-                                                                    className="text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-text-muted"
+                                                                    className="text-[11px] tracking-[0.15em] uppercase text-text-muted"
                                                                 >
                                                                     {tech}
                                                                 </span>
@@ -180,17 +180,17 @@ export default function ProjectsArchive() {
                                                     <span className="text-[11px] tracking-[0.2em] text-text-muted">
                                                         {project.year}
                                                     </span>
-                                                    <span className="mt-1 text-[18px] text-text-muted transition-colors duration-300 group-hover:text-rose-taupe">
+                                                    <span aria-hidden className="mt-1 text-[18px] text-text-muted transition-[color,transform] duration-300 group-hover:text-rose-taupe group-hover:translate-x-1">
                                                         →
                                                     </span>
                                                 </div>
 
                                                 {/* Mobile inline meta */}
                                                 <div className="md:hidden flex items-center justify-between mt-4 pt-3 border-t border-border-light/50">
-                                                    <span className="text-[10px] tracking-[0.2em] text-text-muted">
+                                                    <span className="text-[11px] tracking-[0.2em] text-text-muted">
                                                         {project.year}
                                                     </span>
-                                                    <span className="text-[16px] text-rose-taupe">→</span>
+                                                    <span aria-hidden className="text-[16px] text-rose-taupe">→</span>
                                                 </div>
                                             </div>
                                         </Link>
@@ -215,26 +215,25 @@ export default function ProjectsArchive() {
                                             aria-label={`View ${activeProject.title} project`}
                                             className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
                                         >
-                                            <div className="aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
-                                                {activeProject.image ? (
+                                            <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
+                                                {activeProject.gallery?.[0] ? (
+                                                    // phone screen peeking up from the bottom edge
                                                     <img
-                                                        src={activeProject.image}
-                                                        alt={activeProject.title}
-                                                        loading="lazy"
+                                                        src={activeProject.gallery[0]}
+                                                        alt=""
                                                         decoding="async"
-                                                        className="w-full h-full object-cover"
+                                                        className="absolute left-1/2 top-6 w-[46%] -translate-x-1/2 rounded-t-[18px] shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1"
                                                     />
                                                 ) : (
-                                                    <div
-                                                        className="w-full h-full"
-                                                        style={{ background: `linear-gradient(135deg, ${activeProject.gradient})` }}
-                                                    />
+                                                    <span className="absolute inset-0 grid place-items-center px-6 text-center font-serif text-[32px] leading-[1.05] text-text-primary/80">
+                                                        {activeProject.title}
+                                                    </span>
                                                 )}
                                             </div>
 
                                             <div className="space-y-3">
                                                 <div className="flex items-baseline justify-between gap-3">
-                                                    <h3 className="text-[15px] font-medium text-text-primary truncate">
+                                                    <h3 className="text-[16px] font-medium text-text-primary truncate">
                                                         {activeProject.title}
                                                     </h3>
                                                     <span className="text-[12px] text-text-muted tabular-nums">
@@ -242,7 +241,7 @@ export default function ProjectsArchive() {
                                                     </span>
                                                 </div>
 
-                                                <p className="text-[13px] leading-relaxed text-text-secondary line-clamp-3">
+                                                <p className="text-[14px] leading-relaxed text-text-secondary line-clamp-3">
                                                     {activeProject.description}
                                                 </p>
 
@@ -251,7 +250,7 @@ export default function ProjectsArchive() {
                                                         {activeProject.tech.slice(0, 4).map((tech) => (
                                                             <span
                                                                 key={tech}
-                                                                className="text-[10px] tracking-[0.15em] uppercase text-text-muted"
+                                                                className="text-[11px] tracking-[0.15em] uppercase text-text-muted"
                                                             >
                                                                 {tech}
                                                             </span>
@@ -260,7 +259,7 @@ export default function ProjectsArchive() {
                                                 )}
 
                                                 <div className="pt-4 mt-2 border-t border-border-light/60">
-                                                    <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-rose-taupe">
+                                                    <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-rose-taupe">
                                                         View project
                                                         <span
                                                             aria-hidden

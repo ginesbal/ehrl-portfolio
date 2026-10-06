@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
+import PillCta from '../ui/PillCta.jsx'
 
 const showcaseProjects = (projects.some((p) => p.featured) ? projects.filter((p) => p.featured) : projects).slice(0, 3)
 
@@ -117,22 +118,7 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Link
-            href="/projects"
-            className="group relative inline-flex items-center gap-4 pl-6 pr-2 py-2 rounded-full border border-text-primary/15 bg-bg-primary text-text-primary hover:border-rose-taupe/60 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,transform] duration-300 ease-[var(--ease-out-expo)]"
-          >
-            <span className="text-[12px] tracking-[0.22em] uppercase font-semibold">
-              Project archive
-            </span>
-            <span
-              aria-hidden
-              className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-taupe text-text-light overflow-hidden transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:scale-[1.06]"
-            >
-              <span className="inline-block text-[14px] leading-none transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-[2px]">
-                →
-              </span>
-            </span>
-          </Link>
+          <PillCta as={Link} href="/projects">Project archive</PillCta>
         </motion.div>
       </div>
     </section>

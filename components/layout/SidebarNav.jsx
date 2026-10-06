@@ -16,8 +16,7 @@ export default function SidebarNav() {
   const pathname = usePathname()
   const onHome = pathname === '/'
   const onProjectsRoute = pathname?.startsWith('/projects')
-  const onParkPal = pathname === '/projects/parkpal'
-  const onEVision = pathname === '/projects/evision'
+  const onCaseStudy = pathname?.startsWith('/projects/')
 
   const sections = [
     { id: 'hero', label: 'Home', num: '01' },
@@ -159,7 +158,7 @@ export default function SidebarNav() {
       </aside>
 
       {/* sidebar toggle button - minimizes on scroll / back button on project pages */}
-      {(onParkPal || onEVision) ? (
+      {onCaseStudy ? (
         <Link
           href="/projects"
           className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}

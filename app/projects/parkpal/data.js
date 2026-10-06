@@ -1,4 +1,5 @@
 export const parkpalData = {
+    id: 'parkpal',
     title: 'ParkPal',
     description: 'A location-based parking finder for downtown Calgary, demonstrating advanced spatial database optimization, React Native architecture, and performance-focused development.',
 
@@ -14,8 +15,8 @@ export const parkpalData = {
     },
 
     screenshots: [
-        { src: '/screenshots/parkpal-home.png', alt: 'Real-time availability with distance calculations' },
         { src: '/screenshots/parkpal-map.png', alt: 'Interactive markers with spatial clustering' },
+        { src: '/screenshots/parkpal-home.png', alt: 'Real-time availability with distance calculations' },
         { src: '/screenshots/parkpal-session.png', alt: 'Live session tracking with zone-based rates' }
     ],
 

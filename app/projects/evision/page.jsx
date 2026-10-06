@@ -1,10 +1,8 @@
+import { CaseStudyHero, CaseStudyNav, Contributions, Implementation, Overview, TextLink } from '@/components/case-study/CaseStudy'
+import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
-import MyContributions from './components/MyContributions'
-import ProjectHero from './components/ProjectHero'
-import ProjectNavigation from './components/ProjectNavigation'
-import ProjectOverview from './components/ProjectOverview'
-import TechnicalImplementation from './components/TechnicalImplementation'
+import PillCta from '@/components/ui/PillCta'
 import { evisionData } from './data'
 
 export const metadata = {
@@ -13,20 +11,30 @@ export const metadata = {
 }
 
 export default function EVisionPage() {
+    const { links } = evisionData
+
     return (
-        <div>
+        <div className="min-h-screen bg-bg-primary">
             <MobileNav />
             <SidebarNav />
-
             <main
                 className="transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)' }}
             >
-                <ProjectHero project={evisionData} />
-                <ProjectOverview project={evisionData} />
-                <TechnicalImplementation highlights={evisionData.technicalHighlights} />
-                <MyContributions contributions={evisionData.contributions} />
-                <ProjectNavigation />
+                <CaseStudyHero
+                    project={evisionData}
+                    actions={
+                        <>
+                            <PillCta href={links.demo} target="_blank" rel="noopener noreferrer" arrow="↗">View live demo</PillCta>
+                            <TextLink href={links.github} target="_blank" rel="noopener noreferrer">GitHub ↗</TextLink>
+                        </>
+                    }
+                />
+                <Overview overview={evisionData.overview} />
+                <Implementation highlights={evisionData.technicalHighlights} />
+                <Contributions contributions={evisionData.contributions} />
+                <CaseStudyNav id={evisionData.id} />
+                <Footer />
             </main>
         </div>
     )

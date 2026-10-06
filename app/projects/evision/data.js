@@ -1,4 +1,5 @@
 export const evisionData = {
+    id: 'evision',
     title: 'EVision Advisor',
     description: 'Browse & semantically search electric vehicles with advanced filters, saved lists, intelligent caching and IP rate limiting.',
 
@@ -6,9 +7,6 @@ export const evisionData = {
         demo: 'https://evision.up.railway.app/',
         github: 'https://github.com/ginesbal/ev_chatbotmodel'
     },
-
-    year: '2025',
-    category: 'Web Development',
 
     metrics: [
         { value: '200+', label: 'EV Models', detail: 'in database' },
@@ -77,7 +75,5 @@ export const evisionData = {
                 'Built keyword fallback system'
             ]
         }
-    ],
-
-    techStack: ['FastAPI', 'Python', 'Sentence-Transformers', 'Railway', 'Jinja2', 'SQLite']
+    ]
 }

@@ -1,10 +1,8 @@
+import { CaseStudyNav, Contributions, Implementation, Overview } from '@/components/case-study/CaseStudy'
+import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
-import MyContributions from './components/MyContributions'
 import ProjectHero from './components/ProjectHero'
-import ProjectNavigation from './components/ProjectNavigation'
-import ProjectOverview from './components/ProjectOverview'
-import TechnicalImplementation from './components/TechnicalImplementation'
 import { parkpalData } from './data'
 
 export const metadata = {
@@ -14,7 +12,7 @@ export const metadata = {
 
 export default function ParkPalPage() {
     return (
-        <div>
+        <div className="min-h-screen bg-bg-primary">
             <MobileNav />
             <SidebarNav />
             <main
@@ -22,10 +20,11 @@ export default function ParkPalPage() {
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)' }}
             >
                 <ProjectHero project={parkpalData} />
-                <ProjectOverview project={parkpalData} />
-                <TechnicalImplementation highlights={parkpalData.technicalHighlights} />
-                <MyContributions contributions={parkpalData.contributions} />
-                <ProjectNavigation />
+                <Overview overview={parkpalData.overview} />
+                <Implementation highlights={parkpalData.technicalHighlights} />
+                <Contributions contributions={parkpalData.contributions} />
+                <CaseStudyNav id={parkpalData.id} />
+                <Footer />
             </main>
         </div>
     )

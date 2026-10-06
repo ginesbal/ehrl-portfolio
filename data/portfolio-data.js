@@ -16,15 +16,12 @@ export const projects = [
         github: 'https://github.com/ginesbal/parkpal',
         featured: true,
 
-        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%236b4f4f;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%237d6d75;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="600" fill="white" opacity="0.9"%3EParkPal%3C/text%3E%3C/svg%3E',
         gallery: [
-            '/screenshots/parkpal-home.png',
             '/screenshots/parkpal-map.png',
+            '/screenshots/parkpal-home.png',
             '/screenshots/parkpal-session.png'
         ],
 
-        gradient: '#6b4f4f, #7d6d75',
-        accentColor: '#6b4f4f',
 
         tech: [
             'React Native',
@@ -69,8 +66,6 @@ export const projects = [
         ]
     },
 
-    // Add this object to your data/portfolio-data.js array
-    // Place it within the first 3 items to appear in Featured grid
     {
         id: 'evision',
         title: 'EVision Advisor',
@@ -84,10 +79,7 @@ export const projects = [
         github: 'https://github.com/ginesbal/ev_chatbotmodel',
         featured: true,
 
-        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23111827;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%234b5563;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="800" height="600" fill="url(%23grad)"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="600" fill="white" opacity="0.9"%3EEVision%3C/text%3E%3C/svg%3E',
 
-        gradient: '#111827, #4b5563',
-        accentColor: '#111827',
 
         tech: [
             'FastAPI',
