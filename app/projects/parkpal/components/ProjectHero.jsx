@@ -9,6 +9,15 @@ import { useState } from 'react'
 
 export default function ProjectHero({ project }) {
     const [demoOpen, setDemoOpen] = useState(false)
+    const [demoSource, setDemoSource] = useState(null)
+
+    const openDemo = () => {
+        setDemoOpen(true)
+        // the demo's API route says whether it's serving live data or the Calgary snapshot
+        fetch('/api/parking/nearby?lat=51.0447&lng=-114.0719&radius=1')
+            .then((res) => setDemoSource(res.headers.get('x-parkpal-source')))
+            .catch(() => {})
+    }
 
     return (
         <>
@@ -16,7 +25,7 @@ export default function ProjectHero({ project }) {
                 project={project}
                 actions={
                     <>
-                        <PillCta as="button" type="button" onClick={() => setDemoOpen(true)}>View live demo</PillCta>
+                        <PillCta as="button" type="button" onClick={openDemo}>View live demo</PillCta>
                         <TextLink href={project.links.github} target="_blank" rel="noopener noreferrer">GitHub ↗</TextLink>
                     </>
                 }
@@ -43,6 +52,11 @@ export default function ProjectHero({ project }) {
                                 />
                             </PhoneFrame>
                         </div>
+                        {demoSource === 'snapshot' && (
+                            <p className="max-w-[min(390px,90vw)] text-center text-[13px] leading-snug text-text-light/80">
+                                The live backend is offline, so this demo is running on a snapshot of City of Calgary open data.
+                            </p>
+                        )}
                         <div className="flex items-center gap-8 text-[12px] tracking-[0.15em] uppercase">
                             <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] text-text-light/70 hover:text-text-light">
                                 Open in new tab ↗

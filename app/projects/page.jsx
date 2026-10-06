@@ -26,7 +26,6 @@ export default function ProjectsArchive() {
     }, [])
 
     const activeProject = projects.find((p) => p.id === activeId) ?? projects[0] ?? null
-    const liveCount = projects.filter((p) => p.demo).length
 
     return (
         <div className="min-h-screen bg-bg-primary">
@@ -289,11 +288,6 @@ export default function ProjectsArchive() {
                                     End of archive
                                 </span>
                                 <div className="flex items-center gap-6">
-                                    {liveCount > 0 && (
-                                        <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
-                                            <span className="text-rose-taupe">{liveCount}</span> live
-                                        </span>
-                                    )}
                                     <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
                                         <span className="text-text-primary">{projects.length}</span> total
                                     </span>

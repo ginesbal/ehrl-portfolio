@@ -16,7 +16,6 @@ export const parkpalData = {
 
     screenshots: [
         { src: '/screenshots/parkpal-map.png', alt: 'Interactive markers with spatial clustering' },
-        { src: '/screenshots/parkpal-home.png', alt: 'Real-time availability with distance calculations' },
         { src: '/screenshots/parkpal-session.png', alt: 'Live session tracking with zone-based rates' }
     ],
 

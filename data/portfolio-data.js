@@ -18,7 +18,6 @@ export const projects = [
 
         gallery: [
             '/screenshots/parkpal-map.png',
-            '/screenshots/parkpal-home.png',
             '/screenshots/parkpal-session.png'
         ],
 
