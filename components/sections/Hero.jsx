@@ -32,11 +32,10 @@ export default function Hero() {
             style={{ minHeight: '90px' }}
           />
           <div className="flex flex-col justify-center gap-1">
-            <div className="leading-tight">
-              <h2 className=" font-bold tracking-[0.15em] uppercase text-onyx">Ehrl</h2>
-              <h2 className="font-bold tracking-[0.15em] uppercase text-onyx">Balquin</h2>
-            </div>
-            <p className="text-[12px] md:text-[12px] font-medium text-text-muted">Full-Stack Developer</p>
+            <p className="leading-tight font-semibold tracking-[0.15em] uppercase text-onyx">
+              Ehrl<br />Balquin
+            </p>
+            <p className="text-[12px] font-medium text-text-muted">Full-Stack Developer</p>
           </div>
         </motion.div>
 
@@ -52,8 +51,8 @@ export default function Hero() {
           >
             <div className="w-[2px] bg-rose-taupe" />
             <div>
-              <p className="text-[11px] tracking-[0.2em] uppercase font-semibold text-text-onyx">Ehrl Balquin</p>
-              <p className="text-[8px] tracking-[0.15em] text-text-muted/70 mt-0.5">Full-Stack Developer</p>
+              <p className="text-[11px] tracking-[0.2em] uppercase font-semibold text-onyx">Ehrl Balquin</p>
+              <p className="text-[11px] tracking-[0.05em] text-text-muted mt-0.5">Full-Stack Developer</p>
             </div>
           </motion.div>
 
@@ -73,13 +72,21 @@ export default function Hero() {
           >
             portfolio<span className="italic text-rose-taupe">.</span>
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 md:mt-8 max-w-md text-[16px] md:text-[18px] leading-relaxed text-text-secondary"
+          >
+            I build interfaces that feel clean, intuitive, and purposeful, and the APIs and databases behind them.
+          </motion.p>
 
           {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 md:mt-0 flex items-center justify-end gap-6 md:absolute md:bottom-8 md:right-36"
+            className="mt-10 md:mt-0 flex items-center justify-end gap-6 md:absolute md:bottom-8 md:right-36"
           >
             <a
               href="#projects"
@@ -89,6 +96,7 @@ export default function Hero() {
             </a>
             <span className="w-[3px] h-6 bg-rose-taupe self-center" />
             <button
+              type="button"
               onClick={() => setIsResumeOpen(true)}
               className="text-[14px] md:text-[15px] font-semibold uppercase tracking-[0.1em] text-onyx transition-colors duration-300 hover:text-rose-taupe"
             >
@@ -103,7 +111,7 @@ export default function Hero() {
       </div>
 
       {isResumeOpen && (
-        <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+        <ResumeModal onClose={() => setIsResumeOpen(false)} />
       )}
     </section>
   )

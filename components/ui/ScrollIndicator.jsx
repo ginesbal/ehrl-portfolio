@@ -97,17 +97,16 @@ export default function ScrollIndicator() {
 
     if (!isVisible) return null
 
-    {/* scroll indicator */ }
     return (
-        <div
+        <button
+            type="button"
             className="fixed bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-700"
             style={{
                 opacity,
                 willChange: 'opacity, transform',
                 pointerEvents: opacity < 0.05 ? 'none' : 'auto'
             }}
-            role="button"
-            aria-label="Scroll down"
+            aria-label="Scroll to projects"
             onClick={() => {
                 window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
             }}
@@ -132,6 +131,6 @@ export default function ScrollIndicator() {
                     Scroll
                 </span>
             </div>
-        </div>
+        </button>
     )
 }
