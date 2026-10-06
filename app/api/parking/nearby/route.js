@@ -4,7 +4,7 @@ import spots from '@/data/parkpal-snapshot.json'
 // when that's down, answers from a snapshot of City of Calgary Open Data
 // (datasets rhkg-vwwp, ggxk-g2u3, 2rmy-g65b, 9hbw-zj92; spots within 1km of
 // downtown, taken Oct 2026) in the response shape of backend/routes/parking.js
-// in ginesbal/parkpal.
+// in ginesbal/parkaid.
 const LIVE_API = 'https://parkpal-production.up.railway.app'
 const ZONE_KEYS = ['permit_zone', 'price_zone', 'zone_type', 'parking_zone', 'enforceable_time']
 

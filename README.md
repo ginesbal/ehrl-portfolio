@@ -8,15 +8,15 @@ A modern, performance-optimized portfolio showcasing full-stack development proj
 
 ### ParkPal - Smart Parking Finder
 
-Mobile-first parking finder for downtown Calgary with PostGIS spatial optimization. Built with React Native, Node.js, and PostgreSQL with PostGIS extensions.
+Mobile-first parking finder for downtown Calgary. Built with React Native (Expo), Node.js/Express, and PostgreSQL with PostGIS.
 
-**Key Technical Achievement:**
+**Highlights:**
 
-- Optimized geospatial queries from 800ms+ to ~120ms average using PostGIS spatial indexing
-- Implemented `ST_DWithin` radius-based searches with custom indexes
-- 100+ parking spots retrieved with debounced search (300ms) to reduce API calls
+- `ST_DWithin` radius search on a GiST-indexed geography column over ~2,700 Calgary Open Data spots
+- Closest 100 spots in ~36ms on average (the repo's performance test, local PostGIS)
+- 7 backend tests (Jest + Supertest), passing; 300ms debounced search in the app
 
-[View Live Demo](/parkpal) | [GitHub](https://github.com/ginesbal/parkpal)
+[View Live Demo](/projects/parkpal) | [GitHub](https://github.com/ginesbal/parkaid)
 
 ## 🛠️ Tech Stack
 

@@ -7,7 +7,7 @@ import { parkpalData } from './data'
 
 export const metadata = {
     title: 'ParkPal — Smart Parking Finder | Ehrl Balquin',
-    description: 'Location-based parking finder for downtown Calgary with PostGIS spatial optimization and React Native architecture.',
+    description: 'Parking finder for downtown Calgary: a React Native app over an Express API with PostGIS radius search.',
 }
 
 export default function ParkPalPage() {

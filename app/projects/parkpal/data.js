@@ -1,87 +1,91 @@
+// Every figure here is checkable in ginesbal/parkaid (branch claude/map-pin-radius-redesign):
+// counts and timings come from running its setup script and Jest suite against PostGIS.
 export const parkpalData = {
     id: 'parkpal',
     title: 'ParkPal',
-    description: 'A location-based parking finder for downtown Calgary, demonstrating advanced spatial database optimization, React Native architecture, and performance-focused development.',
+    description: 'A parking finder for downtown Calgary: a React Native (Expo) app over an Express API that searches about 2,700 spots from the city\'s open data with PostGIS.',
 
     metrics: [
-        { value: '~120ms', label: 'Query Time', detail: 'PostGIS spatial queries' },
-        { value: '200+', label: 'Locations', detail: 'Downtown Calgary' },
-        { value: '100%', label: 'Coverage', detail: 'Jest + Supertest' }
+        { value: '~2,700', label: 'Spots loaded', detail: 'four Calgary Open Data sets' },
+        { value: '36ms', label: 'Nearby search', detail: 'closest 100, avg of 10, local PostGIS' },
+        { value: '7', label: 'Backend tests', detail: 'Jest + Supertest, passing' }
     ],
 
     links: {
-        github: 'https://github.com/ginesbal/parkpal',
+        github: 'https://github.com/ginesbal/parkaid',
         demo: '/parkpal/index.html'
     },
 
     screenshots: [
-        { src: '/screenshots/parkpal-map.png', alt: 'Interactive markers with spatial clustering' },
-        { src: '/screenshots/parkpal-session.png', alt: 'Live session tracking with zone-based rates' }
+        { src: '/screenshots/parkpal-map.png', alt: 'Map of nearby spots inside the search radius' },
+        { src: '/screenshots/parkpal-session.png', alt: 'Starting a demo parking session: plate, duration and hourly rate' }
     ],
 
     overview: {
         summary: [
-            'ParkPal addresses the challenge of finding available parking in downtown Calgary by providing real-time, location-aware search across 200+ parking spots.',
-            'Originally developed as a five-person capstone project, I individually redesigned and rebuilt the application to focus on performance optimization, clean architecture, and modern React Native patterns.'
+            'ParkPal finds parking near you in downtown Calgary. It searches the city\'s published inventory of street, lot, residential and school-zone parking and lists the closest spots with distance and walking time.',
+            'It began as a five-person SAIT capstone. I redesigned the interface, rebuilt the map screen, wrote the location, parking and session hooks, and took the backend from laptop-only to a push-to-deploy service on Render.'
         ],
         technicalFocus: [
-            'Spatial database optimization',
-            'Real-time location services',
-            'Performance-focused architecture',
-            'Comprehensive test coverage'
+            'PostGIS radius search on an indexed geography column',
+            'Debounced, cached requests from the app',
+            'A backend that deploys and stays up on Render',
+            'API contract, data-quality and performance tests'
         ],
         coreFeatures: [
-            'GPS & manual location search',
-            'Radius-based spatial queries',
-            'Interactive map with clustering',
-            'Session tracking & cost calculation'
+            'Search from GPS or a dropped pin',
+            'Radius search with spot-type filters',
+            'Map with grouped markers and tappable cards',
+            'Parking session timer with a cost estimate'
         ]
     },
 
     technicalHighlights: [
         {
-            title: 'Spatial Database Architecture',
-            challenge: 'Standard database queries were too slow for real-time location-based searches across 200+ parking spots',
-            approach: 'Implemented PostGIS spatial indexing with ST_DWithin for efficient radius-based queries',
-            outcome: 'Achieved ~120ms average query time, verified through Jest + Supertest automated testing'
+            title: 'Spatial search in the database',
+            challenge: 'Every search needs the spots closest to a point out of about 2,700, and it runs each time the map settles.',
+            approach: 'The query runs inside Postgres: ST_DWithin on a GiST-indexed geography column, ordered by ST_Distance and capped at 100. The API only formats the rows.',
+            tradeoff: 'The cap means a 500m and a 1km search can return the same nearest 100. The data is the city\'s inventory, not live availability.',
+            outcome: 'The repo\'s performance test averages 36ms over 10 requests for the closest 100 spots (local PostGIS, full dataset). The data-quality tests check that every result is inside the radius and sorted by distance.'
         },
         {
-            title: 'Performance Optimization',
-            challenge: 'Map interactions triggered excessive API calls, causing lag during panning and zooming',
-            approach: 'Implemented 300ms request debouncing, memoized distance calculations, and lazy marker loading',
-            outcome: 'Eliminated redundant API calls while maintaining smooth, responsive user experience'
+            title: 'Fewer requests from the app',
+            challenge: 'Panning the map would otherwise fire a search for every intermediate position.',
+            approach: 'useParkingSpots waits 300ms after the location settles before searching, and responses are cached on the phone so a bad connection still shows the last results.',
+            outcome: 'One request per settled position instead of one per frame of a pan, and a stale-but-useful list when the network drops.'
         },
         {
-            title: 'Architecture & Maintainability',
-            challenge: 'Screen components grew to 500+ lines with mixed UI and business logic',
-            approach: 'Extracted custom hooks (useLocationManager, useParkingSpots, useSessionManager) following separation of concerns',
-            outcome: 'Improved code maintainability and achieved 100% test coverage'
+            title: 'A backend that deploys',
+            challenge: 'The capstone backend ran on a laptop but crashed on startup elsewhere, and three separate problems broke deploys.',
+            approach: 'Cut required setup to one setting (DATABASE_URL), made the health check stop querying the database, removed a stray root package-lock.json, and switched to the Supabase pooler URL after the IPv6-only one failed.',
+            outcome: 'Push-to-deploy on Render from a single Blueprint file, with each fix confirmed by running it.'
         }
     ],
 
     contributions: [
         {
-            category: 'Architecture & Design',
+            category: 'App & interface',
             items: [
-                'Complete UI/UX redesign with map-first interaction model',
-                'Designed and implemented custom hook architecture',
-                'Created reusable component library with consistent patterns'
+                'Redesigned the user interface',
+                'Rebuilt the map screen, including the tappable cards and marker grouping',
+                'Wrote the custom hooks for location, parking spots and sessions',
+                'Added debouncing, memoization and lazy loading'
             ]
         },
         {
-            category: 'Database & Backend',
+            category: 'Backend & data',
             items: [
-                'Implemented PostGIS spatial indexing for efficient location queries',
-                'Built RESTful API with Node.js and Express',
-                'Migrated database infrastructure to Supabase for improved scalability'
+                'Improved the endpoints for the location queries',
+                'Moved the database to Supabase (Postgres + PostGIS)',
+                'Wrote the script that loads four Calgary Open Data sets into one table, safe to re-run'
             ]
         },
         {
-            category: 'Performance & Testing',
+            category: 'Deployment & testing',
             items: [
-                'Optimized API calls with debouncing and memoization strategies',
-                'Implemented lazy loading and spatial clustering for map markers',
-                'Established comprehensive test suite achieving 100% coverage with Jest and Supertest'
+                'Set up push-to-deploy on Render and fixed the three deploy failures',
+                'Added the API contract, data-quality and performance tests (7, all passing)',
+                'Removed dead files and an unused dependency, and stopped committing node_modules'
             ]
         }
     ]

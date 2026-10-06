@@ -115,6 +115,7 @@ export function Implementation({ highlights }) {
     const rows = [
         ['Challenge', 'challenge', 'text-text-secondary'],
         ['Approach', 'approach', 'text-text-secondary'],
+        ['Trade-off', 'tradeoff', 'text-text-secondary'],
         ['Result', 'outcome', 'text-text-primary font-medium'],
     ]
 
@@ -129,7 +130,7 @@ export function Implementation({ highlights }) {
                         <div>
                             <h3 className="font-serif text-[clamp(1.5rem,2.6vw,2rem)] leading-tight text-text-primary">{item.title}</h3>
                             <dl className="mt-6 grid sm:grid-cols-[7rem_1fr] gap-x-6 sm:gap-y-5 max-w-3xl">
-                                {rows.map(([name, key, tone]) => (
+                                {rows.filter(([, key]) => item[key]).map(([name, key, tone]) => (
                                     <div key={key} className="contents">
                                         <dt className={`${label} sm:pt-1 ${key === 'outcome' ? '!text-rose-taupe' : ''}`}>{name}</dt>
                                         <dd className={`mt-1 mb-5 sm:m-0 text-[15px] leading-relaxed ${tone}`}>{item[key]}</dd>

@@ -7,7 +7,7 @@ import { evisionData } from './data'
 
 export const metadata = {
     title: 'EVision Advisor — NLP-Powered EV Search | Ehrl Balquin',
-    description: 'NLP-powered electric vehicle search platform with semantic search and intelligent caching.'
+    description: 'Plain-language search over 231 electric vehicles, built with FastAPI: query parsing, blended ranking, caching and rate limiting.'
 }
 
 // Re-check the demo hourly so the page flips back on its own after a redeploy.
