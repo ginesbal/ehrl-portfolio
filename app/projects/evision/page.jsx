@@ -80,6 +80,7 @@ export default async function EVisionPage() {
             <MobileNav />
             <SidebarNav />
             <main
+                id="main"
                 className="transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)' }}
             >

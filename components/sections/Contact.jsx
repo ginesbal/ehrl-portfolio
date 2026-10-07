@@ -30,7 +30,7 @@ function Field({ id, label, error, rows, ...props }) {
           rows={rows}
           required
           aria-describedby={`${id}-error`}
-          className="peer w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-light outline-none resize-none [&:user-invalid]:border-[var(--danger)]"
+          className="peer w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-medium outline-none resize-none [&:user-invalid]:border-[var(--danger)]"
           {...props}
         />
         <span

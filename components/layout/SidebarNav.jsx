@@ -199,7 +199,7 @@ export default function SidebarNav() {
               style={{
                 width: '2px',
                 height: toggleMinimized ? '14px' : '18px',
-                background: 'var(--border-light)',
+                background: 'var(--border-medium)',
                 transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
                 transformOrigin: 'center'
               }}

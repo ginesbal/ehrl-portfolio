@@ -54,7 +54,7 @@ export default function Projects() {
             >
               <Link
                 href={`/projects/${project.id}`}
-                className="group relative block border-t border-border-light active:bg-rose-taupe/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-4"
+                className="group relative block border-t border-border-light active:bg-rose-taupe/5"
               >
                 {/* Left accent — CSS only */}
                 <div

@@ -33,9 +33,9 @@ export default function ProjectsArchive() {
             <SidebarNav />
 
             <main
+                id="main"
                 className="relative transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)', minHeight: '100vh' }}
-                tabIndex={0}
             >
                 <section className="relative bg-bg-primary pt-28 lg:pt-20 pb-16 md:pb-24 overflow-hidden">
                     <FloatingCircles section="projects" />
@@ -123,7 +123,7 @@ export default function ProjectsArchive() {
                                     >
                                         <Link
                                             href={`/projects/${project.id}`}
-                                            className="group relative block border-t border-border-light active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-4 focus-visible:ring-offset-bg-primary transition-transform duration-150 ease-out"
+                                            className="group relative block border-t border-border-light active:scale-[0.995] transition-transform duration-150 ease-out"
                                         >
                                             {/* Left accent bar */}
                                             <div
@@ -212,7 +212,7 @@ export default function ProjectsArchive() {
                                         <Link
                                             href={`/projects/${activeProject.id}`}
                                             aria-label={`View ${activeProject.title} project`}
-                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
+                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
                                         >
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
                                                 {activeProject.gallery?.[0] ? (

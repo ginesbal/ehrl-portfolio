@@ -114,7 +114,7 @@ export default function MobileNav() {
 
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-accent z-50"
+                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full z-50"
                             aria-label="Toggle menu"
                             aria-expanded={mobileMenuOpen}
                         >

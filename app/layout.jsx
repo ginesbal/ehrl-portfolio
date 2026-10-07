@@ -49,6 +49,12 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body className={sourceSans.className} suppressHydrationWarning>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-bg-dark focus:px-5 focus:py-3 focus:text-[14px] focus:font-semibold focus:text-text-light"
+        >
+          Skip to content
+        </a>
         <ErrorBoundary>
           {/* framer ignores prefers-reduced-motion unless told to */}
           <MotionConfig reducedMotion="user">{children}</MotionConfig>

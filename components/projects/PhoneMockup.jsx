@@ -42,18 +42,26 @@ export function PhoneFrame({ children }) {
 // Screenshot carousel in a phone frame. The live demo opens in a dialog from the page.
 export default function PhoneMockup({ screenshots = [] }) {
     const [currentSlide, setCurrentSlide] = useState(0)
+    const [held, setHeld] = useState(false) // pointer or focus is on the carousel
+    const [picked, setPicked] = useState(false) // a dot was chosen: stop for good
 
     // auto-rotate screenshots (respects reduced-motion)
     useEffect(() => {
-        if (screenshots.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        if (held || picked || screenshots.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
         const id = setInterval(() => setCurrentSlide((prev) => (prev + 1) % screenshots.length), 4000)
         return () => clearInterval(id)
-    }, [screenshots.length])
+    }, [held, picked, screenshots.length])
 
     const current = screenshots[currentSlide]
 
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div
+            className="flex flex-col items-center gap-4"
+            onPointerEnter={() => setHeld(true)}
+            onPointerLeave={() => setHeld(false)}
+            onFocus={() => setHeld(true)}
+            onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setHeld(false)}
+        >
             <PhoneFrame>
                 {screenshots.map((s, idx) => (
                     <div key={s.src} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: idx === currentSlide ? 1 : 0 }}>
@@ -75,12 +83,12 @@ export default function PhoneMockup({ screenshots = [] }) {
             {screenshots.length > 1 && (
                 <div className="flex items-center">
                     {screenshots.map((s, idx) => (
-                        // 44px hit area around an 8px dot
+                        // 44px tall, at least 24px wide hit area around an 8px dot
                         <button
                             key={s.src}
                             type="button"
-                            onClick={() => setCurrentSlide(idx)}
-                            className="h-11 px-1.5 grid place-items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/60"
+                            onClick={() => { setCurrentSlide(idx); setPicked(true) }}
+                            className="h-11 px-2 grid place-items-center rounded-full"
                             aria-label={`View ${s.alt || `screenshot ${idx + 1}`}`}
                             aria-current={idx === currentSlide}
                         >

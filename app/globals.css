@@ -108,7 +108,7 @@
 
     /* Borders */
     --border-light: var(--grey-olive-200);
-    --border-medium: var(--grey-olive-300);
+    --border-medium: var(--grey-olive-500); /* 3.6:1 on bg-primary: the floor for control edges */
     --border-dark: var(--taupe-600);
 
     /* Status */
@@ -121,7 +121,6 @@
 
     /* Interactive */
     --hover-overlay: rgba(193, 93, 62, 0.08);
-    --focus-ring: rgba(193, 93, 62, 0.25);
 
     /* ═══════════════════════════════════════════════════════════════
        DESIGN TOKENS
@@ -175,7 +174,6 @@
     --border-light: var(--grey-olive-800);
     --border-medium: var(--grey-olive-700);
     --hover-overlay: rgba(193, 93, 62, 0.12);
-    --focus-ring: rgba(193, 93, 62, 0.35);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -261,12 +259,6 @@
       border-color var(--dur-2) var(--ease-out-quart),
       transform var(--dur-1) var(--ease-out-emil),
       box-shadow var(--dur-2) var(--ease-out-quart);
-  }
-  .btn-base:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 3px var(--focus-ring),
-      0 0 0 1px var(--accent-primary);
   }
   .btn-base:disabled {
     opacity: 0.5;
@@ -359,8 +351,7 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Interactive Transitions
-   Narrow default so components can own their own transform timing.
-   Explicit component rules (e.g. .btn-base) take precedence. */
+   Narrow default so components can own their own transform timing. */
 a,
 button {
   transition:
@@ -370,7 +361,7 @@ button {
     opacity var(--dur-2) var(--ease-out-quart);
 }
 
-/* Focus States: one tinted ring for anything that doesn't style its own */
+/* Focus: one outline everywhere, 5.5:1 on the page and 3:1 on bg-dark */
 :focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 3px;

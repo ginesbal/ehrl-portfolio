@@ -37,6 +37,7 @@ module.exports = {
         'bistre': token('bistre'),
 
         'border-light': token('border-light'),
+        'border-medium': token('border-medium'),
         'border-dark': token('border-dark'),
       },
       borderColor: { DEFAULT: 'var(--border-light)' },
