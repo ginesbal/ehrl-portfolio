@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
 
@@ -13,6 +13,7 @@ export default function MobileNav() {
     const [activeSection, setActiveSection] = useState('')
     const [isResumeOpen, setIsResumeOpen] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const toggleRef = useRef(null)
     const pathname = usePathname()
     const onHome = pathname === '/'
     const onProjectsRoot = pathname === '/projects'
@@ -113,6 +114,7 @@ export default function MobileNav() {
                         </Link>
 
                         <button
+                            ref={toggleRef}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full z-50"
                             aria-label="Toggle menu"
@@ -187,7 +189,9 @@ export default function MobileNav() {
             </AnimatePresence>
 
             {isResumeOpen && (
-                <ResumeModal onClose={() => setIsResumeOpen(false)} />
+                // the menu (and its Resume button) is gone by the time the dialog closes,
+                // so focus goes back to the menu toggle instead of falling to <body>
+                <ResumeModal onClose={() => { setIsResumeOpen(false); toggleRef.current?.focus() }} />
             )}
         </>
     )

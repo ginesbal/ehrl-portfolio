@@ -24,16 +24,17 @@ export default function ResumeModal({ onClose }) {
                         <a href={pdfPath} download="Ehrl_Balquin_Resume.pdf" className="btn-link px-2">
                             Download<span className="hidden md:inline">&nbsp;PDF</span>
                         </a>
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="w-11 h-11 grid place-items-center rounded-full text-text-secondary hover:bg-rose-taupe/10 active:scale-95"
-                            aria-label="Close resume"
-                        >
-                            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
-                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            </svg>
-                        </button>
+                        <form method="dialog" className="contents">
+                            <button
+                                data-autofocus
+                                className="w-11 h-11 grid place-items-center rounded-full text-text-secondary hover:bg-rose-taupe/10 active:scale-95"
+                                aria-label="Close resume"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
+                                    <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
 

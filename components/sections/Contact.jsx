@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 const EMAIL = 'ehrlbalquin@gmail.com'
@@ -11,8 +12,15 @@ const links = [
   { label: 'GitHub', href: 'https://github.com/ginesbal' },
 ]
 
-// Validation is native (required / type / minLength). :user-invalid only matches
-// after someone has interacted with the field, so errors never shout on first paint.
+// The same rules the API applies (app/api/contact/route.js), on trimmed values.
+// Each returns what's wrong in words, or null.
+const rules = {
+  name: (v) => (!v ? 'Please enter your name.' : v.length < 2 ? 'Your name needs at least 2 characters.' : null),
+  email: (v, el) => (!v ? 'Please enter your email.' : el.validity.typeMismatch ? 'That email address looks incomplete.' : null),
+  message: (v) => (!v ? 'Please write a message.' : v.length < 10 ? 'A little more detail, please (10+ characters).' : null),
+}
+const check = (el) => rules[el.name](el.value.trim(), el)
+
 function Field({ id, label, error, rows, ...props }) {
   const Tag = rows ? 'textarea' : 'input'
   return (
@@ -29,18 +37,22 @@ function Field({ id, label, error, rows, ...props }) {
           name={id}
           rows={rows}
           required
-          aria-describedby={`${id}-error`}
-          className="peer w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-medium outline-none resize-none [&:user-invalid]:border-[var(--danger)]"
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className="peer w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-medium focus:outline-none resize-none aria-[invalid=true]:border-[var(--danger)]"
           {...props}
         />
+        {/* the focus indicator: a 2px rose underline, 5.5:1 on the page */}
         <span
           aria-hidden
           className="absolute left-0 bottom-0 h-[2px] w-full bg-rose-taupe origin-left scale-x-0 transition-transform duration-300 ease-[var(--ease-out-expo)] peer-focus:scale-x-100"
         />
-        <p id={`${id}-error`} className="hidden peer-[:user-invalid]:block text-[13px] mt-2 text-[var(--danger)]">
+      </div>
+      {error && (
+        <p id={`${id}-error`} className="text-[13px] mt-2 text-[var(--danger)]">
           {error}
         </p>
-      </div>
+      )}
     </div>
   )
 }
@@ -48,13 +60,32 @@ function Field({ id, label, error, rows, ...props }) {
 export default function Contact() {
   const [busy, setBusy] = useState(false)
   const [status, setStatus] = useState(null)
+  const [errors, setErrors] = useState({})
   const statusRef = useRef(null)
+
+  // Errors appear once a filled-in field is left, or on submit, and update as you type.
+  const handleBlur = (e) => {
+    if (rules[e.target.name] && e.target.value) setErrors((prev) => ({ ...prev, [e.target.name]: check(e.target) }))
+  }
+  const handleInput = (e) => {
+    if (errors[e.target.name]) setErrors((prev) => ({ ...prev, [e.target.name]: check(e.target) }))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formEl = e.currentTarget
     const data = Object.fromEntries(new FormData(formEl))
     if (data._hp) return
+
+    const fields = Object.keys(rules).map((name) => formEl.elements[name])
+    const found = Object.fromEntries(fields.map((el) => [el.name, check(el)]))
+    // render the messages first, so the focused field is announced with its error
+    flushSync(() => setErrors(found))
+    const firstInvalid = fields.find((el) => found[el.name])
+    if (firstInvalid) {
+      firstInvalid.focus()
+      return
+    }
 
     setBusy(true)
     setStatus(null)
@@ -128,7 +159,10 @@ export default function Contact() {
       {/* right - form */}
       <div className="w-full md:w-1/2 px-5 py-10 md:px-12 md:py-12 lg:px-16 flex flex-col md:justify-center bg-bg-primary">
         <motion.form
+          noValidate
           onSubmit={handleSubmit}
+          onBlur={handleBlur}
+          onInput={handleInput}
           className="max-w-md mx-auto w-full space-y-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -137,9 +171,9 @@ export default function Contact() {
         >
           <input type="text" name="_hp" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-          <Field id="name" label="Name" autoComplete="name" minLength={2} pattern=".*\S.*\S.*" error="Please enter your name." />
-          <Field id="email" label="Email" type="email" autoComplete="email" error="Please enter a valid email address." />
-          <Field id="message" label="Message" rows={4} minLength={10} error="A little more detail, please (10+ characters)." />
+          <Field id="name" label="Name" autoComplete="name" error={errors.name} />
+          <Field id="email" label="Email" type="email" autoComplete="email" error={errors.email} />
+          <Field id="message" label="Message" rows={4} error={errors.message} />
 
           <button
             type="submit"
@@ -149,8 +183,8 @@ export default function Contact() {
             {busy ? 'Sending…' : 'Send'}
           </button>
 
-          <div ref={statusRef} tabIndex={-1} aria-live="polite" className="outline-none text-[14px]">
-            {status === 'success' && <p className="text-rose-taupe">Message sent. I&apos;ll get back to you soon.</p>}
+          <div ref={statusRef} tabIndex={-1} aria-live="polite" className="focus:outline-none text-[14px]">
+            {status === 'success' && <p className="text-text-primary">Message sent. I&apos;ll get back to you soon.</p>}
             {status === 'error' && (
               <p className="text-text-secondary">
                 That didn&apos;t go through. You can email me directly at{' '}

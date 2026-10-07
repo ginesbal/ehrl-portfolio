@@ -1,4 +1,7 @@
 // src/data/portfolio-data.js
+// Static imports give next/image each preview's real size, so the archive can serve a resized copy.
+import aimPreview from '../public/screenshots/aim-dashboard.webp'
+import parkaidPreview from '../public/screenshots/parkaid-map.png'
 
 export const projects = [
     {
@@ -14,10 +17,7 @@ export const projects = [
         github: 'https://github.com/ginesbal/parkaid',
         featured: true,
 
-        gallery: [
-            '/screenshots/parkaid-map.png',
-            '/screenshots/parkaid-session.png'
-        ],
+        preview: parkaidPreview,
 
 
         tech: [
@@ -69,12 +69,9 @@ export const projects = [
         github: 'https://github.com/ginesbal/aim',
         featured: true,
 
-        // desktop screenshots, so the archive preview frames them landscape
+        // a desktop screenshot, so the archive preview frames it landscape
         screen: 'desktop',
-        gallery: [
-            '/screenshots/aim-dashboard.webp',
-            '/screenshots/aim-focus.webp'
-        ],
+        preview: aimPreview,
 
         tech: [
             'Next.js',

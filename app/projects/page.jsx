@@ -6,6 +6,7 @@ import SidebarNav from '@/components/layout/SidebarNav.jsx'
 import FloatingCircles from '@/components/ui/FloatingCircles.jsx'
 import { projects } from '@/data/portfolio-data'
 import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -215,13 +216,14 @@ export default function ProjectsArchive() {
                                             className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
                                         >
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
-                                                {activeProject.gallery?.[0] ? (
+                                                {activeProject.preview ? (
                                                     // screen peeking up from the bottom edge: a phone, or a wider desktop window
-                                                    <img
-                                                        src={activeProject.gallery[0]}
+                                                    // (88% or 46% of the card's 320px inner width)
+                                                    <Image
+                                                        src={activeProject.preview}
                                                         alt=""
-                                                        decoding="async"
-                                                        className={`absolute left-1/2 -translate-x-1/2 shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
+                                                        sizes={activeProject.screen === 'desktop' ? '282px' : '148px'}
+                                                        className={`absolute left-1/2 -translate-x-1/2 h-auto shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
                                                     />
                                                 ) : (
                                                     <span className="absolute inset-0 grid place-items-center px-6 text-center font-serif text-[32px] leading-[1.05] text-text-primary/80">

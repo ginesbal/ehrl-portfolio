@@ -7,7 +7,7 @@ const H = 844
 
 // A true 390×844 phone viewport, scaled down to whatever width its parent gives it,
 // so embedded content lays out exactly as on a phone.
-export function PhoneFrame({ children }) {
+function PhoneFrame({ children }) {
     const ref = useRef(null)
     const [scale, setScale] = useState(1)
 
