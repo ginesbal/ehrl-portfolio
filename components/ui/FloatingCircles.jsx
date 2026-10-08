@@ -1,137 +1,31 @@
-'use client'
-
-import { motion } from 'framer-motion'
-
+// Ambient brand circles. Pure CSS drift (see .drift in globals.css), so they run
+// off the main thread and stop under prefers-reduced-motion.
 const sectionCircles = {
     hero: [
-        {
-            className: 'pointer-events-none absolute top-[12%] left-[6%] w-80 h-80 rounded-full border opacity-[0.03] hidden sm:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -20, 0], x: [0, 10, 0] },
-            transition: { duration: 9, repeat: Infinity, ease: 'easeInOut' }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[18%] left-[8%] w-80 h-80 rounded-full opacity-[0.02] hidden sm:block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 15, 0], x: [0, -8, 0] },
-            transition: { duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[42%] right-[20%] w-80 h-80 rounded-full border opacity-[0.03] hidden sm:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -12, 0], x: [0, -6, 0] },
-            transition: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[22%] right-[12%] w-80 h-80 rounded-full border opacity-[0.03] hidden sm:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, 21, 0], x: [0, -2, 0] },
-            transition: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }
-        },
-        {
-            className: 'pointer-events-none absolute top-[30%] left-[42%] w-80 h-80 rounded-full border opacity-[0.025] hidden sm:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -14, 0], x: [0, 12, 0] },
-            transition: { duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }
-        },
-        {
-            className: 'pointer-events-none absolute top-[8%] right-[28%] w-80 h-80 rounded-full opacity-[0.022] hidden sm:block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 10, 0], x: [0, -10, 0] },
-            transition: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[8%] left-[30%] w-80 h-80 rounded-full border opacity-[0.02] hidden sm:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -9, 0], x: [0, 7, 0] },
-            transition: { duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }
-        }
+        { className: 'top-[12%] left-[6%] w-80 h-80 hidden sm:block', opacity: 0.03, x: 10, y: -20, duration: 9 },
+        { className: 'top-[8%] right-[28%] w-80 h-80 hidden sm:block', fill: true, opacity: 0.022, x: -10, y: 10, duration: 7, delay: 1.2 },
+        { className: 'bottom-[22%] right-[12%] w-80 h-80 hidden sm:block', opacity: 0.03, x: -2, y: 21, duration: 8, delay: 1.5 },
     ],
     projects: [
-        {
-            className: 'pointer-events-none absolute top-[8%] left-[3%] w-40 h-40 sm:w-64 sm:h-64 rounded-full opacity-[0.018] block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, -14, 0], x: [0, 8, 0] },
-            transition: { duration: 10, repeat: Infinity, ease: 'easeInOut' }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[8%] right-[5%] w-44 h-44 sm:w-64 sm:h-64 rounded-full opacity-[0.015] block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 12, 0], x: [0, -10, 0] },
-            transition: { duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }
-        },
-        {
-            className: 'pointer-events-none absolute top-[52%] left-[38%] w-56 h-56 rounded-full opacity-[0.013] hidden md:block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, -10, 0], x: [0, 6, 0] },
-            transition: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }
-        }
-    ],
-    contact: [
-        {
-            className: 'pointer-events-none absolute top-[15%] left-[5%] w-[350px] h-[350px] rounded-full border opacity-[0.04] hidden md:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -20, 0], x: [0, 10, 0] },
-            transition: { duration: 11, repeat: Infinity, ease: 'easeInOut' }
-        },
-        {
-            className: 'pointer-events-none absolute top-[8%] right-[10%] w-72 h-72 rounded-full opacity-[0.03] hidden md:block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 12, 0], x: [0, -9, 0] },
-            transition: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[10%] right-[18%] w-72 h-72 rounded-full border opacity-[0.035] hidden md:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -11, 0], x: [0, 7, 0] },
-            transition: { duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.3 }
-        },
-        {
-            className: 'pointer-events-none absolute bottom-[18%] left-[38%] w-72 h-72 rounded-full opacity-[0.03] hidden lg:block',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 8, 0], x: [0, -6, 0] },
-            transition: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }
-        }
+        { className: 'top-[8%] left-[3%] w-40 h-40 sm:w-64 sm:h-64', fill: true, opacity: 0.018, x: 8, y: -14, duration: 10 },
+        { className: 'bottom-[8%] right-[5%] w-44 h-44 sm:w-64 sm:h-64', fill: true, opacity: 0.015, x: -10, y: 12, duration: 12, delay: 0.7 },
     ],
     about: [
-        {
-            className: 'pointer-events-none absolute -left-32 top-[20%] w-[400px] h-[400px] rounded-full border opacity-[0.03] hidden md:block',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -25, 0], x: [0, 15, 0] },
-            transition: { duration: 13, repeat: Infinity, ease: 'easeInOut' }
-        }
+        { className: '-left-32 top-[20%] w-[400px] h-[400px] hidden md:block', opacity: 0.03, x: 15, y: -25, duration: 13 },
     ],
-    selectedWork: [
-        {
-            className: 'pointer-events-none absolute -right-20 top-[8%] w-80 h-80 rounded-full opacity-[0.03]',
-            style: { background: 'var(--rose-taupe)' },
-            animate: { y: [0, 16, 0], x: [0, -8, 0] },
-            transition: { duration: 12, repeat: Infinity, ease: 'easeInOut' }
-        },
-        {
-            className: 'pointer-events-none absolute left-[4%] top-[6%] w-48 h-48 rounded-full border opacity-[0.04]',
-            style: { borderColor: 'var(--rose-taupe)' },
-            animate: { y: [0, -12, 0], x: [0, 6, 0] },
-            transition: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }
-        }
-    ]
+    contact: [
+        { className: 'top-[15%] left-[5%] w-[350px] h-[350px] hidden md:block', opacity: 0.04, x: 10, y: -20, duration: 11 },
+        { className: 'bottom-[10%] right-[18%] w-72 h-72 hidden md:block', opacity: 0.035, x: 7, y: -11, duration: 10, delay: 1.3 },
+    ],
 }
 
 export default function FloatingCircles({ section = 'hero' }) {
-    const circles = sectionCircles[section] || sectionCircles.hero
-
-    return (
-        <>
-            {circles.map((circle, index) => (
-                <motion.span
-                    key={index}
-                    aria-hidden
-                    className={circle.className}
-                    style={circle.style}
-                    animate={circle.animate}
-                    transition={circle.transition}
-                />
-            ))}
-        </>
-    )
+    return sectionCircles[section].map(({ className, fill, opacity, x, y, duration, delay = 0 }, i) => (
+        <span
+            key={i}
+            aria-hidden
+            className={`drift pointer-events-none absolute rounded-full ${fill ? 'bg-rose-taupe' : 'border border-rose-taupe'} ${className}`}
+            style={{ opacity, '--dx': `${x}px`, '--dy': `${y}px`, '--dur': `${duration}s`, '--delay': `${delay}s` }}
+        />
+    ))
 }

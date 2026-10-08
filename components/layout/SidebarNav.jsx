@@ -16,8 +16,7 @@ export default function SidebarNav() {
   const pathname = usePathname()
   const onHome = pathname === '/'
   const onProjectsRoute = pathname?.startsWith('/projects')
-  const onParkPal = pathname === '/projects/parkpal'
-  const onEVision = pathname === '/projects/evision'
+  const onCaseStudy = pathname?.startsWith('/projects/')
 
   const sections = [
     { id: 'hero', label: 'Home', num: '01' },
@@ -95,7 +94,7 @@ export default function SidebarNav() {
             <div className="relative w-12 h-12">
               <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-all duration-500 group-hover:scale-110" />
               <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-rose-taupe">
-                <span className="text-[15px] font-bold text-rose-taupe group-hover:text-white transition-colors duration-300">
+                <span className="text-[15px] font-bold text-rose-taupe group-hover:text-text-light transition-colors duration-300">
                   eb
                 </span>
               </div>
@@ -109,7 +108,9 @@ export default function SidebarNav() {
               const isHovered = hoveredItem === section.id
 
               return (
-                <a
+                // Link, not <a>: a full page load to /#contact from a case study lands at the top,
+                // while client-side navigation scrolls to the section (as the mobile menu does)
+                <Link
                   key={section.id}
                   href={onHome ? `#${section.id}` : `/#${section.id}`}
                   onClick={(e) => handleClick(e, section.id)}
@@ -135,7 +136,7 @@ export default function SidebarNav() {
                   >
                     {section.label}
                   </span>
-                </a>
+                </Link>
               )
             })}
           </nav>
@@ -159,10 +160,10 @@ export default function SidebarNav() {
       </aside>
 
       {/* sidebar toggle button - minimizes on scroll / back button on project pages */}
-      {(onParkPal || onEVision) ? (
+      {onCaseStudy ? (
         <Link
           href="/projects"
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
           style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
           aria-label="Back to projects"
           title="Back to projects"
@@ -170,7 +171,7 @@ export default function SidebarNav() {
           <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
           {!toggleMinimized && (
             <span
-              className="text-[8px] tracking-[0.15em] uppercase font-semibold"
+              className="text-[10px] tracking-[0.15em] uppercase font-semibold"
               style={{ color: 'var(--text-secondary)' }}
             >
               Back
@@ -181,7 +182,7 @@ export default function SidebarNav() {
         <button
           type="button"
           onClick={() => setCollapsed((prev) => !prev)}
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
           style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
           aria-pressed={collapsed}
           aria-label={collapsed ? 'Show sidebar' : 'Hide sidebar'}
@@ -200,7 +201,7 @@ export default function SidebarNav() {
               style={{
                 width: '2px',
                 height: toggleMinimized ? '14px' : '18px',
-                background: 'var(--border-light)',
+                background: 'var(--border-medium)',
                 transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
                 transformOrigin: 'center'
               }}
@@ -208,7 +209,7 @@ export default function SidebarNav() {
           </span>
           {!toggleMinimized && (
             <span
-              className="text-[8px] tracking-[0.15em] uppercase transition-opacity duration-500"
+              className="text-[10px] tracking-[0.15em] uppercase transition-opacity duration-500"
               style={{ color: 'var(--text-secondary)', opacity: collapsed ? 0.75 : 1 }}
             >
               {collapsed ? 'Show sidebar' : 'Hide sidebar'}
@@ -218,7 +219,7 @@ export default function SidebarNav() {
       )}
 
       {isResumeOpen && (
-        <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+        <ResumeModal onClose={() => setIsResumeOpen(false)} />
       )}
     </>
   )

@@ -1,7 +1,11 @@
 ﻿import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { EMAIL_PATTERN, LIMITS } from '@/lib/contact'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+const escapeHtml = (s) =>
+    String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 
 export async function POST(request) {
     try {
@@ -15,9 +19,7 @@ export async function POST(request) {
             )
         }
 
-        // Improved email validation
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-        if (!emailRegex.test(email) || email.length > 254) {
+        if (!EMAIL_PATTERN.test(email) || email.length > LIMITS.email.max) {
             return NextResponse.json(
                 { error: 'Invalid email address' },
                 { status: 400 }
@@ -25,10 +27,10 @@ export async function POST(request) {
         }
 
         // Basic input sanitization
-        const sanitizedName = name.trim().slice(0, 100)
-        const sanitizedMessage = message.trim().slice(0, 5000)
+        const sanitizedName = name.trim().slice(0, LIMITS.name.max)
+        const sanitizedMessage = message.trim().slice(0, LIMITS.message.max)
 
-        if (sanitizedName.length < 2 || sanitizedMessage.length < 10) {
+        if (sanitizedName.length < LIMITS.name.min || sanitizedMessage.length < LIMITS.message.min) {
             return NextResponse.json(
                 { error: 'Name must be at least 2 characters and message at least 10 characters' },
                 { status: 400 }
@@ -42,12 +44,12 @@ export async function POST(request) {
             subject: `Portfolio Contact: ${subject}`,
             html: `
                 <h2>New Contact Form Submission</h2>
-                <p><strong>From:</strong> ${sanitizedName} (${email})</p>
-                ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-                <p><strong>Subject:</strong> ${subject}</p>
+                <p><strong>From:</strong> ${escapeHtml(sanitizedName)} (${escapeHtml(email)})</p>
+                ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
+                <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
                 <hr />
                 <p><strong>Message:</strong></p>
-                <p>${sanitizedMessage.replace(/\n/g, '<br />').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                <p>${escapeHtml(sanitizedMessage).replace(/\n/g, '<br />')}</p>
             `,
         })
 

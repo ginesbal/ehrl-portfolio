@@ -7,20 +7,14 @@ Next.js 15 portfolio site with App Router, showcasing projects with custom modal
 
 ### Component Organization
 - **Sections** (`components/sections/`): Full-page sections composed on `app/page.js` - Hero, Projects, Skills, About, Contact
-- **Modals** (`components/modals/`): Project detail overlays with custom showcase capability
-- **Projects** (`components/projects/`): Project-specific components (ParkPalShowcase, PhoneMockup, ProjectCard)
-- **Layout** (`components/layout/`): Navigation with scroll-based active section detection, Footer
-
-### Modal System
-Projects can render in two modes via `ProjectModalWrapper`:
-- **Standard modal**: Generic project display for future projects
-- **Custom showcase**: Project-specific full-screen showcase (e.g., `ParkPalShowcase.jsx`)
-
-Controlled by `customShowcase: true` flag in `data/portfolio-data.js`. This pattern allows deep project storytelling while maintaining consistent modal infrastructure.
+- **Case studies** (`components/case-study/`): Shared hero/overview/implementation/contributions/nav for `/projects/[id]`
+- **Modals** (`components/modals/`): ResumeModal, built on the native `<dialog>` wrapper in `components/ui/Dialog.jsx`
+- **Projects** (`components/projects/`): PhoneMockup carousel and PhoneFrame (true 390×844 viewport, scaled)
+- **Layout** (`components/layout/`): SidebarNav and MobileNav with scroll-based active section detection, Footer
 
 ### Data Structure
 Central data in `data/portfolio-data.js`:
-- Project metadata with optional `customShowcase` flag
+- Project metadata; each project also has a case-study page at `app/projects/<id>/`
 - Utility functions: `getProjectById`, `getFeaturedProjects`, etc.
 - **Single source of truth** - all project data lives here
 
@@ -40,23 +34,10 @@ Key variables:
 - Borders: `--border-light`, `--border-dark`
 - Easings: `--ease-out-expo`, `--ease-out-quart`
 
-### Typography Classes
-Pre-defined classes in `globals.css`:
-- `heading-xl`, `heading-lg`, `heading-md` for headlines
-- `body-text`, `caption-text` for content
-- `container-custom` for consistent page margins
-
 ## Animation Patterns
 
-### Framer Motion Variants
-Reusable animation objects in `lib/animations.js`:
-- `fadeInUp`, `fadeIn`, `scaleIn`
-- `slideInFromLeft`, `slideInFromRight`
-- `staggerContainer` for sequential reveals
-- `textReveal` for text masking effects
-
 ### Inline Animations
-Some components use inline Framer Motion for context-specific timing (see `Hero.jsx` for staggered text reveals with custom delays).
+Framer Motion is used inline; `MotionConfig reducedMotion="user"` in the root layout honors the OS setting. Ambient circles are plain CSS (`.drift`). Some components use inline Framer Motion for context-specific timing (see `Hero.jsx` for staggered text reveals with custom delays).
 
 ## Navigation System
 
@@ -104,17 +85,21 @@ See `.env.local.example` for configuration template.
 
 ### Public Directory Structure
 - `/files/resume.pdf`: Resume for download
-- `/screenshots/parkpal-*.png`: Project gallery images
-- `/parkpal/index.html`: Embedded Expo web build for live demo
+- `/screenshots/parkaid-*.png`: Project gallery images
+- `/parkaid/index.html`: Embedded Expo web build for live demo (its API is app/api/parking/nearby)
 - `/images/projects/`: Project thumbnails and assets
 
 ### Embedded Demos
-ParkPal uses iframe to `/parkpal/index.html` (Expo web export). Future mobile projects should follow this pattern.
+parkaid uses an iframe to `/parkaid/index.html` (Expo web export). Future mobile projects should follow this pattern.
+
+The export is hand-patched. Re-apply these after re-exporting it:
+- `public/_expo/static/js/web/AppEntry-*.js`: `apiUrl` is `""` (same-origin API route); the check-signs aria-label; the Find Parking web fallback's `screenshot` style is `{width:'100%',height:'auto',aspectRatio:828/1792}` so the picture is anchored to the top instead of a centred crop in windows shorter than 844px.
+- `public/parkaid/index.html`: the inline `keydown` script that closes the portfolio's demo dialog on Esc while the app has focus.
 
 ## Key Conventions
 
 ### State Management
-Simple React hooks (`useState`, `useEffect`) - no external state library. Modal state lifted to parent sections.
+Simple React hooks (`useState`, `useEffect`) - no external state library. Dialogs mount when open (`{open && <Dialog …/>}`).
 
 ### Client Components
 Most components are `'use client'` due to interactivity (Framer Motion, scroll listeners, modals). Keep server components where possible for new sections without interactions.
@@ -139,19 +124,11 @@ onMouseEnter={(e) => {
 ### Scroll-based Effects
 Navigation and Hero use `window.addEventListener('scroll')` with cleanup. Always remove listeners in cleanup function.
 
-### Gradient Backgrounds
-Dynamic gradients via inline styles from project data:
-```jsx
-background: `linear-gradient(135deg, ${project.gradient})`
-```
-
 ## Adding New Projects
 
-1. Add project object to `data/portfolio-data.js` 
-2. For standard projects: Set `demo` to iframe URL or null
-3. For custom showcases: Set `customShowcase: true` and create showcase component
-4. Add gallery images to `/screenshots/` or `/public/images/`
-5. Modal system automatically handles rendering logic
+1. Add project object to `data/portfolio-data.js` (order sets prev/next on case studies)
+2. Create `app/projects/<id>/page.jsx` + `data.js` composing `components/case-study/CaseStudy.jsx`
+3. Add screenshots to `/public/screenshots/`; `gallery[0]` is the archive preview
 
 ## Known Quirks
 

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
 
@@ -13,6 +13,7 @@ export default function MobileNav() {
     const [activeSection, setActiveSection] = useState('')
     const [isResumeOpen, setIsResumeOpen] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const toggleRef = useRef(null)
     const pathname = usePathname()
     const onHome = pathname === '/'
     const onProjectsRoot = pathname === '/projects'
@@ -106,15 +107,16 @@ export default function MobileNav() {
                             <div
                                 className="w-10 h-10 rounded-full border-2 border-rose-taupe flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-rose-taupe"
                             >
-                                <span className="text-[14px] font-semibold text-text-primary group-hover:text-white transition-colors">
+                                <span className="text-[14px] font-semibold text-text-primary group-hover:text-text-light transition-colors">
                                     eb
                                 </span>
                             </div>
                         </Link>
 
                         <button
+                            ref={toggleRef}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-taupe/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-accent z-50"
+                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full z-50"
                             aria-label="Toggle menu"
                             aria-expanded={mobileMenuOpen}
                         >
@@ -134,7 +136,7 @@ export default function MobileNav() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}
-                        className="lg:hidden fixed inset-0 z-40 bg-black/5"
+                        className="lg:hidden fixed inset-0 z-40 bg-onyx/10"
                         onClick={() => setMobileMenuOpen(false)}
                         aria-hidden="true"
                     />
@@ -187,7 +189,9 @@ export default function MobileNav() {
             </AnimatePresence>
 
             {isResumeOpen && (
-                <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+                // the menu (and its Resume button) is gone by the time the dialog closes,
+                // so focus goes back to the menu toggle instead of falling to <body>
+                <ResumeModal onClose={() => { setIsResumeOpen(false); toggleRef.current?.focus() }} />
             )}
         </>
     )

@@ -6,17 +6,17 @@ A modern, performance-optimized portfolio showcasing full-stack development proj
 
 ## 🚀 Featured Project
 
-### ParkPal - Smart Parking Finder
+### parkaid - Parking Finder
 
-Mobile-first parking finder for downtown Calgary with PostGIS spatial optimization. Built with React Native, Node.js, and PostgreSQL with PostGIS extensions.
+Mobile-first parking finder for downtown Calgary. Built with React Native (Expo), Node.js/Express, and PostgreSQL with PostGIS.
 
-**Key Technical Achievement:**
+**Highlights:**
 
-- Optimized geospatial queries from 800ms+ to ~120ms average using PostGIS spatial indexing
-- Implemented `ST_DWithin` radius-based searches with custom indexes
-- 100+ parking spots retrieved with debounced search (300ms) to reduce API calls
+- `ST_DWithin` radius search on a GiST-indexed geography column over ~2,700 Calgary Open Data spots
+- Closest 100 spots in ~36ms on average (the repo's performance test, local PostGIS)
+- 7 backend tests (Jest + Supertest), passing; 300ms debounced search in the app
 
-[View Live Demo](/parkpal) | [GitHub](https://github.com/ginesbal/parkpal)
+[View Live Demo](/projects/parkaid) | [GitHub](https://github.com/ginesbal/parkaid)
 
 ## 🛠️ Tech Stack
 
@@ -93,17 +93,16 @@ ehrl-portfolio/
 │   ├── projects/          # Projects page
 │   └── page.js            # Homepage
 ├── components/
-│   ├── sections/          # Full-page sections (Hero, Projects, Contact)
-│   ├── projects/          # Project-specific components
-│   ├── modals/            # Modal system
-│   ├── layout/            # Navigation, Footer
-│   └── ui/                # Reusable UI components
+│   ├── sections/          # Home sections (Hero, Projects, About, Contact)
+│   ├── case-study/        # Shared blocks for /projects/[id] pages
+│   ├── projects/          # PhoneMockup / PhoneFrame
+│   ├── modals/            # ResumeModal
+│   ├── layout/            # SidebarNav, MobileNav, Footer
+│   └── ui/                # Dialog, PillCta, FloatingCircles, ...
 ├── data/
 │   └── portfolio-data.js  # Single source of truth for project data
-├── lib/
-│   └── animations.js      # Reusable Framer Motion variants
 └── public/
-    ├── parkpal/           # Embedded ParkPal demo
+    ├── parkaid/           # Embedded parkaid demo
     ├── screenshots/       # Project images
     └── files/             # Resume PDF
 ```
@@ -121,7 +120,7 @@ See `app/globals.css` for full variable definitions.
 
 ## Key Features
 
-- **Custom Modal System:** Project showcases can use standard modal or custom full-screen layouts
+- **Case studies:** each project has its own page at `/projects/[id]` built from `components/case-study`
 - **Performance Optimized:** Lazy loading, optimized images, minimal bundle size
 - **Accessibility:** Semantic HTML, keyboard navigation, ARIA labels
 - **Contact Form:** Server-side validation with Resend email integration

@@ -11,7 +11,7 @@ export default function Footer() {
             <div className="relative w-10 h-10">
               <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-all duration-500 group-hover:scale-110" />
               <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-rose-taupe">
-                <span className="text-[12px] font-bold text-rose-taupe group-hover:text-white transition-colors duration-300">eb</span>
+                <span className="text-[12px] font-bold text-rose-taupe group-hover:text-text-light transition-colors duration-300">eb</span>
               </div>
             </div>
           </Link>
@@ -21,7 +21,7 @@ export default function Footer() {
             <a href="https://linkedin.com/in/ehrlbalquin" target="_blank" rel="noopener noreferrer" className="hover:text-rose-taupe transition-colors">LinkedIn</a>
             <a href="https://github.com/ginesbal" target="_blank" rel="noopener noreferrer" className="hover:text-rose-taupe transition-colors">GitHub</a>
             <span className="text-text-muted/50">—</span>
-            <span className="text-[12px]">© 2025</span>
+            <span className="text-[12px]">© {new Date().getFullYear()}</span>
           </div>
         </div>
       </div>

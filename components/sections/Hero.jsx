@@ -11,8 +11,9 @@ const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: fa
 export default function Hero() {
   const [isResumeOpen, setIsResumeOpen] = useState(false)
 
+  // full height from md up; on phones it sizes to its content so the work starts on the first screen
   return (
-    <section className="min-h-[100svh] md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
+    <section className="md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
 
       <FloatingCircles />
 
@@ -32,16 +33,15 @@ export default function Hero() {
             style={{ minHeight: '90px' }}
           />
           <div className="flex flex-col justify-center gap-1">
-            <div className="leading-tight">
-              <h2 className=" font-bold tracking-[0.15em] uppercase text-onyx">Ehrl</h2>
-              <h2 className="font-bold tracking-[0.15em] uppercase text-onyx">Balquin</h2>
-            </div>
-            <p className="text-[12px] md:text-[12px] font-medium text-text-muted">Full-Stack Developer</p>
+            <p className="leading-tight font-semibold tracking-[0.15em] uppercase text-onyx">
+              Ehrl<br />Balquin
+            </p>
+            <p className="text-[12px] font-medium text-text-muted">Full-Stack Developer</p>
           </div>
         </motion.div>
 
         {/* main content area */}
-        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-24 md:pb-0">
+        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pt-32 pb-16 md:p-0">
 
           {/* mobile name badge */}
           <motion.div
@@ -52,8 +52,8 @@ export default function Hero() {
           >
             <div className="w-[2px] bg-rose-taupe" />
             <div>
-              <p className="text-[11px] tracking-[0.2em] uppercase font-semibold text-text-onyx">Ehrl Balquin</p>
-              <p className="text-[8px] tracking-[0.15em] text-text-muted/70 mt-0.5">Full-Stack Developer</p>
+              <p className="text-[11px] tracking-[0.2em] uppercase font-semibold text-onyx">Ehrl Balquin</p>
+              <p className="text-[11px] tracking-[0.05em] text-text-muted mt-0.5">Full-Stack Developer</p>
             </div>
           </motion.div>
 
@@ -73,13 +73,21 @@ export default function Hero() {
           >
             portfolio<span className="italic text-rose-taupe">.</span>
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 md:mt-8 max-w-md text-[16px] md:text-[18px] leading-relaxed text-balance text-text-secondary"
+          >
+            I design and build for the web, with the same care for how an interface looks as for how it works.
+          </motion.p>
 
           {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 md:mt-0 flex items-center justify-end gap-6 md:absolute md:bottom-8 md:right-36"
+            className="mt-10 md:mt-0 flex items-center justify-end gap-6 md:absolute md:bottom-8 md:right-36"
           >
             <a
               href="#projects"
@@ -89,6 +97,7 @@ export default function Hero() {
             </a>
             <span className="w-[3px] h-6 bg-rose-taupe self-center" />
             <button
+              type="button"
               onClick={() => setIsResumeOpen(true)}
               className="text-[14px] md:text-[15px] font-semibold uppercase tracking-[0.1em] text-onyx transition-colors duration-300 hover:text-rose-taupe"
             >
@@ -103,7 +112,7 @@ export default function Hero() {
       </div>
 
       {isResumeOpen && (
-        <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+        <ResumeModal onClose={() => setIsResumeOpen(false)} />
       )}
     </section>
   )
