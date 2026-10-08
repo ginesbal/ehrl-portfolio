@@ -7,6 +7,13 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
   <title>parkaid</title>
+  <script>
+    // Embedded in the portfolio's demo dialog (same origin): Esc closes it even while the app has focus.
+    addEventListener('keydown', function (e) {
+      var dialog = e.key === 'Escape' && window.frameElement && window.frameElement.closest('dialog')
+      if (dialog) dialog.close()
+    })
+  </script>
   <style id="expo-reset">
     html,
     body {

@@ -11,6 +11,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        // room for the parkaid demo's windowed layout; landscape phones and short windows get the full-height one
+        roomy: { raw: '(min-width: 480px) and (min-height: 640px)' },
+      },
       fontFamily: {
         sans: ['var(--font-sans)', 'Source Sans 3', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],

@@ -218,7 +218,7 @@ export default function ProjectsArchive() {
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
                                                 {activeProject.preview ? (
                                                     // screen peeking up from the bottom edge: a phone, or a wider desktop window
-                                                    // (88% or 46% of the card's 320px inner width)
+                                                    // (88% or 46% of the card's 318px inner width)
                                                     <Image
                                                         src={activeProject.preview}
                                                         alt=""

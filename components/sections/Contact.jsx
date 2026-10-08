@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
+import { EMAIL_PATTERN, LIMITS } from '@/lib/contact'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 const EMAIL = 'ehrlbalquin@gmail.com'
@@ -12,14 +13,17 @@ const links = [
   { label: 'GitHub', href: 'https://github.com/ginesbal' },
 ]
 
-// The same rules the API applies (app/api/contact/route.js), on trimmed values.
-// Each returns what's wrong in words, or null.
+// The API's own rules (lib/contact.js) on trimmed values. Each returns what's wrong in words, or null.
 const rules = {
-  name: (v) => (!v ? 'Please enter your name.' : v.length < 2 ? 'Your name needs at least 2 characters.' : null),
-  email: (v, el) => (!v ? 'Please enter your email.' : el.validity.typeMismatch ? 'That email address looks incomplete.' : null),
-  message: (v) => (!v ? 'Please write a message.' : v.length < 10 ? 'A little more detail, please (10+ characters).' : null),
+  name: (v) => (!v ? 'Please enter your name.' : v.length < LIMITS.name.min ? `Your name needs at least ${LIMITS.name.min} characters.` : null),
+  email: (v) =>
+    !v ? 'Please enter your email.'
+      : v.length > LIMITS.email.max ? 'That email address is too long.'
+        : !EMAIL_PATTERN.test(v) ? 'Enter a full email address, like name@example.com.'
+          : null,
+  message: (v) => (!v ? 'Please write a message.' : v.length < LIMITS.message.min ? `A little more detail, please (${LIMITS.message.min}+ characters).` : null),
 }
-const check = (el) => rules[el.name](el.value.trim(), el)
+const check = (el) => rules[el.name](el.value.trim())
 
 function Field({ id, label, error, rows, ...props }) {
   const Tag = rows ? 'textarea' : 'input'
@@ -39,20 +43,19 @@ function Field({ id, label, error, rows, ...props }) {
           required
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
-          className="peer w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-medium focus:outline-none resize-none aria-[invalid=true]:border-[var(--danger)]"
+          className="peer block w-full px-0 py-2 text-[16px] text-text-primary bg-transparent border-0 border-b-2 border-border-medium focus:outline-none resize-none aria-[invalid=true]:border-[var(--danger)]"
           {...props}
         />
-        {/* the focus indicator: a 2px rose underline, 5.5:1 on the page */}
+        {/* the focus indicator: a rose underline, 5.5:1 on the page and heavier than the 2px resting line */}
         <span
           aria-hidden
-          className="absolute left-0 bottom-0 h-[2px] w-full bg-rose-taupe origin-left scale-x-0 transition-transform duration-300 ease-[var(--ease-out-expo)] peer-focus:scale-x-100"
+          className="absolute left-0 bottom-0 h-[3px] w-full bg-rose-taupe origin-left scale-x-0 transition-transform duration-300 ease-[var(--ease-out-expo)] peer-focus:scale-x-100"
         />
       </div>
-      {error && (
-        <p id={`${id}-error`} className="text-[13px] mt-2 text-[var(--danger)]">
-          {error}
-        </p>
-      )}
+      {/* the line is always there, so an error appearing never moves what's below (a click on Send can't miss) */}
+      <p id={`${id}-error`} className="min-h-[18px] mt-1 text-[13px] leading-[18px] text-[var(--danger)]">
+        {error}
+      </p>
     </div>
   )
 }
@@ -73,22 +76,28 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (busy) return
     const formEl = e.currentTarget
     const data = Object.fromEntries(new FormData(formEl))
     if (data._hp) return
 
     const fields = Object.keys(rules).map((name) => formEl.elements[name])
     const found = Object.fromEntries(fields.map((el) => [el.name, check(el)]))
-    // render the messages first, so the focused field is announced with its error
-    flushSync(() => setErrors(found))
+    // render the messages (and drop an earlier result) first, so the focused field is read with its error
+    flushSync(() => {
+      setErrors(found)
+      setStatus(null)
+    })
     const firstInvalid = fields.find((el) => found[el.name])
     if (firstInvalid) {
+      // focus() on the field that already has focus does nothing, so blur it first to have it read again
+      if (firstInvalid === document.activeElement) firstInvalid.blur()
       firstInvalid.focus()
       return
     }
 
     setBusy(true)
-    setStatus(null)
+    let result = 'error'
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -100,14 +109,19 @@ export default function Contact() {
           message: data.message.trim(),
         }),
       })
-      setStatus(res.ok ? 'success' : 'error')
-      if (res.ok) formEl.reset()
+      if (res.ok) {
+        result = 'success'
+        formEl.reset()
+      }
     } catch {
-      setStatus('error')
-    } finally {
-      setBusy(false)
-      statusRef.current?.focus()
+      // network failure: result stays 'error'
     }
+    // render the outcome before moving focus to it, so the focus lands on the message, not an empty region
+    flushSync(() => {
+      setStatus(result)
+      setBusy(false)
+    })
+    statusRef.current?.focus()
   }
 
   return (
@@ -163,7 +177,7 @@ export default function Contact() {
           onSubmit={handleSubmit}
           onBlur={handleBlur}
           onInput={handleInput}
-          className="max-w-md mx-auto w-full space-y-6"
+          className="max-w-md mx-auto w-full space-y-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -171,19 +185,20 @@ export default function Contact() {
         >
           <input type="text" name="_hp" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-          <Field id="name" label="Name" autoComplete="name" error={errors.name} />
+          <Field id="name" label="Name" autoComplete="name" maxLength={LIMITS.name.max} error={errors.name} />
           <Field id="email" label="Email" type="email" autoComplete="email" error={errors.email} />
-          <Field id="message" label="Message" rows={4} error={errors.message} />
+          <Field id="message" label="Message" rows={4} maxLength={LIMITS.message.max} error={errors.message} />
 
+          {/* aria-disabled, not disabled: a disabled button drops keyboard focus to the page while sending */}
           <button
             type="submit"
-            disabled={busy}
-            className="w-full min-h-[48px] flex items-center justify-center text-[13px] font-semibold tracking-[0.2em] uppercase bg-rose-taupe text-text-light hover:bg-[var(--powder-blush-700)] active:scale-[0.98] transition-[background-color,transform] duration-200 disabled:opacity-60 disabled:cursor-wait"
+            aria-disabled={busy || undefined}
+            className="w-full min-h-[48px] flex items-center justify-center text-[13px] font-semibold tracking-[0.2em] uppercase bg-rose-taupe text-text-light hover:bg-[var(--powder-blush-700)] active:scale-[0.98] transition-[background-color,transform] duration-200 aria-disabled:opacity-60 aria-disabled:cursor-wait"
           >
             {busy ? 'Sending…' : 'Send'}
           </button>
 
-          <div ref={statusRef} tabIndex={-1} aria-live="polite" className="focus:outline-none text-[14px]">
+          <div ref={statusRef} tabIndex={-1} aria-live="polite" className="!mt-4 focus:outline-none text-[14px]">
             {status === 'success' && <p className="text-text-primary">Message sent. I&apos;ll get back to you soon.</p>}
             {status === 'error' && (
               <p className="text-text-secondary">
