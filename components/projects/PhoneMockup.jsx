@@ -64,21 +64,20 @@ export default function PhoneMockup({ screenshots = [] }) {
         >
             <PhoneFrame>
                 {screenshots.map((s, idx) => (
-                    <div key={s.src} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: idx === currentSlide ? 1 : 0 }}>
-                        <Image src={s.src} alt={s.alt} fill sizes="(max-width: 768px) 90vw, 390px" className="object-cover" priority={idx === 0} />
+                    // contain, not cover: the shots aren't all phone-shaped, and cropping cut the app's own edges.
+                    // White is the app's background, so any letterbox reads as part of its screen.
+                    <div key={s.src} className="absolute inset-0 bg-[#fff] transition-opacity duration-700" style={{ opacity: idx === currentSlide ? 1 : 0 }}>
+                        <Image src={s.src} alt={s.alt} fill sizes="(max-width: 768px) 90vw, 390px" className="object-contain" priority={idx === 0} />
                     </div>
                 ))}
-
-                {current && (
-                    <div
-                        aria-hidden
-                        className="absolute bottom-0 left-0 right-0 px-5 py-6 pointer-events-none"
-                        style={{ background: 'linear-gradient(to top, rgba(19,18,16,0.75) 0%, rgba(19,18,16,0.4) 50%, transparent 100%)' }}
-                    >
-                        <p className="text-text-light font-medium leading-snug text-[13px]">{current.alt}</p>
-                    </div>
-                )}
             </PhoneFrame>
+
+            {/* below the phone, so it never covers the app; two lines reserved so the dots don't jump */}
+            {current && (
+                <p aria-hidden className="min-h-[36px] max-w-[32ch] text-center text-balance text-[13px] leading-snug text-text-muted">
+                    {current.alt}
+                </p>
+            )}
 
             {screenshots.length > 1 && (
                 <div className="flex items-center">

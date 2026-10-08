@@ -165,7 +165,7 @@ export default function Contact() {
           </div>
           <div className="md:pt-6 md:border-t md:border-text-light/10">
             <dt className="text-[11px] tracking-[0.2em] uppercase text-text-light/60 mb-2">Based in</dt>
-            <dd className="text-[15px]">Calgary, AB</dd>
+            <dd className="tap-row text-[15px]">Calgary, AB</dd>
           </div>
         </motion.dl>
       </div>

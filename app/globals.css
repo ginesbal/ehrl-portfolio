@@ -411,10 +411,11 @@ html:has(dialog[open]) {
   }
 }
 
-/* Touch-friendly tap targets */
+/* Touch-friendly tap targets. .tap-row is text that sits beside them and should line up */
 @media (max-width: 767px) and (hover: none) {
   a,
-  button {
+  button,
+  .tap-row {
     min-height: 44px;
     display: inline-flex;
     align-items: center;

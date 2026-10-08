@@ -29,7 +29,7 @@ function QuerySpecimen({ specimen }) {
     return (
         <figure className="max-w-xl xl:mt-4 rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-6 md:p-8">
             <p className={label}>Sample query</p>
-            <p className="mt-3 font-serif text-[clamp(1.625rem,3vw,2.125rem)] leading-[1.15] text-text-primary">
+            <p className="mt-3 font-serif text-[clamp(1.625rem,3vw,2.125rem)] leading-[1.15] text-balance text-text-primary">
                 &ldquo;{query}&rdquo;
             </p>
 

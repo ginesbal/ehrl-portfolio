@@ -11,8 +11,9 @@ const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: fa
 export default function Hero() {
   const [isResumeOpen, setIsResumeOpen] = useState(false)
 
+  // full height from md up; on phones it sizes to its content so the work starts on the first screen
   return (
-    <section className="min-h-[100svh] md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
+    <section className="md:min-h-screen flex md:items-center relative overflow-hidden bg-bg-primary">
 
       <FloatingCircles />
 
@@ -40,7 +41,7 @@ export default function Hero() {
         </motion.div>
 
         {/* main content area */}
-        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pb-24 md:pb-0">
+        <div className="flex flex-col justify-center flex-1 md:flex-none md:justify-center md:min-h-[70vh] max-w-3xl pt-32 pb-16 md:p-0">
 
           {/* mobile name badge */}
           <motion.div

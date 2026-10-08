@@ -69,9 +69,10 @@ export function CaseStudyHero({ project, actions, aside }) {
 
                         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">{actions}</div>
 
+                        {/* each column is a subgrid, so a label that wraps keeps every value on one line */}
                         <dl className="mt-14 md:mt-16 grid grid-cols-3 border-t border-border-light">
                             {project.metrics.map((m) => (
-                                <div key={m.label} className="pt-5 pr-3 pl-4 first:pl-0 border-l border-border-light first:border-l-0">
+                                <div key={m.label} className="row-span-3 grid grid-rows-subgrid content-start pt-5 pr-3 pl-4 first:pl-0 border-l border-border-light first:border-l-0">
                                     <dt className={label}>{m.label}</dt>
                                     <dd className="mt-2 font-serif text-[clamp(1.5rem,3.2vw,2.25rem)] leading-none tabular-nums text-text-primary">
                                         {m.value}
