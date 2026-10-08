@@ -79,7 +79,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 md:mt-8 max-w-md text-[16px] md:text-[18px] leading-relaxed text-balance text-text-secondary"
           >
-            I build fast, accessible, and responsive interfaces.
+            I design and build for the web, with the same care for how an interface looks as for how it works.
           </motion.p>
 
           {/* CTA buttons */}
