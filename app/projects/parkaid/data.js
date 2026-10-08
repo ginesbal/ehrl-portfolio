@@ -29,7 +29,7 @@ export const parkaidData = {
         technicalFocus: [
             'PostGIS radius search on an indexed geography column',
             'Debounced, cached requests from the app',
-            'A backend that deploys and stays up on Render',
+            'A backend that deploys from a push to Render',
             'API contract, data-quality and performance tests'
         ],
         coreFeatures: [
@@ -58,6 +58,7 @@ export const parkaidData = {
             title: 'A backend that deploys',
             challenge: 'The capstone backend ran on a laptop but crashed on startup elsewhere, and three separate problems broke deploys.',
             approach: 'Cut required setup to one setting (DATABASE_URL), made the health check stop querying the database, removed a stray root package-lock.json, and switched to the Supabase pooler URL after the IPv6-only one failed.',
+            tradeoff: 'It is on Render\'s free plan, which sleeps when idle, so the first request after a quiet spell is slow.',
             outcome: 'Push-to-deploy on Render from a single Blueprint file, with each fix confirmed by running it.'
         }
     ],

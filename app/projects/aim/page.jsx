@@ -30,14 +30,23 @@ export default function AimPage() {
                         <div className="space-y-6 max-w-2xl xl:pt-4">
                             {aimData.screenshots.map((s) => (
                                 <figure key={s.src}>
-                                    <Image
-                                        src={s.src}
-                                        alt={s.alt}
-                                        width={s.width}
-                                        height={s.height}
-                                        sizes="(min-width: 1280px) 34vw, (min-width: 768px) 672px, 100vw"
-                                        className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
-                                    />
+                                    <a
+                                        href={s.full}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`${s.alt} (opens the full screenshot)`}
+                                        className="block cursor-zoom-in rounded-[var(--radius-md)]"
+                                    >
+                                        <Image
+                                            src={s.src}
+                                            alt=""
+                                            width={s.width}
+                                            height={s.height}
+                                            sizes="(min-width: 1280px) 34vw, (min-width: 768px) 672px, 100vw"
+                                            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
+                                        />
+                                    </a>
+                                    <figcaption className="mt-3 text-[13px] leading-relaxed text-text-muted">{s.caption}</figcaption>
                                 </figure>
                             ))}
                         </div>

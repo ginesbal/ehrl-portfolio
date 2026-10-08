@@ -7,9 +7,19 @@ export const aimData = {
         github: 'https://github.com/ginesbal/aim'
     },
 
+    // cropped to the part that carries the design (the full captures were ~4px text at this size);
+    // `full` is the uncropped capture, opened on click
     screenshots: [
-        { src: '/screenshots/aim-dashboard.webp', width: 1600, height: 733, alt: 'Dashboard: "focus for 25m on Lab report" with a Begin focusing button, and the daily goal drawn as the "a" of the logo' },
-        { src: '/screenshots/aim-focus.webp', width: 1600, height: 1000, alt: 'Focus: a 25-minute countdown with Pause, Finish early and Discard' }
+        {
+            src: '/screenshots/aim-dashboard-crop.webp', full: '/screenshots/aim-dashboard.webp', width: 1020, height: 616,
+            alt: 'Dashboard: "focus for 25m on Lab report" with a Begin focusing button, and the daily goal drawn as the "a" of the logo',
+            caption: 'The dashboard proposes the next session in one sentence, with one button to start it. The day’s goal is drawn as the logo’s “a”.'
+        },
+        {
+            src: '/screenshots/aim-focus-crop.webp', full: '/screenshots/aim-focus.webp', width: 740, height: 530,
+            alt: 'Focus: a 25-minute countdown with Pause, Finish early and Discard',
+            caption: 'Focus is just the countdown, a +5 min extend, and Pause, Finish early or Discard.'
+        }
     ],
 
     // product facts, not performance claims: aim has no users or usage data yet

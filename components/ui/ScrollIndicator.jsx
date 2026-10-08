@@ -7,7 +7,6 @@ export default function ScrollIndicator() {
     const [opacity, setOpacity] = useState(1)
 
     const rafId = useRef(null)
-    const idleTimeout = useRef(null)
     const lastScrollY = useRef(0)
     const lastOpacity = useRef(opacity)
     const lastVisibility = useRef(isVisible)
@@ -20,20 +19,6 @@ export default function ScrollIndicator() {
         const FADE_START = 20
         const FADE_END = 120           // extend range for a gentler fade
         const HIDE_AFTER = FADE_END + 80 // extra buffer before unmounting
-        const IDLE_OPACITY = 0.35
-        const IDLE_DELAY = 4000
-
-        const scheduleIdleAtTop = () => {
-            clearTimeout(idleTimeout.current)
-            if (lastScrollY.current <= 2) {
-                idleTimeout.current = setTimeout(() => {
-                    // only nudge toward idle if still at top and not already lower
-                    if (lastScrollY.current <= 2) {
-                        updateOpacity(IDLE_OPACITY)
-                    }
-                }, IDLE_DELAY)
-            }
-        }
 
         const updateOpacity = (next) => {
             // reduce noisy updates: only set when change is noticeable
@@ -56,7 +41,6 @@ export default function ScrollIndicator() {
             if (y <= FADE_START) {
                 updateOpacity(1)             // fully visible at very top
                 updateVisibility(true)
-                scheduleIdleAtTop()
                 return
             }
 
@@ -67,9 +51,6 @@ export default function ScrollIndicator() {
 
             updateOpacity(nextOpacity)
             updateVisibility(y <= HIDE_AFTER)
-
-            // no idle fade if user is away from the very top
-            clearTimeout(idleTimeout.current)
         }
 
         const onScroll = () => {
@@ -85,12 +66,10 @@ export default function ScrollIndicator() {
         // initial paint
         lastScrollY.current = window.scrollY || 0
         compute()
-        scheduleIdleAtTop()
 
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => {
             window.removeEventListener('scroll', onScroll)
-            clearTimeout(idleTimeout.current)
             if (rafId.current) cancelAnimationFrame(rafId.current)
         }
     }, [])
@@ -100,33 +79,34 @@ export default function ScrollIndicator() {
     return (
         <button
             type="button"
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-700"
+            className="fixed bottom-8 -translate-x-1/2 z-10 transition-opacity duration-700"
             style={{
+                left: 'calc(50% + var(--sidebar-offset, 0px) / 2)',
                 opacity,
                 willChange: 'opacity, transform',
                 pointerEvents: opacity < 0.05 ? 'none' : 'auto'
             }}
             aria-label="Scroll to projects"
             onClick={() => {
-                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
             }}
         >
             <div className="flex flex-col items-center gap-2 cursor-pointer group">
                 {/* Mouse icon */}
                 <div
                     className="w-6 h-10 border-2 rounded-full flex justify-center pt-2 transition-transform duration-300 group-hover:scale-110"
-                    style={{ borderColor: 'var(--rose-quartz)' }}
+                    style={{ borderColor: 'var(--text-muted)' }}
                 >
                     <div
                         className="w-1 h-2 rounded-full animate-scroll-indicator"
-                        style={{ background: 'var(--rose-quartz)' }}
+                        style={{ background: 'var(--text-muted)' }}
                     />
                 </div>
 
                 {/* Text */}
                 <span
-                    className="text-[11px] tracking-[0.2em] uppercase opacity-75"
-                    style={{ color: 'var(--rose-quartz)' }}
+                    className="text-[11px] tracking-[0.2em] uppercase"
+                    style={{ color: 'var(--text-muted)' }}
                 >
                     Scroll
                 </span>

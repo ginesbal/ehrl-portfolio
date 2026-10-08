@@ -108,7 +108,9 @@ export default function SidebarNav() {
               const isHovered = hoveredItem === section.id
 
               return (
-                <a
+                // Link, not <a>: a full page load to /#contact from a case study lands at the top,
+                // while client-side navigation scrolls to the section (as the mobile menu does)
+                <Link
                   key={section.id}
                   href={onHome ? `#${section.id}` : `/#${section.id}`}
                   onClick={(e) => handleClick(e, section.id)}
@@ -134,7 +136,7 @@ export default function SidebarNav() {
                   >
                     {section.label}
                   </span>
-                </a>
+                </Link>
               )
             })}
           </nav>

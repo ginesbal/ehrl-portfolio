@@ -45,8 +45,8 @@ function QuerySpecimen({ specimen }) {
 
             <div className="mt-6 pt-5 border-t border-border-light">
                 <p className={`${label} flex justify-between gap-4`}>
-                    <span>Top matches</span>
-                    <span className="tabular-nums normal-case tracking-normal text-[12px]">{matched} of {catalog}</span>
+                    <span>Top matches <span className="tabular-nums normal-case tracking-normal text-[12px]">· {matched} of {catalog}</span></span>
+                    <span>Score</span>
                 </p>
                 <ol className="mt-2">
                     {results.map((r, i) => (
@@ -65,7 +65,7 @@ function QuerySpecimen({ specimen }) {
             </div>
 
             <figcaption className="mt-5 text-[12px] leading-relaxed text-text-muted">
-                Real output of the app&apos;s parser and ranking on its catalog (evtable.com data, March 2024), run with token matching as deployed. Prices in CAD; scores out of 100.
+                Real output of the app&apos;s parser and ranking on its catalog (evtable.com data, March 2024), as deployed. Every word became a filter, so the scores (out of 100) come from spec fit and the range-and-price tie-break. Prices in CAD.
             </figcaption>
         </figure>
     )

@@ -38,7 +38,7 @@ export const projects = [
         category: 'Web Development, Search',
         year: '2025',
 
-        description: 'Electric vehicle search in plain language: a query like “affordable SUV under 50000” becomes filters and a ranked list of 231 EVs. Built with FastAPI.',
+        description: 'Electric vehicle search in plain language: a query like “SUV under 50k with over 450 km of range” becomes filters and a ranked list of 231 EVs. Built with FastAPI.',
 
         demo: 'https://evision.up.railway.app/',
         github: 'https://github.com/ginesbal/ev_chatbotmodel',

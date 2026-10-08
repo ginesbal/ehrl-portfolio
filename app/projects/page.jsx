@@ -124,11 +124,13 @@ export default function ProjectsArchive() {
                                     >
                                         <Link
                                             href={`/projects/${project.id}`}
+                                            // the preview follows keyboard focus too, not only the mouse
+                                            onFocus={() => setActiveId(project.id)}
                                             className="group relative block border-t border-border-light active:scale-[0.995] transition-transform duration-150 ease-out"
                                         >
                                             {/* Left accent bar */}
                                             <div
-                                                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
+                                                className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 group-focus-visible:scale-y-100 transition-transform duration-[400ms]"
                                                 style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
                                             />
 
@@ -200,8 +202,9 @@ export default function ProjectsArchive() {
                                 <div className="border-t border-border-light" />
                             </div>
 
-                            {/* Sticky preview panel — desktop only */}
-                            <aside className="hidden lg:block sticky top-24 self-start">
+                            {/* Sticky preview panel — desktop only. A mouse shortcut: every row already links to
+                                the same page, so it stays out of the tab order and the accessibility tree. */}
+                            <aside aria-hidden="true" className="hidden lg:block sticky top-24 self-start">
                                 <AnimatePresence mode="wait">
                                     {activeProject && <motion.div
                                         key={activeProject.id}
@@ -212,7 +215,7 @@ export default function ProjectsArchive() {
                                     >
                                         <Link
                                             href={`/projects/${activeProject.id}`}
-                                            aria-label={`View ${activeProject.title} project`}
+                                            tabIndex={-1}
                                             className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
                                         >
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
