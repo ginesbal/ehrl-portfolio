@@ -62,9 +62,10 @@ export const evisionData = {
         },
         {
             title: 'Caching the catalog and results',
-            challenge: 'Reloading and normalising the EV catalog, or re-ranking the same query, on every request would repeat the same work.',
-            approach: 'The normalised catalog is cached for 24 hours and each page of results for 20 minutes (up to 1,024 pages, least recently used evicted first). If a catalog refresh fails, the last good copy keeps serving.',
-            outcome: 'Repeat searches come from memory, and a failed upstream fetch does not take search down.'
+            challenge: 'Reloading and normalising the EV catalog on every request would repeat slow work and fail whenever the upstream source does.',
+            approach: 'The normalised catalog is cached for 24 hours, and if a refresh fails the last good copy keeps serving. Pages of results are cached for 20 minutes too (up to 1,024, least recently used evicted first), keyed by query, filters, sort and page.',
+            tradeoff: 'The result cache is checked after parsing, filtering and ranking, so a repeat search still re-ranks and only skips building the page. Checking it first would make repeats cheap.',
+            outcome: 'The catalog loads once a day instead of once a request, and a failed upstream fetch does not take search down.'
         },
         {
             title: 'Rate limiting without accounts',

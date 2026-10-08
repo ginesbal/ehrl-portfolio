@@ -13,12 +13,12 @@ export const aimData = {
         {
             src: '/screenshots/aim-dashboard-crop.webp', full: '/screenshots/aim-dashboard.webp', width: 1020, height: 616,
             alt: 'Dashboard: "focus for 25m on Lab report" with a Begin focusing button, and the daily goal drawn as the "a" of the logo',
-            caption: 'The dashboard proposes the next session in one sentence, with one button to start it. The day’s goal is drawn as the logo’s “a”.'
+            caption: 'The words that join the sentence are handwritten; the task and length are set plainly. Begin is the only filled button, and the “a” is the only data display.'
         },
         {
             src: '/screenshots/aim-focus-crop.webp', full: '/screenshots/aim-focus.webp', width: 740, height: 530,
             alt: 'Focus: a 25-minute countdown with Pause, Finish early and Discard',
-            caption: 'Focus is just the countdown, a +5 min extend, and Pause, Finish early or Discard.'
+            caption: 'Focus clears away everything but the clock and its controls. The countdown is set in a light weight so a large number stays calm.'
         }
     ],
 

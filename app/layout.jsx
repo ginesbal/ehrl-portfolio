@@ -1,8 +1,5 @@
-'use client'
-
 // app/layout.jsx
-import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx'
-import { MotionConfig } from 'framer-motion'
+import Providers from '@/components/Providers.jsx'
 import { Source_Sans_3, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
@@ -22,12 +19,17 @@ const sourceSerif = Source_Serif_4({
   display: 'swap',
 })
 
+// Defaults; pages with their own metadata (the case studies, /projects) replace them,
+// so each route has exactly one <title> and description.
+export const metadata = {
+  title: 'Ehrl Balquin - Portfolio',
+  description: 'Ehrl Balquin, full-stack developer in Calgary. Selected work, background, and contact.',
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <head>
-        <title>Ehrl Balquin - Portfolio</title>
-        <meta name="description" content="Ehrl Balquin, full-stack developer in Calgary. Selected work, background, and contact." />
         {/* Strip homepage hash on hard refresh only */}
         <Script id="strip-home-hash-on-reload" strategy="beforeInteractive">
           {`
@@ -55,10 +57,7 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
-        <ErrorBoundary>
-          {/* framer ignores prefers-reduced-motion unless told to */}
-          <MotionConfig reducedMotion="user">{children}</MotionConfig>
-        </ErrorBoundary>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

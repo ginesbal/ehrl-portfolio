@@ -38,7 +38,7 @@ export default function ProjectsArchive() {
                 className="relative transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)', minHeight: '100vh' }}
             >
-                <section className="relative bg-bg-primary pt-28 lg:pt-20 pb-16 md:pb-24 overflow-hidden">
+                <section className="relative bg-bg-primary pt-28 lg:pt-20 pb-16 md:pb-24 overflow-clip">
                     <FloatingCircles section="projects" />
 
                     <div className="container-custom relative z-10">

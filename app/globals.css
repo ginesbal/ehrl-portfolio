@@ -186,6 +186,7 @@
   html {
     @apply antialiased;
     overflow-x: hidden !important;
+    overflow-x: clip !important; /* clip, not hidden: hidden makes a scroll container, which breaks position: sticky */
     max-width: 100vw;
     scroll-padding-top: 80px;
   }
@@ -203,6 +204,7 @@
     overscroll-behavior-y: auto !important;
     touch-action: auto !important;
     overflow-x: hidden !important;
+    overflow-x: clip !important; /* clip, not hidden: hidden makes a scroll container, which breaks position: sticky */
     position: relative;
   }
 
@@ -367,8 +369,10 @@ button {
   outline-offset: 3px;
 }
 
-/* Native <dialog> doesn't lock page scroll on its own */
-html:has(dialog[open]) {
+/* Native <dialog> doesn't lock page scroll on its own, and body.menu-open alone can't:
+   html's overflow keeps body's from reaching the viewport, so lock html itself */
+html:has(dialog[open]),
+html:has(body.menu-open) {
   overflow: hidden;
 }
 
