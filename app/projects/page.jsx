@@ -22,8 +22,8 @@ export default function ProjectsArchive() {
         const mq = window.matchMedia('(hover: hover)')
         setCanHover(mq.matches)
         const handler = (e) => setCanHover(e.matches)
-        mq.addEventListener?.('change', handler) || mq.addListener?.(handler)
-        return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
+        mq.addEventListener('change', handler)
+        return () => mq.removeEventListener('change', handler)
     }, [])
 
     const activeProject = projects.find((p) => p.id === activeId) ?? projects[0] ?? null

@@ -7,6 +7,13 @@ import { useEffect, useState } from 'react'
 
 const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
 
+const sections = [
+  { id: 'hero', label: 'Home', num: '01' },
+  { id: 'projects', label: 'Projects', num: '02' },
+  { id: 'about', label: 'About', num: '03' },
+  { id: 'contact', label: 'Contact', num: '04' },
+]
+
 export default function SidebarNav() {
   const [activeSection, setActiveSection] = useState('hero')
   const [isResumeOpen, setIsResumeOpen] = useState(false)
@@ -17,13 +24,6 @@ export default function SidebarNav() {
   const onHome = pathname === '/'
   const onProjectsRoute = pathname?.startsWith('/projects')
   const onCaseStudy = pathname?.startsWith('/projects/')
-
-  const sections = [
-    { id: 'hero', label: 'Home', num: '01' },
-    { id: 'projects', label: 'Projects', num: '02' },
-    { id: 'about', label: 'About', num: '03' },
-    { id: 'contact', label: 'Contact', num: '04' },
-  ]
 
   // keep sidebar active state in sync with route for non-home pages
   useEffect(() => {
@@ -83,6 +83,65 @@ export default function SidebarNav() {
 
   return (
     <>
+      {/* sidebar toggle - minimizes on scroll / back button on project pages; before the aside so it is the first tab stop */}
+      {onCaseStudy ? (
+        <Link
+          href="/projects"
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
+          aria-label="Back to projects"
+          title="Back to projects"
+        >
+          <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
+          {!toggleMinimized && (
+            <span
+              className="text-[10px] tracking-[0.15em] uppercase font-semibold"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Back
+            </span>
+          )}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setCollapsed((prev) => !prev)}
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
+          aria-pressed={collapsed}
+          aria-label={collapsed ? 'Show sidebar' : 'Hide sidebar'}
+          title={collapsed ? 'Show sidebar' : 'Hide sidebar'}
+        >
+          <span
+            className="relative flex items-center justify-center"
+            style={{ width: toggleMinimized ? '20px' : '24px', height: toggleMinimized ? '20px' : '24px' }}
+          >
+            <span
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-20"
+              style={{ background: 'var(--border-light)' }}
+            />
+            <span
+              className="relative block rounded-full transition-all duration-500"
+              style={{
+                width: '2px',
+                height: toggleMinimized ? '14px' : '18px',
+                background: 'var(--border-medium)',
+                transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
+                transformOrigin: 'center'
+              }}
+            />
+          </span>
+          {!toggleMinimized && (
+            <span
+              className="text-[10px] tracking-[0.15em] uppercase transition-opacity duration-500"
+              style={{ color: 'var(--text-secondary)', opacity: collapsed ? 0.75 : 1 }}
+            >
+              {collapsed ? 'Show sidebar' : 'Hide sidebar'}
+            </span>
+          )}
+        </button>
+      )}
+
       {/* main sidebar */}
       <aside
         className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] flex-col justify-between py-10 px-8 bg-bg-secondary border-r border-border-light z-40 transition-transform duration-500"
@@ -90,7 +149,7 @@ export default function SidebarNav() {
       >
         <div>
           {/* logo */}
-          <Link href="/" className="inline-flex items-center gap-3 group mb-20">
+          <Link href="/" aria-label="Home" className="inline-flex items-center gap-3 group mb-20">
             <div className="relative w-12 h-12">
               <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-all duration-500 group-hover:scale-110" />
               <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-rose-taupe">
@@ -158,65 +217,6 @@ export default function SidebarNav() {
           </span>
         </button>
       </aside>
-
-      {/* sidebar toggle button - minimizes on scroll / back button on project pages */}
-      {onCaseStudy ? (
-        <Link
-          href="/projects"
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
-          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
-          aria-label="Back to projects"
-          title="Back to projects"
-        >
-          <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
-          {!toggleMinimized && (
-            <span
-              className="text-[10px] tracking-[0.15em] uppercase font-semibold"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Back
-            </span>
-          )}
-        </Link>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setCollapsed((prev) => !prev)}
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[var(--shadow-sm)] transition-all duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
-          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
-          aria-pressed={collapsed}
-          aria-label={collapsed ? 'Show sidebar' : 'Hide sidebar'}
-          title={collapsed ? 'Show sidebar' : 'Hide sidebar'}
-        >
-          <span
-            className="relative flex items-center justify-center"
-            style={{ width: toggleMinimized ? '20px' : '24px', height: toggleMinimized ? '20px' : '24px' }}
-          >
-            <span
-              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-20"
-              style={{ background: 'var(--border-light)' }}
-            />
-            <span
-              className="relative block rounded-full transition-all duration-500"
-              style={{
-                width: '2px',
-                height: toggleMinimized ? '14px' : '18px',
-                background: 'var(--border-medium)',
-                transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
-                transformOrigin: 'center'
-              }}
-            />
-          </span>
-          {!toggleMinimized && (
-            <span
-              className="text-[10px] tracking-[0.15em] uppercase transition-opacity duration-500"
-              style={{ color: 'var(--text-secondary)', opacity: collapsed ? 0.75 : 1 }}
-            >
-              {collapsed ? 'Show sidebar' : 'Hide sidebar'}
-            </span>
-          )}
-        </button>
-      )}
 
       {isResumeOpen && (
         <ResumeModal onClose={() => setIsResumeOpen(false)} />

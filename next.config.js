@@ -29,12 +29,6 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: "/projects/evision/app/:path*",
-        headers: [
-          { key: "Cache-Control", value: "no-store" }
-        ]
-      },
     ];
   },
   // ParkPal was renamed parkaid; keep old links working
@@ -42,14 +36,6 @@ const nextConfig = {
     return [
       { source: '/projects/parkpal', destination: '/projects/parkaid', permanent: true },
       { source: '/parkpal/:path*', destination: '/parkaid/:path*', permanent: true },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/projects/evision/app/:path*",
-        destination: "https://evision.up.railway.app/:path*"
-      }
     ];
   },
 };

@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-bg-primary py-4 border-t border-border-light">
       <div className="container-custom">
         <div className="flex flex-row md:flex-row items-center justify-between gap-4">
-          <Link href="/" className="inline-flex items-center gap-3 group">
+          <Link href="/" aria-label="Home" className="inline-flex items-center gap-3 group">
             <div className="relative w-10 h-10">
               <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-all duration-500 group-hover:scale-110" />
               <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-rose-taupe">
@@ -20,7 +20,7 @@ export default function Footer() {
             <a href="mailto:ehrlbalquin@gmail.com" className="hover:text-rose-taupe transition-colors">Email</a>
             <a href="https://linkedin.com/in/ehrlbalquin" target="_blank" rel="noopener noreferrer" className="hover:text-rose-taupe transition-colors">LinkedIn</a>
             <a href="https://github.com/ginesbal" target="_blank" rel="noopener noreferrer" className="hover:text-rose-taupe transition-colors">GitHub</a>
-            <span className="text-text-muted/50">—</span>
+            <span aria-hidden className="text-text-muted/50">—</span>
             <span className="text-[12px]">© {new Date().getFullYear()}</span>
           </div>
         </div>

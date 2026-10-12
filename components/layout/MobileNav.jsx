@@ -41,12 +41,19 @@ export default function MobileNav() {
     }, [pathname])
 
     useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.classList.add('menu-open')
-        } else {
-            document.body.classList.remove('menu-open')
+        if (!mobileMenuOpen) return
+        document.body.classList.add('menu-open')
+        // Esc closes the menu and hands focus back to the toggle
+        const onKey = (e) => {
+            if (e.key !== 'Escape') return
+            setMobileMenuOpen(false)
+            toggleRef.current?.focus()
         }
-        return () => document.body.classList.remove('menu-open')
+        document.addEventListener('keydown', onKey)
+        return () => {
+            document.body.classList.remove('menu-open')
+            document.removeEventListener('keydown', onKey)
+        }
     }, [mobileMenuOpen])
 
     useEffect(() => {
@@ -153,6 +160,11 @@ export default function MobileNav() {
                         transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                         className="lg:hidden fixed left-0 right-0 z-40 bg-bg-secondary border-b border-border-light"
                         style={{ top: '76px' }}
+                        // tabbing past the last item would reach the page hidden behind the menu, so close it
+                        onBlur={(e) => {
+                            const to = e.relatedTarget
+                            if (to && !e.currentTarget.contains(to) && to !== toggleRef.current) setMobileMenuOpen(false)
+                        }}
                     >
                         <div className="container-custom py-2 max-h-[calc(100vh-80px)] overflow-y-auto">
                             {['Projects', 'About', 'Contact'].map((item, index) => {

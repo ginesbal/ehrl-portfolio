@@ -22,7 +22,7 @@ const sourceSerif = Source_Serif_4({
 // Defaults; pages with their own metadata (the case studies, /projects) replace them,
 // so each route has exactly one <title> and description.
 export const metadata = {
-  title: 'Ehrl Balquin - Portfolio',
+  title: 'Ehrl Balquin | Portfolio',
   description: 'Ehrl Balquin, full-stack developer in Calgary. Selected work, background, and contact.',
 }
 
