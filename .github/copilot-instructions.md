@@ -94,7 +94,7 @@ parkaid uses an iframe to `/parkaid/index.html` (Expo web export). Future mobile
 
 The export is hand-patched. Re-apply these after re-exporting it:
 - `public/_expo/static/js/web/AppEntry-*.js`: `apiUrl` is `""` (same-origin API route); the check-signs aria-label; the Find Parking web fallback's `screenshot` style is `{width:'100%',height:'auto',aspectRatio:828/1792}` so the picture is anchored to the top instead of a centred crop in windows shorter than 844px.
-- `public/parkaid/index.html`: the inline `keydown` script that closes the portfolio's demo dialog on Esc while the app has focus.
+- `public/parkaid/index.html`: the inline script that closes the portfolio's demo dialog on Esc while the app has focus, and turns geolocation off (the data covers downtown Calgary only, so the app always falls back to it, in the dialog or in its own tab). Headers in `next.config.js` don't reach `public/` files on Netlify, so this lives in the page.
 
 ## Key Conventions
 
