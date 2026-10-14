@@ -10,7 +10,7 @@ export const projects = [
         title: 'parkaid',
         category: 'Mobile Development, Spatial Databases',
         year: '2024',
-        role: 'Full Stack Developer',
+        role: 'Full-Stack Developer',
 
         description: 'Mobile parking finder for downtown Calgary built with React Native and PostGIS. Lists the closest of about 2,700 city parking spots with distance and walking time.',
         // the home row's text; its tech line already names the stack

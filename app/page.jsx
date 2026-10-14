@@ -40,7 +40,7 @@ export default function Home() {
                 <Waypoint
                     id="contact"
                     label="Get in Touch"
-                    annotation="let's work together"
+                    annotation="let’s work together"
                     meta="04"
                 />
                 <Contact />

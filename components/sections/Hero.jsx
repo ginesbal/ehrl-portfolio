@@ -107,7 +107,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden md:block">
+      {/* not on landscape phones, where it would sit on the statement */}
+      <div className="hidden md:block [@media(max-height:500px)]:hidden">
         <ScrollIndicator />
       </div>
 

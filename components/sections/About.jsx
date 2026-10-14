@@ -2,14 +2,15 @@
 
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import ErrorBoundary from '../ui/ErrorBoundary.jsx'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 const SplineScene = dynamic(() => import('../ui/SplineScene'), { ssr: false })
 
 const skills = [
   ['Languages', 'Java · Python · JavaScript · TypeScript · C# · SQL · HTML/CSS'],
-  ['Frontend & Mobile', 'React · React Native · Next.js · Expo Go · Tailwind'],
+  ['Front-end & Mobile', 'React · React Native · Next.js · Expo Go · Tailwind'],
   ['Backend & APIs', 'Node.js · Express · FastAPI · REST · JWT Auth'],
   ['Databases', 'PostgreSQL · MySQL · MongoDB · SQLite'],
   ['Testing & QA', 'Jest · Postman · Selenium'],
@@ -18,9 +19,9 @@ const skills = [
 ]
 
 export default function About() {
-  // The 3D scene is desktop-only; don't download the runtime on phones
+  // The 3D scene is desktop-only, and its ~560KB runtime loads only as About comes near
   const [showScene, setShowScene] = useState(false)
-  useEffect(() => setShowScene(window.matchMedia('(min-width: 1024px)').matches), [])
+  const nearScene = () => window.matchMedia('(min-width: 1024px)').matches && setShowScene(true)
 
   return (
     <section className="relative bg-bg-primary pt-8 md:pt-0 pb-12 overflow-hidden">
@@ -35,7 +36,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
               About
             </motion.h2>
@@ -46,7 +47,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
                 <p>Hey there!</p>
                 <p>
@@ -59,7 +60,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.35 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               >
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                   {skills.map(([label, value]) => (
@@ -80,7 +81,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -101,22 +102,25 @@ export default function About() {
             className="hidden lg:flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true, margin: '400px' }}
+            onViewportEnter={nearScene}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative w-full aspect-square max-w-[400px]">
               <div className="absolute inset-0 rounded-full border border-border-light" />
               <div className="absolute inset-4 rounded-full overflow-hidden bg-bg-secondary">
                 {showScene && (
-                  <SplineScene
-                    sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode"
-                    className="w-full h-full"
-                    fallbackContent={
+                  // the runtime throws (it has no onError) when its chunk, the scene, the decoder or
+                  // WebGL is unavailable; this keeps that inside the circle, not the page-wide boundary
+                  <ErrorBoundary
+                    fallback={
                       <div className="w-full h-full grid place-items-center">
                         <p className="text-[13px] text-text-muted">3D scene unavailable</p>
                       </div>
                     }
-                  />
+                  >
+                    <SplineScene sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode" className="w-full h-full" />
+                  </ErrorBoundary>
                 )}
               </div>
             </div>

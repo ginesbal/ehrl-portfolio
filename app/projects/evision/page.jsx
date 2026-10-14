@@ -64,8 +64,8 @@ function QuerySpecimen({ specimen }) {
                 </ol>
             </div>
 
-            <figcaption className="mt-5 text-[12px] leading-relaxed text-text-muted">
-                Real output of the app&apos;s parser and ranking on its catalog (evtable.com data, March 2024), as deployed. Every word became a filter, so the scores (out of 100) come from spec fit and the range-and-price tie-break. Prices in CAD.
+            <figcaption className="mt-5 text-[13px] leading-relaxed text-pretty text-text-muted">
+                Real output of the app’s parser and ranking on its catalog (evtable.com data, March 2024), as deployed. Every word became a filter, so the scores (out of 100) come from spec fit and the range-and-price tie-break. Prices in CAD.
             </figcaption>
         </figure>
     )

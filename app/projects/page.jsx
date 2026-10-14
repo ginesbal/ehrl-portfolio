@@ -3,6 +3,7 @@
 import Footer from '@/components/layout/Footer.jsx'
 import MobileNav from '@/components/layout/MobileNav.jsx'
 import SidebarNav from '@/components/layout/SidebarNav.jsx'
+import { Specimen } from '@/components/sections/Projects.jsx'
 import FloatingCircles from '@/components/ui/FloatingCircles.jsx'
 import { projects } from '@/data/portfolio-data'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -14,7 +15,6 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
 const EASE_OUT_EMIL = [0.23, 1, 0.32, 1]
 
 export default function ProjectsArchive() {
-    const [hoveredId, setHoveredId] = useState(null)
     const [activeId, setActiveId] = useState(null)
     const [canHover, setCanHover] = useState(true)
 
@@ -70,8 +70,8 @@ export default function ProjectsArchive() {
                                 <span className="inline-flex w-2 h-2 rounded-full bg-rose-taupe" />
                                 <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted">Archive</span>
                                 <div className="h-px w-12 bg-border-light" />
-                                <span className="text-[11px] tracking-[0.25em] uppercase text-text-muted tabular-nums">
-                                    {String(projects.length).padStart(2, '0')} works
+                                <span className="text-[11px] tracking-[0.3em] uppercase text-text-muted tabular-nums">
+                                    {projects.length} works
                                 </span>
                             </motion.div>
 
@@ -86,13 +86,13 @@ export default function ProjectsArchive() {
                             </motion.h1>
 
                             <motion.p
-                                className="mt-6 md:mt-8 max-w-md text-[14px] leading-relaxed text-text-secondary"
+                                className="mt-6 md:mt-8 max-w-xl text-[17px] md:text-[19px] leading-relaxed text-text-secondary"
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
                             >
-                                A few things I&apos;ve built over the past couple of years.
+                                A few things I’ve built over the past couple of years.
                             </motion.p>
                         </header>
 
@@ -108,19 +108,7 @@ export default function ProjectsArchive() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-80px' }}
                                         transition={{ duration: 0.6, delay: index * 0.05, ease: EASE_OUT_EXPO }}
-                                        onMouseEnter={() => {
-                                            if (!canHover) return
-                                            setHoveredId(project.id)
-                                            setActiveId(project.id)
-                                        }}
-                                        onMouseLeave={() => {
-                                            if (!canHover) return
-                                            setHoveredId(null)
-                                        }}
-                                        style={{
-                                            opacity: canHover && hoveredId !== null && hoveredId !== project.id ? 0.35 : 1,
-                                            transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1)',
-                                        }}
+                                        onMouseEnter={() => canHover && setActiveId(project.id)}
                                     >
                                         <Link
                                             href={`/projects/${project.id}`}
@@ -155,7 +143,7 @@ export default function ProjectsArchive() {
                                                     </div>
 
                                                     {project.description && (
-                                                        <p className="mt-3 md:mt-4 max-w-xl text-[15px] leading-relaxed text-text-secondary line-clamp-2">
+                                                        <p className="mt-3 md:mt-4 max-w-xl text-[15px] leading-relaxed text-pretty text-text-secondary">
                                                             {project.description}
                                                         </p>
                                                     )}
@@ -176,7 +164,7 @@ export default function ProjectsArchive() {
 
                                                 {/* Right column — desktop */}
                                                 <div className="hidden md:flex flex-col items-end gap-1.5 shrink-0">
-                                                    <span className="text-[11px] tracking-[0.25em] tabular-nums text-text-muted">
+                                                    <span className="text-[11px] tracking-[0.2em] tabular-nums text-text-muted">
                                                         {String(index + 1).padStart(2, '0')}
                                                     </span>
                                                     <span className="text-[11px] tracking-[0.2em] text-text-muted">
@@ -216,23 +204,21 @@ export default function ProjectsArchive() {
                                         <Link
                                             href={`/projects/${activeProject.id}`}
                                             tabIndex={-1}
-                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 shadow-[var(--shadow-xs)] hover:border-rose-taupe/40 hover:shadow-[var(--shadow-sm)] active:scale-[0.99] transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-expo)]"
+                                            className="group block rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-5 hover:border-rose-taupe/40 active:scale-[0.99] transition-[border-color,transform] duration-300 ease-[var(--ease-out-expo)]"
                                         >
                                             <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-bg-accent mb-5">
-                                                {activeProject.preview ? (
-                                                    // screen peeking up from the bottom edge: a phone, or a wider desktop window
-                                                    // (88% or 46% of the card's 318px inner width)
+                                                {/* the same artefact as the home row: EVision's query, or a screen peeking up
+                                                    from the bottom edge, a phone or a wider desktop window (88% or 46% of 318px) */}
+                                                {activeProject.id === 'evision' ? (
+                                                    <Specimen className="transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1" />
+                                                ) : (activeProject.thumb ?? activeProject.preview) ? (
                                                     <Image
-                                                        src={activeProject.preview}
+                                                        src={activeProject.thumb ?? activeProject.preview}
                                                         alt=""
                                                         sizes={activeProject.screen === 'desktop' ? '282px' : '148px'}
-                                                        className={`absolute left-1/2 -translate-x-1/2 h-auto shadow-[var(--shadow-md)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
+                                                        className={`absolute left-1/2 -translate-x-1/2 h-auto transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
                                                     />
-                                                ) : (
-                                                    <span className="absolute inset-0 grid place-items-center px-6 text-center font-serif text-[32px] leading-[1.05] text-text-primary/80">
-                                                        {activeProject.title}
-                                                    </span>
-                                                )}
+                                                ) : null}
                                             </div>
 
                                             <div className="space-y-3">
@@ -245,7 +231,7 @@ export default function ProjectsArchive() {
                                                     </span>
                                                 </div>
 
-                                                <p className="text-[14px] leading-relaxed text-text-secondary line-clamp-3">
+                                                <p className="text-[14px] leading-relaxed text-pretty text-text-secondary">
                                                     {activeProject.description}
                                                 </p>
 
@@ -289,7 +275,7 @@ export default function ProjectsArchive() {
                             className="mt-20 md:mt-28 pt-8 border-t border-border-light"
                         >
                             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <span className="text-[11px] tracking-[0.25em] uppercase text-text-muted">
+                                <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
                                     End of archive
                                 </span>
                                 <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">

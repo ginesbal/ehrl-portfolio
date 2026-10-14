@@ -22,14 +22,15 @@ export default function MobileNav() {
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50)
-            const sections = ['projects', 'skills', 'about', 'contact']
-            const current = sections.find((section) => {
-                const el = document.getElementById(section)
-                if (!el) return false
-                const rect = el.getBoundingClientRect()
-                return rect.top <= 120 && rect.bottom >= 120
-            })
-            setActiveSection(current || '')
+            // the last section whose top has passed the bar, as the sidebar does (the ids sit on
+            // short waypoint bands, so testing whether one straddles a line goes blank mid-section)
+            let current = ''
+            for (const id of ['projects', 'about', 'contact']) {
+                const el = document.getElementById(id)
+                if (el && el.getBoundingClientRect().top <= 120) current = id
+            }
+            if (document.getElementById('contact') && Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 2) current = 'contact'
+            setActiveSection(current)
         }
         window.addEventListener('scroll', handleScroll, { passive: true })
         handleScroll()
@@ -105,16 +106,16 @@ export default function MobileNav() {
         <>
             {/* mobile top nav */}
             <nav
-                className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 shadow-sm backdrop-blur ${scrolled ? 'bg-bg-accent/90' : 'bg-bg-accent/95'}`}
+                className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-colors duration-300 py-4 backdrop-blur ${scrolled ? 'bg-bg-accent/90' : 'bg-bg-accent/95'}`}
                 style={{ borderBottom: '2px solid var(--border-light)' }}
             >
                 <div className="container-custom">
                     <div className="flex items-center justify-between">
                         <Link href="/" aria-label="Home" className="flex items-center group">
                             <div
-                                className="w-10 h-10 rounded-full border-2 border-rose-taupe flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-rose-taupe"
+                                className="w-10 h-10 rounded-full border-2 border-rose-taupe flex items-center justify-center transition-[transform,background-color] duration-300 group-hover:scale-110 group-hover:bg-rose-taupe"
                             >
-                                <span className="text-[14px] font-semibold text-text-primary group-hover:text-text-light transition-colors">
+                                <span className="text-[14px] font-semibold text-rose-taupe group-hover:text-text-light transition-colors">
                                     eb
                                 </span>
                             </div>
@@ -123,13 +124,14 @@ export default function MobileNav() {
                         <button
                             ref={toggleRef}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full z-50"
+                            className="relative w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-full z-50"
                             aria-label="Toggle menu"
                             aria-expanded={mobileMenuOpen}
+                            aria-controls="mobile-menu"
                         >
-                            <span className={`w-6 h-0.5 bg-text-primary transition-all duration-200 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-                            <span className={`w-6 h-0.5 bg-text-primary transition-all duration-200 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
-                            <span className={`w-6 h-0.5 bg-text-primary transition-all duration-200 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                            <span className={`w-6 h-0.5 bg-text-primary transition-transform duration-200 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                            <span className={`w-6 h-0.5 bg-text-primary transition-opacity duration-200 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
+                            <span className={`w-6 h-0.5 bg-text-primary transition-transform duration-200 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
                         </button>
                     </div>
                 </div>
@@ -152,8 +154,10 @@ export default function MobileNav() {
 
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <motion.div
+                    <motion.nav
                         key="mobile-menu-dropdown"
+                        id="mobile-menu"
+                        aria-label="Menu"
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
@@ -176,7 +180,7 @@ export default function MobileNav() {
                                         href={href}
                                         prefetch={false}
                                         onClick={(e) => handleMobileLinkClick(e, item)}
-                                        className={`block py-3 text-[15px] font-bold transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
+                                        className={`block py-3 text-[15px] font-semibold transition-colors min-h-[48px] flex items-center ${active ? 'text-rose-taupe' : 'text-text-primary'}`}
                                         style={{
                                             animation: `fadeIn 0.24s var(--ease-out-emil) ${index * 0.04}s both`,
                                         }}
@@ -196,7 +200,7 @@ export default function MobileNav() {
                                 Resume
                             </button>
                         </div>
-                    </motion.div>
+                    </motion.nav>
                 )}
             </AnimatePresence>
 

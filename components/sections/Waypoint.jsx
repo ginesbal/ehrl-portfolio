@@ -5,7 +5,7 @@ export default function Waypoint({
     <section id={id} className="py-8 md:py-10 bg-bg-primary">
       <div className="container-custom">
         <div className="flex items-center gap-4 md:gap-8">
-          <div className="flex items-center gap-2 shrink-0 text-[11px] tracking-[0.3em] uppercase text-text-muted">
+          <div className="flex items-center gap-4 shrink-0 text-[11px] tracking-[0.3em] uppercase text-text-muted">
             <span className="inline-flex w-2 h-2 rounded-full bg-rose-taupe" />
             <span>{label}</span>
           </div>

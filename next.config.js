@@ -5,13 +5,8 @@ const nextConfig = {
     config.resolve.symlinks = false;
     return config;
   },
+  // every image is local, so no remotePatterns: the optimizer won't resize other sites' images
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
     formats: ['image/avif', 'image/webp'],
   },
   async headers() {

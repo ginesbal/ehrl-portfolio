@@ -29,11 +29,11 @@ function PhoneFrame({ children }) {
                     boxShadow: '0 20px 60px rgba(28,25,23,0.3), 0 0 0 1px rgba(243,242,241,0.08) inset',
                 }}
             >
-                <div aria-hidden className="absolute top-[10px] left-1/2 -translate-x-1/2 h-7 w-28 bg-[#131210] rounded-b-2xl z-10" />
+                <div aria-hidden className="absolute top-[10px] left-1/2 -translate-x-1/2 h-7 w-28 bg-bg-dark rounded-b-2xl z-10" />
                 <div className="absolute overflow-hidden rounded-[28px] bg-bg-primary" style={{ inset: 12, top: 26 }}>
                     {children}
                 </div>
-                <div aria-hidden className="absolute bottom-2 left-1/2 -translate-x-1/2 h-1 w-[120px] rounded-full bg-[rgba(243,242,241,0.25)]" />
+                <div aria-hidden className="absolute bottom-2 left-1/2 -translate-x-1/2 h-1 w-[120px] rounded-full bg-text-light/25" />
             </div>
         </div>
     )
@@ -44,18 +44,28 @@ export default function PhoneMockup({ screenshots = [] }) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [held, setHeld] = useState(false) // pointer or focus is on the carousel
     const [picked, setPicked] = useState(false) // a dot was chosen: stop for good
+    const [inView, setInView] = useState(false)
+    const ref = useRef(null)
+
+    // only rotate while the phone is mostly on screen (on a phone it starts below the fold)
+    useEffect(() => {
+        const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.6 })
+        io.observe(ref.current)
+        return () => io.disconnect()
+    }, [])
 
     // auto-rotate screenshots (respects reduced-motion)
     useEffect(() => {
-        if (held || picked || screenshots.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        if (!inView || held || picked || screenshots.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
         const id = setInterval(() => setCurrentSlide((prev) => (prev + 1) % screenshots.length), 4000)
         return () => clearInterval(id)
-    }, [held, picked, screenshots.length])
+    }, [inView, held, picked, screenshots.length])
 
     const current = screenshots[currentSlide]
 
     return (
         <div
+            ref={ref}
             className="flex flex-col items-center gap-4"
             onPointerEnter={() => setHeld(true)}
             onPointerLeave={() => setHeld(false)}

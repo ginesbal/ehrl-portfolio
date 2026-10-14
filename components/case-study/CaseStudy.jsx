@@ -59,7 +59,7 @@ export function CaseStudyHero({ project, actions, aside }) {
                             {project.title}<span className="italic text-rose-taupe">.</span>
                         </h1>
 
-                        <p className="mt-6 md:mt-8 max-w-xl text-[17px] md:text-[19px] leading-relaxed text-text-secondary">
+                        <p className="mt-6 md:mt-8 max-w-xl text-[17px] md:text-[19px] leading-relaxed text-pretty text-text-secondary">
                             {project.description}
                         </p>
 
@@ -73,7 +73,7 @@ export function CaseStudyHero({ project, actions, aside }) {
                                     <dd className="mt-2 font-serif text-[clamp(1.5rem,3.2vw,2.25rem)] leading-none tabular-nums text-text-primary">
                                         {m.value}
                                     </dd>
-                                    {m.detail && <dd className="mt-2 text-[13px] leading-snug text-text-muted">{m.detail}</dd>}
+                                    {m.detail && <dd className="mt-2 text-[13px] leading-snug text-balance text-text-muted">{m.detail}</dd>}
                                 </div>
                             ))}
                         </dl>
@@ -91,23 +91,23 @@ export function Overview({ overview }) {
 
     return (
         <Section title="Overview">
-            <p className="max-w-3xl font-serif text-[clamp(1.25rem,2.4vw,1.875rem)] leading-[1.35] text-text-primary">{lede}</p>
+            <p className="max-w-3xl font-serif text-[clamp(1.25rem,2.4vw,1.875rem)] leading-[1.35] text-pretty text-text-primary">{lede}</p>
             {rest.map((p) => (
-                <p key={p} className="mt-6 max-w-2xl text-[17px] leading-relaxed text-text-secondary">{p}</p>
+                <p key={p} className="mt-6 max-w-2xl text-[17px] leading-relaxed text-pretty text-text-secondary">{p}</p>
             ))}
         </Section>
     )
 }
 
 // One real piece of the work beside the highlight it supports: verbatim code, or a screenshot.
-function Figure({ figure, className }) {
-    const caption = <figcaption className="mt-3 text-[13px] leading-relaxed text-text-muted">{figure.caption}</figcaption>
+function Figure({ figure, id, className }) {
+    const caption = <figcaption id={id} className="mt-3 text-[13px] leading-relaxed text-pretty text-text-muted">{figure.caption}</figcaption>
 
     if (figure.code) {
         return (
             <figure className={className}>
-                {/* focusable so it can be scrolled by keyboard if a narrow screen ever needs it */}
-                <pre tabIndex={0} className="overflow-x-auto rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-4 md:p-5 font-mono text-[11.5px] md:text-[12.5px] leading-[1.6] text-text-primary">
+                {/* focusable (and named by its caption) because it scrolls sideways on narrow phones */}
+                <pre tabIndex={0} role="region" aria-labelledby={id} className="overflow-x-auto rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-4 md:p-5 font-mono text-[11.5px] md:text-[12.5px] leading-[1.6] text-text-primary">
                     <code>{figure.code}</code>
                 </pre>
                 {caption}
@@ -122,7 +122,7 @@ function Figure({ figure, className }) {
             width={figure.width}
             height={figure.height}
             sizes={figure.phone ? '280px' : '(min-width: 1280px) 400px, (min-width: 768px) 640px, 100vw'}
-            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
+            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light"
         />
     )
 
@@ -145,7 +145,7 @@ function Figure({ figure, className }) {
 }
 
 export function Implementation({ highlights }) {
-    const text = 'max-w-[62ch] text-[15px] leading-relaxed'
+    const text = 'max-w-[62ch] text-[15px] leading-relaxed text-pretty'
 
     return (
         <Section title="Technical implementation">
@@ -159,18 +159,18 @@ export function Implementation({ highlights }) {
                             {String(i + 1).padStart(2, '0')}
                         </span>
                         <div>
-                            <h3 className="font-serif text-[clamp(1.5rem,2.6vw,2rem)] leading-tight text-text-primary">{item.title}</h3>
+                            <h3 className="font-serif text-[clamp(1.5rem,2.6vw,2rem)] leading-tight text-balance text-text-primary">{item.title}</h3>
                             <p className={`mt-5 ${text} text-text-secondary`}><Rich text={item.body} /></p>
                             {item.outcome && <p className={`mt-4 ${text} font-medium text-text-primary`}><Rich text={item.outcome} /></p>}
                             {item.tradeoff && (
-                                <p className="mt-4 max-w-[62ch] text-[14px] leading-relaxed text-text-muted">
+                                <p className="mt-4 max-w-[62ch] text-[14px] leading-relaxed text-pretty text-text-muted">
                                     <span className={`${label} mr-1.5`}>Trade-off</span>{' '}
                                     <Rich text={item.tradeoff} />
                                 </p>
                             )}
                         </div>
                         {item.figure && (
-                            <Figure figure={item.figure} className="mt-8 md:col-start-2 xl:col-start-3 xl:row-start-1 xl:mt-0 xl:self-start" />
+                            <Figure figure={item.figure} id={`figure-${i + 1}`} className="mt-8 md:col-start-2 xl:col-start-3 xl:row-start-1 xl:mt-0 xl:self-start" />
                         )}
                     </li>
                 ))}
@@ -186,7 +186,7 @@ export function CaseStudyNav({ id }) {
     const next = projects[i + 1]
     const sides = [
         prev ? { href: `/projects/${prev.id}`, eyebrow: 'Previous', title: prev.title } : all,
-        next ? { href: `/projects/${next.id}`, eyebrow: 'Next project', title: next.title } : all,
+        next ? { href: `/projects/${next.id}`, eyebrow: 'Next', title: next.title } : all,
     ]
 
     return (
@@ -199,7 +199,8 @@ export function CaseStudyNav({ id }) {
                         className={`group flex flex-col gap-2 ${side ? 'items-end text-right' : 'items-start'}`}
                     >
                         <span className={label}>
-                            {side ? `${eyebrow} →` : `← ${eyebrow}`}
+                            {/* the arrow points the way you go: no → on 'Back to' */}
+                            {side ? (next ? `${eyebrow} →` : eyebrow) : `← ${eyebrow}`}
                         </span>
                         <span className="font-serif text-[clamp(1.5rem,3.5vw,2.5rem)] leading-tight text-text-primary transition-colors group-hover:text-rose-taupe">
                             {title}

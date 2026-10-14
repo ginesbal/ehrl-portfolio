@@ -10,31 +10,34 @@ const showcaseProjects = (projects.some((p) => p.featured) ? projects.filter((p)
 
 const lift = 'transition-transform duration-500 ease-[var(--ease-out-expo)] motion-safe:group-hover:-translate-y-1'
 
-// One real piece of each project: its phone screen, its desktop screen, or (EVision has
-// no screenshot) the sample query its case study leads with. Screens run off the bottom
-// edge (-bottom-2), so the hover lift never opens a gap.
+// EVision has no screenshot, so its artefact is the sample query its case study leads with.
+// Shared with the /projects preview.
+export function Specimen({ className = '' }) {
+  return (
+    <div className={`absolute inset-0 flex flex-col justify-center p-5 xl:p-6 ${className}`}>
+      <p className="font-serif text-[18px] xl:text-[21px] leading-[1.25] text-balance text-text-primary">&ldquo;{specimen.query}&rdquo;</p>
+      <span className="block my-3 xl:my-4 h-px bg-border-light" />
+      <p className="text-[13px] leading-snug text-text-muted">
+        Read as <span className="text-text-secondary">{specimen.readAs.join(' · ')}</span>
+      </p>
+      <p className="mt-1 text-[13px] tabular-nums text-text-muted">{specimen.matched} of {specimen.catalog} match</p>
+    </div>
+  )
+}
+
+// One real piece of each project: its phone screen, its desktop screen, or EVision's query.
+// Screens run off the bottom edge (-bottom-2), so the hover lift never opens a gap.
 function Artefact({ project }) {
   const image = project.thumb ?? project.preview
 
-  if (project.id === 'evision') {
-    return (
-      <div className={`absolute inset-0 flex flex-col justify-center p-5 xl:p-6 ${lift}`}>
-        <p className="font-serif text-[18px] xl:text-[21px] leading-[1.25] text-balance text-text-primary">&ldquo;{specimen.query}&rdquo;</p>
-        <span className="block my-3 xl:my-4 h-px bg-border-light" />
-        <p className="text-[13px] leading-snug text-text-muted">
-          Read as <span className="text-text-secondary">{specimen.readAs.join(' · ')}</span>
-        </p>
-        <p className="mt-1 text-[13px] tabular-nums text-text-muted">{specimen.matched} of {specimen.catalog} match</p>
-      </div>
-    )
-  }
+  if (project.id === 'evision') return <Specimen className={lift} />
 
   if (!image) return null
 
   const desktop = project.screen === 'desktop'
   return (
     <div
-      className={`absolute -bottom-2 overflow-hidden shadow-[var(--shadow-sm)] ${lift} ${
+      className={`absolute -bottom-2 overflow-hidden ${lift} ${
         desktop ? 'top-6 xl:top-10 inset-x-6 rounded-t-[8px]' : 'top-5 left-1/2 -translate-x-1/2 w-[11.5rem] rounded-t-[18px]'
       }`}
     >
@@ -58,7 +61,7 @@ export default function Projects() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           Projects
         </motion.h2>
@@ -70,7 +73,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: index * 0.05 }}
+              transition={{ duration: 0.7, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
                 href={`/projects/${project.id}`}
