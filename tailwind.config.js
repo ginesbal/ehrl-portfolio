@@ -19,6 +19,7 @@ module.exports = {
         sans: ['var(--font-sans)', 'Source Sans 3', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
         display: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       colors: {
         // Map CSS variables to Tailwind colors for consistency

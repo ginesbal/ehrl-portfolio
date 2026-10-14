@@ -1,4 +1,4 @@
-import { CaseStudyHero, CaseStudyNav, Contributions, Implementation, Overview } from '@/components/case-study/CaseStudy'
+import { CaseStudyHero, CaseStudyNav, Implementation, Overview } from '@/components/case-study/CaseStudy'
 import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
@@ -54,7 +54,6 @@ export default function AimPage() {
                 />
                 <Overview overview={aimData.overview} />
                 <Implementation highlights={aimData.technicalHighlights} />
-                <Contributions contributions={aimData.contributions} />
                 <CaseStudyNav id={aimData.id} />
                 <Footer />
             </main>

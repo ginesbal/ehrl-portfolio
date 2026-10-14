@@ -7,9 +7,9 @@ Next.js 15 portfolio site with App Router, showcasing projects with custom modal
 
 ### Component Organization
 - **Sections** (`components/sections/`): Full-page sections composed on `app/page.js` - Hero, Projects, Skills, About, Contact
-- **Case studies** (`components/case-study/`): Shared hero/overview/implementation/contributions/nav for `/projects/[id]`
+- **Case studies** (`components/case-study/`): Shared hero/overview/implementation/nav for `/projects/[id]`. Each fact has one place: numbers in the hero, what I did in the Overview, mechanisms in the highlights (`body`, `outcome`, `tradeoff`, optional `figure` of verbatim code or a screenshot; `backticks` render as code)
 - **Modals** (`components/modals/`): ResumeModal, built on the native `<dialog>` wrapper in `components/ui/Dialog.jsx`
-- **Projects** (`components/projects/`): PhoneMockup carousel and PhoneFrame (true 390×844 viewport, scaled)
+- **Projects** (`components/projects/`): PhoneMockup carousel in a true 390×844 phone frame, scaled
 - **Layout** (`components/layout/`): SidebarNav and MobileNav with scroll-based active section detection, Footer
 
 ### Data Structure
@@ -128,7 +128,7 @@ Navigation and Hero use `window.addEventListener('scroll')` with cleanup. Always
 
 1. Add project object to `data/portfolio-data.js` (order sets prev/next on case studies)
 2. Create `app/projects/<id>/page.jsx` + `data.js` composing `components/case-study/CaseStudy.jsx`
-3. Add screenshots to `/public/screenshots/`; `gallery[0]` is the archive preview
+3. Add screenshots to `/public/screenshots/`; `preview` is the archive's image and `thumb` (falls back to `preview`) the home row's; `summary` (falls back to `description`) is the home row's text
 
 ## Known Quirks
 

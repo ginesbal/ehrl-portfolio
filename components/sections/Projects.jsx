@@ -1,31 +1,55 @@
 'use client'
 
+import { specimen } from '@/app/projects/evision/data'
 import { projects } from '@/data/portfolio-data'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import FloatingCircles from '../ui/FloatingCircles.jsx'
-import PillCta from '../ui/PillCta.jsx'
 
 const showcaseProjects = (projects.some((p) => p.featured) ? projects.filter((p) => p.featured) : projects).slice(0, 3)
 
+const lift = 'transition-transform duration-500 ease-[var(--ease-out-expo)] motion-safe:group-hover:-translate-y-1'
+
+// One real piece of each project: its phone screen, its desktop screen, or (EVision has
+// no screenshot) the sample query its case study leads with. Screens run off the bottom
+// edge (-bottom-2), so the hover lift never opens a gap.
+function Artefact({ project }) {
+  const image = project.thumb ?? project.preview
+
+  if (!image) {
+    return (
+      <div className={`absolute inset-0 flex flex-col justify-center p-5 xl:p-6 ${lift}`}>
+        <p className="font-serif text-[18px] xl:text-[21px] leading-[1.25] text-balance text-text-primary">&ldquo;{specimen.query}&rdquo;</p>
+        <span className="block my-3 xl:my-4 h-px bg-border-light" />
+        <p className="text-[13px] leading-snug text-text-muted">
+          Read as <span className="text-text-secondary">{specimen.readAs.join(' · ')}</span>
+        </p>
+        <p className="mt-1 text-[13px] tabular-nums text-text-muted">{specimen.matched} of {specimen.catalog} match</p>
+      </div>
+    )
+  }
+
+  const desktop = project.screen === 'desktop'
+  return (
+    <div
+      className={`absolute -bottom-2 overflow-hidden shadow-[var(--shadow-sm)] ${lift} ${
+        desktop ? 'top-6 inset-x-6 rounded-t-[8px]' : 'top-5 left-1/2 -translate-x-1/2 w-[11.5rem] rounded-t-[18px]'
+      }`}
+    >
+      <Image
+        src={image}
+        alt=""
+        fill
+        sizes={desktop ? '304px' : '184px'}
+        className={`object-cover ${desktop ? 'object-left-top' : 'object-top'}`}
+      />
+    </div>
+  )
+}
+
 export default function Projects() {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [canHover, setCanHover] = useState(true)
-
-  // Detect touch-only devices
-  useEffect(() => {
-    const mq = window.matchMedia('(hover: hover)')
-    setCanHover(mq.matches)
-    const handler = (e) => setCanHover(e.matches)
-    mq.addEventListener?.('change', handler) || mq.addListener?.(handler)
-    return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
-  }, [])
-
   return (
     <section className="relative bg-bg-primary pt-8 md:pt-0 pb-16 md:pb-24">
-      <FloatingCircles section="projects" />
-
       <div className="container-custom">
         <motion.h2
           className="mb-12 md:mb-16 font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal tracking-[-0.01em] leading-[0.95] text-text-primary"
@@ -45,12 +69,6 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: index * 0.05 }}
-              onMouseEnter={() => canHover && setHoveredIndex(index)}
-              onMouseLeave={() => canHover && setHoveredIndex(null)}
-              style={{
-                opacity: canHover && hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                transition: 'opacity 300ms cubic-bezier(0.23, 1, 0.32, 1)',
-              }}
             >
               <Link
                 href={`/projects/${project.id}`}
@@ -58,51 +76,31 @@ export default function Projects() {
               >
                 {/* Left accent — CSS only */}
                 <div
-                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
+                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 group-focus-visible:scale-y-100 transition-transform duration-[400ms]"
                   style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
                 />
 
-                <div className="pl-4 md:pl-6 py-6 md:py-8 grid lg:grid-cols-[1fr_auto] gap-x-8 items-start">
+                <div className="pl-4 md:pl-6 py-6 md:py-8 xl:grid xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-x-16 xl:items-start">
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-baseline gap-x-3 md:gap-x-4 gap-y-1">
+                    <div className="flex items-baseline gap-x-3 md:gap-x-4">
                       <h3 className="font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] font-normal leading-[1.05] tracking-[-0.01em] text-text-primary">
                         {project.title}
                       </h3>
-                      <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">
-                        {project.category.split(',')[0].trim()}
+                      <span className="text-[11px] tracking-[0.2em] tabular-nums text-text-muted">{project.year}</span>
+                      <span aria-hidden className="xl:hidden ml-auto self-center text-[16px] text-rose-taupe transition-transform duration-300 group-hover:translate-x-1">
+                        →
                       </span>
                     </div>
 
-                    <p className="text-[15px] text-text-secondary leading-relaxed max-w-xl mt-3 line-clamp-2">
-                      {project.description}
+                    <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-text-secondary">
+                      {project.summary ?? project.description}
                     </p>
 
-                    {project.tech?.length > 0 && (
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
-                        {project.tech.slice(0, 3).map((tech) => (
-                          <span key={tech} className="text-[11px] tracking-[0.15em] uppercase text-text-muted">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    <p className="mt-3 text-[13px] text-text-muted">{project.tech.slice(0, 3).join(' · ')}</p>
                   </div>
 
-                  {/* Right column — simplified on mobile */}
-                  <div className="hidden md:flex flex-col items-end gap-1.5 shrink-0">
-                    <span className="text-[11px] tracking-[0.25em] tabular-nums text-text-muted">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span className="text-[11px] tracking-[0.2em] text-text-muted">{project.year}</span>
-                    <span aria-hidden className="text-[18px] mt-1 text-text-muted transition-[color,transform] duration-300 group-hover:text-rose-taupe group-hover:translate-x-1">
-                      →
-                    </span>
-                  </div>
-
-                  {/* Mobile arrow inline */}
-                  <div className="md:hidden flex items-center justify-between mt-3 pt-3 border-t border-border-light/50">
-                    <span className="text-[11px] tracking-[0.2em] text-text-muted">{project.year}</span>
-                    <span aria-hidden className="text-[16px] text-rose-taupe">→</span>
+                  <div aria-hidden className="relative mt-5 xl:mt-0 w-full max-w-[22rem] h-[10.5rem] xl:h-[13.5rem] overflow-hidden rounded-[var(--radius-md)] bg-bg-accent">
+                    <Artefact project={project} />
                   </div>
                 </div>
               </Link>
@@ -110,16 +108,6 @@ export default function Projects() {
           ))}
           <div className="border-t border-border-light" />
         </div>
-
-        <motion.div
-          className="mt-12 md:mt-16 flex justify-center md:justify-end"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <PillCta as={Link} href="/projects">Project archive</PillCta>
-        </motion.div>
       </div>
     </section>
   )

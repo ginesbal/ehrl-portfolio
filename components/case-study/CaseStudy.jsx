@@ -1,5 +1,6 @@
 // Shared building blocks for /projects/[id] case studies.
 import { projects } from '@/data/portfolio-data'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const label = 'text-[11px] tracking-[0.2em] uppercase text-text-muted'
@@ -19,15 +20,10 @@ function Section({ title, children }) {
     )
 }
 
-function Bullets({ items }) {
-    return (
-        <ul className="space-y-2.5">
-            {items.map((item) => (
-                <li key={item} className="relative pl-5 text-[15px] leading-relaxed text-text-secondary before:content-['–'] before:absolute before:left-0 before:text-text-muted/60">
-                    {item}
-                </li>
-            ))}
-        </ul>
+// `backticks` in the data mark code identifiers
+function Rich({ text }) {
+    return text.split(/`([^`]+)`/).map((part, i) =>
+        i % 2 ? <code key={i} className="font-mono text-[0.88em] text-text-primary">{part}</code> : part
     )
 }
 
@@ -99,64 +95,86 @@ export function Overview({ overview }) {
             {rest.map((p) => (
                 <p key={p} className="mt-6 max-w-2xl text-[17px] leading-relaxed text-text-secondary">{p}</p>
             ))}
-
-            <div className="mt-14 md:mt-16 grid md:grid-cols-2 gap-10 md:gap-16">
-                {[['Technical focus', overview.technicalFocus], ['Core features', overview.coreFeatures]].map(([title, items]) => (
-                    <div key={title}>
-                        <h3 className={`${label} pb-3 mb-5 border-b border-border-light`}>{title}</h3>
-                        <Bullets items={items} />
-                    </div>
-                ))}
-            </div>
         </Section>
     )
 }
 
+// One real piece of the work beside the highlight it supports: verbatim code, or a screenshot.
+function Figure({ figure, className }) {
+    const caption = <figcaption className="mt-3 text-[13px] leading-relaxed text-text-muted">{figure.caption}</figcaption>
+
+    if (figure.code) {
+        return (
+            <figure className={className}>
+                {/* focusable so it can be scrolled by keyboard if a narrow screen ever needs it */}
+                <pre tabIndex={0} className="overflow-x-auto rounded-[var(--radius-lg)] border border-border-light bg-bg-secondary p-4 md:p-5 font-mono text-[11.5px] md:text-[12.5px] leading-[1.6] text-text-primary">
+                    <code>{figure.code}</code>
+                </pre>
+                {caption}
+            </figure>
+        )
+    }
+
+    const image = (
+        <Image
+            src={figure.src}
+            alt={figure.full ? '' : figure.alt}
+            width={figure.width}
+            height={figure.height}
+            sizes={figure.phone ? '280px' : '(min-width: 1280px) 400px, (min-width: 768px) 640px, 100vw'}
+            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
+        />
+    )
+
+    return (
+        <figure className={`${figure.phone ? 'max-w-[17.5rem]' : ''} ${className}`}>
+            {figure.full ? (
+                <a
+                    href={figure.full}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${figure.alt} (opens the full screenshot)`}
+                    className="block cursor-zoom-in rounded-[var(--radius-md)]"
+                >
+                    {image}
+                </a>
+            ) : image}
+            {caption}
+        </figure>
+    )
+}
+
 export function Implementation({ highlights }) {
-    const rows = [
-        ['Challenge', 'challenge', 'text-text-secondary'],
-        ['Approach', 'approach', 'text-text-secondary'],
-        ['Trade-off', 'tradeoff', 'text-text-secondary'],
-        ['Result', 'outcome', 'text-text-primary font-medium'],
-    ]
+    const text = 'max-w-[62ch] text-[15px] leading-relaxed'
 
     return (
         <Section title="Technical implementation">
             <ol className="space-y-14 md:space-y-20">
                 {highlights.map((item, i) => (
-                    <li key={item.title} className="grid md:grid-cols-[4.5rem_1fr] gap-3 md:gap-8">
+                    <li
+                        key={item.title}
+                        className={`grid md:grid-cols-[4.5rem_minmax(0,1fr)] gap-3 md:gap-x-8 ${item.figure ? 'xl:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,25rem)]' : ''}`}
+                    >
                         <span aria-hidden className="font-serif text-[32px] md:text-[44px] leading-none tabular-nums text-text-muted/40">
                             {String(i + 1).padStart(2, '0')}
                         </span>
                         <div>
                             <h3 className="font-serif text-[clamp(1.5rem,2.6vw,2rem)] leading-tight text-text-primary">{item.title}</h3>
-                            <dl className="mt-6 grid sm:grid-cols-[7rem_1fr] gap-x-6 sm:gap-y-5 max-w-3xl">
-                                {rows.filter(([, key]) => item[key]).map(([name, key, tone]) => (
-                                    <div key={key} className="contents">
-                                        <dt className={`${label} sm:pt-1 ${key === 'outcome' ? '!text-rose-taupe' : ''}`}>{name}</dt>
-                                        <dd className={`mt-1 mb-5 sm:m-0 text-[15px] leading-relaxed ${tone}`}>{item[key]}</dd>
-                                    </div>
-                                ))}
-                            </dl>
+                            <p className={`mt-5 ${text} text-text-secondary`}><Rich text={item.body} /></p>
+                            {item.outcome && <p className={`mt-4 ${text} font-medium text-text-primary`}><Rich text={item.outcome} /></p>}
+                            {item.tradeoff && (
+                                <p className="mt-4 max-w-[62ch] text-[14px] leading-relaxed text-text-muted">
+                                    <span className={`${label} mr-2.5`}>Trade-off</span>
+                                    <Rich text={item.tradeoff} />
+                                </p>
+                            )}
                         </div>
+                        {item.figure && (
+                            <Figure figure={item.figure} className="mt-8 md:col-start-2 xl:col-start-3 xl:row-start-1 xl:mt-0 xl:self-start" />
+                        )}
                     </li>
                 ))}
             </ol>
-        </Section>
-    )
-}
-
-export function Contributions({ contributions }) {
-    return (
-        <Section title="My contributions">
-            <div className="divide-y divide-border-light">
-                {contributions.map((group) => (
-                    <div key={group.category} className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-12 py-8 first:pt-0 last:pb-0">
-                        <h3 className="font-serif text-[22px] md:text-[24px] leading-snug text-text-primary">{group.category}</h3>
-                        <Bullets items={group.items} />
-                    </div>
-                ))}
-            </div>
         </Section>
     )
 }

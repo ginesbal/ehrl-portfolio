@@ -1,4 +1,4 @@
-import { CaseStudyHero, CaseStudyNav, Contributions, Implementation, Overview, TextLink } from '@/components/case-study/CaseStudy'
+import { CaseStudyHero, CaseStudyNav, Implementation, Overview, TextLink } from '@/components/case-study/CaseStudy'
 import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
@@ -103,7 +103,6 @@ export default async function EVisionPage() {
                 />
                 <Overview overview={evisionData.overview} />
                 <Implementation highlights={evisionData.technicalHighlights} />
-                <Contributions contributions={evisionData.contributions} />
                 <CaseStudyNav id={evisionData.id} />
                 <Footer />
             </main>

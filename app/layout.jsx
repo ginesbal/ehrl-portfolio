@@ -1,6 +1,6 @@
 // app/layout.jsx
 import Providers from '@/components/Providers.jsx'
-import { Source_Sans_3, Source_Serif_4 } from 'next/font/google'
+import { Source_Code_Pro, Source_Sans_3, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
@@ -19,6 +19,15 @@ const sourceSerif = Source_Serif_4({
   display: 'swap',
 })
 
+// the superfamily's mono, for code in the case studies; only those pages use it, so no preload
+const sourceCode = Source_Code_Pro({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-mono',
+  display: 'swap',
+  preload: false,
+})
+
 // Defaults; pages with their own metadata (the case studies, /projects) replace them,
 // so each route has exactly one <title> and description.
 export const metadata = {
@@ -28,7 +37,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${sourceSans.variable} ${sourceSerif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sourceSans.variable} ${sourceSerif.variable} ${sourceCode.variable}`}>
       <head>
         {/* Strip homepage hash on hard refresh only */}
         <Script id="strip-home-hash-on-reload" strategy="beforeInteractive">
