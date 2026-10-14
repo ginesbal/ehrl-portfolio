@@ -5,19 +5,14 @@ const nextConfig = {
     config.resolve.symlinks = false;
     return config;
   },
+  // every image is local, so no remotePatterns: the optimizer won't resize other sites' images
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
     formats: ['image/avif', 'image/webp'],
   },
   async headers() {
     return [
       {
-        source: '/parkpal/:path*',
+        source: '/parkaid/:path*',
         headers: [
           {
             key: 'X-Frame-Options',
@@ -29,20 +24,13 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: "/projects/evision/app/:path*",
-        headers: [
-          { key: "Cache-Control", value: "no-store" }
-        ]
-      },
     ];
   },
-  async rewrites() {
+  // ParkPal was renamed parkaid; keep old links working
+  async redirects() {
     return [
-      {
-        source: "/projects/evision/app/:path*",
-        destination: "https://evision.up.railway.app/:path*"
-      }
+      { source: '/projects/parkpal', destination: '/projects/parkaid', permanent: true },
+      { source: '/parkpal/:path*', destination: '/parkaid/:path*', permanent: true },
     ];
   },
 };

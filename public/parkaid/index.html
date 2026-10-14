@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+  <title>parkaid</title>
+  <script>
+    // Embedded in the portfolio's demo dialog (same origin): Esc closes it even while the app has focus.
+    addEventListener('keydown', function (e) {
+      var dialog = e.key === 'Escape' && window.frameElement && window.frameElement.closest('dialog')
+      if (dialog) dialog.close()
+    })
+    // The demo's data covers downtown Calgary only, so location is always off, as in the dialog's
+    // iframe (allow="geolocation 'none'"): opened in its own tab, the app falls back to downtown too.
+    if (navigator.geolocation) {
+      var denied = function (ok, fail) {
+        setTimeout(function () { if (fail) fail({ code: 1, PERMISSION_DENIED: 1, message: 'Location is off in this demo' }) })
+        return 0
+      }
+      navigator.geolocation.getCurrentPosition = denied
+      navigator.geolocation.watchPosition = denied
+    }
+  </script>
+  <style id="expo-reset">
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    #root {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      flex: 1;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+  <script src="/_expo/static/js/web/AppEntry-59d51e729218cb4c99eea48858c3f721.js" defer></script>
+</body>
+
+</html>

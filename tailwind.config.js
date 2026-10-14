@@ -1,3 +1,7 @@
+// CSS-variable colors can't take Tailwind's /opacity modifiers on their own;
+// color-mix lets `bg-rose-taupe/10` etc. actually compile.
+const token = (name) => `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,34 +11,44 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        // room for the parkaid demo's windowed layout; landscape phones and short windows get the full-height one
+        roomy: { raw: '(min-width: 480px) and (min-height: 640px)' },
+      },
       fontFamily: {
         sans: ['var(--font-sans)', 'Source Sans 3', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
         display: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       colors: {
         // Map CSS variables to Tailwind colors for consistency
-        'bg-primary': 'var(--bg-primary)',
-        'bg-secondary': 'var(--bg-secondary)',
-        'bg-accent': 'var(--bg-accent)',
-        'bg-dark': 'var(--bg-dark)',
+        'bg-primary': token('bg-primary'),
+        'bg-secondary': token('bg-secondary'),
+        'bg-accent': token('bg-accent'),
+        'bg-dark': token('bg-dark'),
 
-        'text-primary': 'var(--text-primary)',
-        'text-secondary': 'var(--text-secondary)',
-        'text-muted': 'var(--text-muted)',
-        'text-light': 'var(--text-light)',
+        'text-primary': token('text-primary'),
+        'text-secondary': token('text-secondary'),
+        'text-muted': token('text-muted'),
+        'text-light': token('text-light'),
 
-        'rose-taupe': 'var(--rose-taupe)',
-        'rose-quartz': 'var(--rose-quartz)',
-        'onyx': 'var(--onyx)',
-        'anti-flash-white': 'var(--anti-flash-white)',
-        'silver': 'var(--silver)',
-        'reseda-green': 'var(--reseda-green)',
-        'bistre': 'var(--bistre)',
+        'rose-taupe': token('rose-taupe'),
+        'rose-quartz': token('rose-quartz'),
+        'onyx': token('onyx'),
+        'anti-flash-white': token('anti-flash-white'),
+        'silver': token('silver'),
+        'reseda-green': token('reseda-green'),
+        'bistre': token('bistre'),
 
-        'border-light': 'var(--border-light)',
-        'border-dark': 'var(--border-dark)',
+        'border-light': token('border-light'),
+        'border-medium': token('border-medium'),
+        'border-dark': token('border-dark'),
       },
+      borderColor: { DEFAULT: 'var(--border-light)' },
+      ringColor: { DEFAULT: 'var(--rose-taupe)' },
+      ringOffsetColor: { DEFAULT: 'var(--bg-primary)' },
+      // token() is for colours (it adds an alpha channel); these take the variable as is
       boxShadow: {
         sm: 'var(--shadow-sm)',
         md: 'var(--shadow-md)',

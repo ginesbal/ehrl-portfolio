@@ -16,9 +16,9 @@ export default function Home() {
             <SidebarNav />
 
             <main
+                id="main"
                 className="transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)', minHeight: '100vh' }}
-                tabIndex={0}
             >
                 <div id="hero">
                     <Hero />
@@ -40,7 +40,7 @@ export default function Home() {
                 <Waypoint
                     id="contact"
                     label="Get in Touch"
-                    annotation="let's work together"
+                    annotation="let’s work together"
                     meta="04"
                 />
                 <Contact />

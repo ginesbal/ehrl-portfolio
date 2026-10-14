@@ -1,11 +1,19 @@
 'use client'
 
+import { projects } from '@/data/portfolio-data'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
+
+const sections = [
+  { id: 'hero', label: 'Home', num: '01' },
+  { id: 'projects', label: 'Projects', num: '02' },
+  { id: 'about', label: 'About', num: '03' },
+  { id: 'contact', label: 'Contact', num: '04' },
+]
 
 export default function SidebarNav() {
   const [activeSection, setActiveSection] = useState('hero')
@@ -15,21 +23,14 @@ export default function SidebarNav() {
   const [toggleMinimized, setToggleMinimized] = useState(false)
   const pathname = usePathname()
   const onHome = pathname === '/'
-  const onProjectsRoute = pathname?.startsWith('/projects')
-  const onParkPal = pathname === '/projects/parkpal'
-  const onEVision = pathname === '/projects/evision'
-
-  const sections = [
-    { id: 'hero', label: 'Home', num: '01' },
-    { id: 'projects', label: 'Projects', num: '02' },
-    { id: 'about', label: 'About', num: '03' },
-    { id: 'contact', label: 'Contact', num: '04' },
-  ]
+  // only real case studies, so a mistyped /projects/... 404 renders the same toggle on server and client
+  const onCaseStudy = projects.some((p) => pathname === `/projects/${p.id}`)
+  const onProjectsRoute = pathname === '/projects' || onCaseStudy
 
   // keep sidebar active state in sync with route for non-home pages
   useEffect(() => {
     if (onHome) return
-    setActiveSection(onProjectsRoute ? 'projects' : 'hero')
+    setActiveSection(onProjectsRoute ? 'projects' : '')
     setToggleMinimized(window.scrollY > 24)
   }, [onHome, onProjectsRoute])
 
@@ -39,7 +40,7 @@ export default function SidebarNav() {
       setToggleMinimized(window.scrollY > 24)
 
       if (!onHome) {
-        setActiveSection(onProjectsRoute ? 'projects' : 'hero')
+        setActiveSection(onProjectsRoute ? 'projects' : '')
         return
       }
 
@@ -50,6 +51,8 @@ export default function SidebarNav() {
         const rect = el.getBoundingClientRect()
         if (rect.top <= 100) current = section.id
       }
+      // Contact is too short to reach the top on tall screens: at the bottom of the page, it's the one
+      if (Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 2) current = sections[sections.length - 1].id
       setActiveSection(current)
     }
 
@@ -77,25 +80,84 @@ export default function SidebarNav() {
       return
     }
 
-    const rect = el.getBoundingClientRect()
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    window.scrollTo({ top: rect.top + scrollTop - 32, behavior: 'smooth' })
+    el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <>
+      {/* sidebar toggle - minimizes on scroll / back button on project pages; before the aside so it is the first tab stop */}
+      {onCaseStudy ? (
+        <nav aria-label="Back" className="hidden lg:block">
+          <Link
+            href="/projects"
+            className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm transition-[padding,gap,left] duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+            style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
+            aria-label="Back to projects"
+            title="Back to projects"
+          >
+            <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
+            {!toggleMinimized && (
+              <span
+                className="text-[10px] tracking-[0.15em] uppercase"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Back
+              </span>
+            )}
+          </Link>
+        </nav>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setCollapsed((prev) => !prev)}
+          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm transition-[padding,gap,left] duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
+          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
+          aria-label={collapsed ? 'Show sidebar' : 'Hide sidebar'}
+          title={collapsed ? 'Show sidebar' : 'Hide sidebar'}
+        >
+          <span
+            className="relative flex items-center justify-center"
+            style={{ width: toggleMinimized ? '20px' : '24px', height: toggleMinimized ? '20px' : '24px' }}
+          >
+            <span
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-20"
+              style={{ background: 'var(--border-light)' }}
+            />
+            <span
+              className="relative block rounded-full transition-[height,transform] duration-500"
+              style={{
+                width: '2px',
+                height: toggleMinimized ? '14px' : '18px',
+                background: 'var(--border-medium)',
+                transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
+                transformOrigin: 'center'
+              }}
+            />
+          </span>
+          {!toggleMinimized && (
+            <span
+              className="text-[10px] tracking-[0.15em] uppercase transition-opacity duration-500"
+              style={{ color: 'var(--text-secondary)', opacity: collapsed ? 0.75 : 1 }}
+            >
+              {collapsed ? 'Show sidebar' : 'Hide sidebar'}
+            </span>
+          )}
+        </button>
+      )}
+
       {/* main sidebar */}
       <aside
+        inert={collapsed}
         className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] flex-col justify-between py-10 px-8 bg-bg-secondary border-r border-border-light z-40 transition-transform duration-500"
         style={{ transform: collapsed ? 'translateX(-100%)' : 'translateX(0)' }}
       >
         <div>
           {/* logo */}
-          <Link href="/" className="inline-flex items-center gap-3 group mb-20">
+          <Link href="/" aria-label="Home" className="inline-flex items-center gap-3 group mb-20">
             <div className="relative w-12 h-12">
-              <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-all duration-500 group-hover:scale-110" />
-              <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-rose-taupe">
-                <span className="text-[15px] font-bold text-rose-taupe group-hover:text-white transition-colors duration-300">
+              <div className="absolute inset-0 rounded-full border-2 border-rose-taupe transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute inset-[3px] rounded-full bg-bg-primary flex items-center justify-center transition-colors duration-300 group-hover:bg-rose-taupe">
+                <span className="text-[15px] font-semibold text-rose-taupe group-hover:text-text-light transition-colors duration-300">
                   eb
                 </span>
               </div>
@@ -109,16 +171,18 @@ export default function SidebarNav() {
               const isHovered = hoveredItem === section.id
 
               return (
-                <a
+                // Link, not <a>: a full page load to /#contact from a case study lands at the top,
+                // while client-side navigation scrolls to the section (as the mobile menu does)
+                <Link
                   key={section.id}
-                  href={onHome ? `#${section.id}` : `/#${section.id}`}
+                  href={onHome ? `#${section.id}` : section.id === 'projects' ? '/projects' : `/#${section.id}`}
                   onClick={(e) => handleClick(e, section.id)}
                   onMouseEnter={() => setHoveredItem(section.id)}
                   onMouseLeave={() => setHoveredItem(null)}
-                  className="group flex items-baseline gap-3 transition-all duration-300"
+                  className="group flex items-baseline gap-3"
                 >
                   <span
-                    className="font-semibold tracking-wider transition-all duration-300"
+                    className="font-semibold tracking-wider transition-[font-size,color] duration-300"
                     style={{
                       fontSize: isActive ? '14px' : '11px',
                       color: isActive || isHovered ? 'var(--rose-taupe)' : 'var(--text-muted)'
@@ -127,7 +191,7 @@ export default function SidebarNav() {
                     {section.num}
                   </span>
                   <span
-                    className="font-semibold uppercase tracking-wide transition-all duration-300"
+                    className="font-semibold uppercase tracking-wide transition-[font-size,color] duration-300"
                     style={{
                       fontSize: isActive ? '22px' : '14px',
                       color: isActive || isHovered ? 'var(--rose-taupe)' : 'var(--text-muted)'
@@ -135,7 +199,7 @@ export default function SidebarNav() {
                   >
                     {section.label}
                   </span>
-                </a>
+                </Link>
               )
             })}
           </nav>
@@ -147,7 +211,7 @@ export default function SidebarNav() {
           className="group absolute bottom-10 right-8 flex flex-col items-end"
         >
           <span
-            className="text-[13px] font-extrabold tracking-[0.15em] uppercase text-text-muted transition-colors duration-300 group-hover:text-rose-taupe relative inline-block pb-[2px]"
+            className="text-[13px] font-semibold tracking-[0.15em] uppercase text-text-muted transition-colors duration-300 group-hover:text-rose-taupe relative inline-block pb-[2px]"
           >
             <span className="relative z-10">Resume</span>
             <span
@@ -158,67 +222,8 @@ export default function SidebarNav() {
         </button>
       </aside>
 
-      {/* sidebar toggle button - minimizes on scroll / back button on project pages */}
-      {(onParkPal || onEVision) ? (
-        <Link
-          href="/projects"
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
-          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
-          aria-label="Back to projects"
-          title="Back to projects"
-        >
-          <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>←</span>
-          {!toggleMinimized && (
-            <span
-              className="text-[8px] tracking-[0.15em] uppercase font-semibold"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Back
-            </span>
-          )}
-        </Link>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setCollapsed((prev) => !prev)}
-          className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${toggleMinimized ? 'gap-0 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
-          style={{ left: 'calc(var(--sidebar-offset, 0px) + 12px)', borderColor: 'var(--border-light)' }}
-          aria-pressed={collapsed}
-          aria-label={collapsed ? 'Show sidebar' : 'Hide sidebar'}
-          title={collapsed ? 'Show sidebar' : 'Hide sidebar'}
-        >
-          <span
-            className="relative flex items-center justify-center"
-            style={{ width: toggleMinimized ? '20px' : '24px', height: toggleMinimized ? '20px' : '24px' }}
-          >
-            <span
-              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-20"
-              style={{ background: 'var(--border-light)' }}
-            />
-            <span
-              className="relative block rounded-full transition-all duration-500"
-              style={{
-                width: '2px',
-                height: toggleMinimized ? '14px' : '18px',
-                background: 'var(--border-light)',
-                transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
-                transformOrigin: 'center'
-              }}
-            />
-          </span>
-          {!toggleMinimized && (
-            <span
-              className="text-[8px] tracking-[0.15em] uppercase transition-opacity duration-500"
-              style={{ color: 'var(--text-secondary)', opacity: collapsed ? 0.75 : 1 }}
-            >
-              {collapsed ? 'Show sidebar' : 'Hide sidebar'}
-            </span>
-          )}
-        </button>
-      )}
-
       {isResumeOpen && (
-        <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+        <ResumeModal onClose={() => setIsResumeOpen(false)} />
       )}
     </>
   )
