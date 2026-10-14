@@ -97,33 +97,38 @@ export default function About() {
             </div>
           </div>
 
-          {/* Desktop: 3D Scene */}
+          {/* Desktop: 3D Scene. The outer watch starts the download 400px early; the entrance plays in view. */}
           <motion.div
             className="hidden lg:flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '400px' }}
             onViewportEnter={nearScene}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative w-full aspect-square max-w-[400px]">
-              <div className="absolute inset-0 rounded-full border border-border-light" />
-              <div className="absolute inset-4 rounded-full overflow-hidden bg-bg-secondary">
-                {showScene && (
-                  // the runtime throws (it has no onError) when its chunk, the scene, the decoder or
-                  // WebGL is unavailable; this keeps that inside the circle, not the page-wide boundary
-                  <ErrorBoundary
-                    fallback={
-                      <div className="w-full h-full grid place-items-center">
-                        <p className="text-[13px] text-text-muted">3D scene unavailable</p>
-                      </div>
-                    }
-                  >
-                    <SplineScene sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode" className="w-full h-full" />
-                  </ErrorBoundary>
-                )}
+            <motion.div
+              className="w-full flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="relative w-full aspect-square max-w-[400px]">
+                <div className="absolute inset-0 rounded-full border border-border-light" />
+                <div className="absolute inset-4 rounded-full overflow-hidden bg-bg-secondary">
+                  {showScene && (
+                    // the runtime throws (it has no onError) when its chunk, the scene, the decoder or
+                    // WebGL is unavailable; this keeps that inside the circle, not the page-wide boundary
+                    <ErrorBoundary
+                      fallback={
+                        <div className="w-full h-full grid place-items-center">
+                          <p className="text-[13px] text-text-muted">3D scene unavailable</p>
+                        </div>
+                      }
+                    >
+                      <SplineScene sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode" className="w-full h-full" />
+                    </ErrorBoundary>
+                  )}
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

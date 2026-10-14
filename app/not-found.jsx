@@ -24,7 +24,7 @@ export default function NotFound() {
                     <h1 className="font-serif text-[clamp(3rem,8vw,6rem)] font-normal leading-[0.95] tracking-[-0.02em] text-text-primary">
                         Page not found<span className="italic text-rose-taupe">.</span>
                     </h1>
-                    <p className="mt-6 md:mt-8 max-w-xl text-[17px] md:text-[19px] leading-relaxed text-text-secondary">
+                    <p className="mt-6 md:mt-8 max-w-xl text-[17px] md:text-[19px] leading-relaxed text-pretty text-text-secondary">
                         There is nothing at this address. It may have moved, or the link may be mistyped.
                     </p>
                     <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">

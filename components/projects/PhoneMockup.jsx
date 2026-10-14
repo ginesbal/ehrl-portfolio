@@ -47,9 +47,13 @@ export default function PhoneMockup({ screenshots = [] }) {
     const [inView, setInView] = useState(false)
     const ref = useRef(null)
 
-    // only rotate while the phone is mostly on screen (on a phone it starts below the fold)
+    // only rotate while the phone is mostly on screen (on a phone it starts below the fold); in a
+    // window shorter than the phone, "mostly" means it fills most of the window
     useEffect(() => {
-        const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.6 })
+        const io = new IntersectionObserver(
+            ([e]) => setInView(e.intersectionRatio >= 0.6 || e.intersectionRect.height >= window.innerHeight * 0.6),
+            { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] }
+        )
         io.observe(ref.current)
         return () => io.disconnect()
     }, [])

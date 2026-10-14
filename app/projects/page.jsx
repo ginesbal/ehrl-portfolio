@@ -216,7 +216,7 @@ export default function ProjectsArchive() {
                                                         src={activeProject.thumb ?? activeProject.preview}
                                                         alt=""
                                                         sizes={activeProject.screen === 'desktop' ? '282px' : '148px'}
-                                                        className={`absolute left-1/2 -translate-x-1/2 h-auto transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? 'top-8 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
+                                                        className={`absolute left-1/2 -translate-x-1/2 h-auto transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1 ${activeProject.screen === 'desktop' ? '-bottom-2 w-[88%] rounded-t-[8px]' : 'top-6 w-[46%] rounded-t-[18px]'}`}
                                                     />
                                                 ) : null}
                                             </div>

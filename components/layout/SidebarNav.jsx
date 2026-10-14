@@ -87,7 +87,7 @@ export default function SidebarNav() {
     <>
       {/* sidebar toggle - minimizes on scroll / back button on project pages; before the aside so it is the first tab stop */}
       {onCaseStudy ? (
-        <nav aria-label="Back">
+        <nav aria-label="Back" className="hidden lg:block">
           <Link
             href="/projects"
             className={`group hidden lg:flex fixed top-6 z-50 items-center rounded-full border bg-bg-primary/95 backdrop-blur-sm transition-[padding,gap,left] duration-500 ${toggleMinimized ? 'gap-2 px-2.5 py-1.5' : 'gap-2 px-3 py-1'}`}
