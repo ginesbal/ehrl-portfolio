@@ -47,18 +47,18 @@ export const evisionData = {
     technicalHighlights: [
         {
             title: 'Ranking a plain-language query',
-            body: '`parse_query` reads price, range, drivetrain, seats and SUV intent out of the text. It parses range before price, so “over 450 km” isn’t read as a price. Whatever is left is scored by token match and, when the model is installed, `all-MiniLM-L6-v2` similarity, then blended with spec fit and a tie-break into one score.',
+            body: '`parse_query` reads price, range, drivetrain, seats and SUV intent out of the text. It parses range before price, so “over 200 mi” isn’t read as a price. Whatever is left is scored by token match and, when the model is installed, `all-MiniLM-L6-v2` similarity, then blended with spec fit and a tie-break into one score.',
             tradeoff: 'The embedding model is optional and not in `requirements.txt`, so without it ranking falls back to token match and spec fit.'
         },
         {
             title: 'Caching the catalog and results',
             body: 'Loading and normalising the catalog on every request would repeat slow work. The normalised catalog is cached for 24 hours, and result pages are cached by query, filters, sort and page.',
-            outcome: 'If a catalog refresh fails, the last good copy keeps serving, so an upstream outage doesn’t take search down.',
+            outcome: 'If a catalog refresh fails, the last good copy keeps serving, so an upstream outage doesn’t take search down while the app stays running.',
             tradeoff: 'The result cache is checked after parsing, filtering and ranking, so a repeat search still re-ranks and only skips building the page. Checking it first would make repeats cheap.'
         },
         {
             title: 'Rate limiting without accounts',
-            body: 'A public search endpoint needs protection from scripted bursts, and there is no login to hang a quota on. Each IP keeps a queue of its recent request times. Entries older than the window drop off, and when the queue is full the request is refused. The limiter is off in debug mode.',
+            body: 'A public search endpoint needs protection from scripted bursts, and there is no login to hang a quota on. The server keeps a queue of recent request times for each IP. Entries older than the window drop off, and when the queue is full the request is refused. The limiter is off in debug mode.',
             outcome: 'A refused search gets a 429 and “Too many requests. Try again in a minute.”',
             tradeoff: 'The queues live in process memory, so they reset on restart and aren’t shared between instances.',
             // verbatim: app/rate_limit.py lines 6-21

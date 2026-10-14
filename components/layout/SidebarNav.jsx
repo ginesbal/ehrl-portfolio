@@ -28,7 +28,7 @@ export default function SidebarNav() {
   // keep sidebar active state in sync with route for non-home pages
   useEffect(() => {
     if (onHome) return
-    setActiveSection(onProjectsRoute ? 'projects' : 'hero')
+    setActiveSection(onProjectsRoute ? 'projects' : '')
     setToggleMinimized(window.scrollY > 24)
   }, [onHome, onProjectsRoute])
 
@@ -38,7 +38,7 @@ export default function SidebarNav() {
       setToggleMinimized(window.scrollY > 24)
 
       if (!onHome) {
-        setActiveSection(onProjectsRoute ? 'projects' : 'hero')
+        setActiveSection(onProjectsRoute ? 'projects' : '')
         return
       }
 

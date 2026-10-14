@@ -16,7 +16,7 @@ const lift = 'transition-transform duration-500 ease-[var(--ease-out-expo)] moti
 function Artefact({ project }) {
   const image = project.thumb ?? project.preview
 
-  if (!image) {
+  if (project.id === 'evision') {
     return (
       <div className={`absolute inset-0 flex flex-col justify-center p-5 xl:p-6 ${lift}`}>
         <p className="font-serif text-[18px] xl:text-[21px] leading-[1.25] text-balance text-text-primary">&ldquo;{specimen.query}&rdquo;</p>
@@ -29,11 +29,13 @@ function Artefact({ project }) {
     )
   }
 
+  if (!image) return null
+
   const desktop = project.screen === 'desktop'
   return (
     <div
       className={`absolute -bottom-2 overflow-hidden shadow-[var(--shadow-sm)] ${lift} ${
-        desktop ? 'top-6 inset-x-6 rounded-t-[8px]' : 'top-5 left-1/2 -translate-x-1/2 w-[11.5rem] rounded-t-[18px]'
+        desktop ? 'top-6 xl:top-10 inset-x-6 rounded-t-[8px]' : 'top-5 left-1/2 -translate-x-1/2 w-[11.5rem] rounded-t-[18px]'
       }`}
     >
       <Image

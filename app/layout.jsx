@@ -26,6 +26,9 @@ const sourceCode = Source_Code_Pro({
   variable: '--font-mono',
   display: 'swap',
   preload: false,
+  // fall back to a system mono, not Arial resized, so code keeps its columns while it loads
+  adjustFontFallback: false,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 })
 
 // Defaults; pages with their own metadata (the case studies, /projects) replace them,

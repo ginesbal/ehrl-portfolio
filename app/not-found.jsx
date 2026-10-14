@@ -16,11 +16,11 @@ export default function NotFound() {
             <SidebarNav />
             <main
                 id="main"
-                className="transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
+                className="flex min-h-svh flex-col transition-[margin] duration-500 ease-[var(--ease-out-expo)]"
                 style={{ marginLeft: 'var(--sidebar-offset, 0px)' }}
             >
-                {/* fills the screen above the footer (73px tall) */}
-                <section className="container-custom pt-32 pb-24 md:pb-32 min-h-[calc(100svh-73px)]">
+                {/* fills the screen above the footer */}
+                <section className="container-custom flex-1 w-full pt-32 pb-24 md:pb-32">
                     <h1 className="font-serif text-[clamp(3rem,8vw,6rem)] font-normal leading-[0.95] tracking-[-0.02em] text-text-primary">
                         Page not found<span className="italic text-rose-taupe">.</span>
                     </h1>

@@ -153,7 +153,7 @@ export function Implementation({ highlights }) {
                 {highlights.map((item, i) => (
                     <li
                         key={item.title}
-                        className={`grid md:grid-cols-[4.5rem_minmax(0,1fr)] gap-3 md:gap-x-8 ${item.figure ? 'xl:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,25rem)]' : ''}`}
+                        className={`grid grid-cols-1 md:grid-cols-[4.5rem_minmax(0,1fr)] gap-3 md:gap-x-8 ${item.figure ? 'xl:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,25rem)]' : ''}`}
                     >
                         <span aria-hidden className="font-serif text-[32px] md:text-[44px] leading-none tabular-nums text-text-muted/40">
                             {String(i + 1).padStart(2, '0')}
@@ -164,7 +164,7 @@ export function Implementation({ highlights }) {
                             {item.outcome && <p className={`mt-4 ${text} font-medium text-text-primary`}><Rich text={item.outcome} /></p>}
                             {item.tradeoff && (
                                 <p className="mt-4 max-w-[62ch] text-[14px] leading-relaxed text-text-muted">
-                                    <span className={`${label} mr-2.5`}>Trade-off</span>
+                                    <span className={`${label} mr-1.5`}>Trade-off</span>{' '}
                                     <Rich text={item.tradeoff} />
                                 </p>
                             )}

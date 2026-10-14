@@ -25,7 +25,7 @@ export const parkaidData = {
     overview: {
         summary: [
             'parkaid began as a five-person SAIT capstone. I redesigned the interface, rebuilt the map screen and wrote the app\'s location, parking and session hooks.',
-            'On the backend I moved the database to Supabase, wrote the setup script that loads the city\'s open data into one table and is safe to re-run, and added the tests.'
+            'On the backend I moved the database to Supabase, wrote the setup script that loads the datasets into one table and is safe to re-run, and added the tests.'
         ]
     },
 
@@ -33,7 +33,7 @@ export const parkaidData = {
     technicalHighlights: [
         {
             title: 'Spatial search in the database',
-            body: 'Each time the map settles, the app asks for the spots closest to a point. The query runs inside Postgres: `ST_DWithin` on a GiST-indexed geography column, ordered by `ST_Distance` with a fixed limit, so the API only formats the rows.',
+            body: 'Whenever the search point, filter or radius changes, the app asks for the spots closest to that point. The query runs inside Postgres: `ST_DWithin` on a GiST-indexed geography column, ordered by `ST_Distance` with a fixed limit, so the API only formats the rows.',
             outcome: 'The data-quality tests check that every result is inside the radius and sorted by distance.',
             tradeoff: 'Because of the limit, a 500m and a 1km search can return the same spots. The data is the city\'s inventory, not live availability.',
             // the web demo answers from the snapshot in app/api/parking/nearby, not PostGIS; the caption says so
@@ -45,13 +45,13 @@ export const parkaidData = {
         },
         {
             title: 'Fewer requests from the app',
-            body: 'Panning the map would otherwise fire a search for every intermediate position. `useParkingSpots` waits 300ms after the location settles before it searches, and responses are cached on the phone.',
-            outcome: 'One request per settled position instead of one per frame of a pan, and the last results still show when the network drops.'
+            body: 'Tapping through filters or dropping a pin a few times in a row would otherwise fire a search for each step. `useParkingSpots` waits 300ms after its inputs stop changing before it searches, and responses are cached on the phone.',
+            outcome: 'One request once the inputs settle, and a search already made in the last day is answered from the phone\'s cache when the network drops.'
         },
         {
             title: 'A backend that deploys',
             body: 'The backend ran on a laptop and crashed on startup anywhere else. I cut required setup to one setting (`DATABASE_URL`), stopped the health check querying the database, removed a stray root `package-lock.json`, and switched to the Supabase pooler URL after the IPv6-only one failed.',
-            outcome: 'Every push to the connected branch now deploys to Render from a single Blueprint file.',
+            outcome: 'With the Blueprint, every push to the connected branch deployed to Render, and each fix was confirmed by running it.',
             tradeoff: 'The Blueprint uses Render\'s free plan, which sleeps when idle, so the first request after a quiet spell is slow.'
         }
     ]

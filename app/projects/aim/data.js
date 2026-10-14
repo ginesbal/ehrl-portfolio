@@ -1,7 +1,7 @@
 export const aimData = {
     id: 'aim',
     title: 'aim',
-    description: 'A calm study app built around the focus session. The dashboard proposes the next session in one sentence, Focus runs it, and every finished session fills part of the day\'s goal, drawn as the “a” of the logo.',
+    description: 'A calm study app built around the focus session. The dashboard proposes the next session in one sentence, Focus runs it, and every finished session fills part of the day’s goal, drawn as the “a” of the logo.',
 
     links: {
         github: 'https://github.com/ginesbal/aim'
@@ -36,7 +36,6 @@ export const aimData = {
         {
             title: 'A timer that keeps wall-clock time',
             body: 'aim often runs in a background tab, where browsers throttle `setInterval` (to about once a minute after five minutes hidden) and stop it during sleep. So the session stores its end time, works out the seconds left from `Date.now()` on every tick, and snaps to the true time on `visibilitychange`. The tab title shows whole minutes, which stay true when ticks are throttled.',
-            outcome: 'The countdown follows the clock, not how often the browser lets the timer run.',
             tradeoff: 'In a tab hidden for a long time, Done and the chime can arrive up to a minute late. A one-shot timeout or a Web Worker timer would fix that.',
             // moved down from the hero: the screen the timer drives
             figure: {
@@ -48,7 +47,7 @@ export const aimData = {
         {
             title: 'Sessions that survive a reload',
             body: 'A session can be running, paused, or finished but not yet saved when the student reloads or leaves Focus. The session in flight is kept in `sessionStorage` and validated on load, and the dashboard offers the way back to it.',
-            outcome: 'A reload resumes the session instead of losing it, and since that storage is per tab, a stale session can’t surface in another tab or days later.',
+            outcome: 'Because `sessionStorage` is per tab, a stale session can’t surface in another tab or days later.',
             tradeoff: 'If storage is full or blocked, the session still runs; it just won’t survive a reload.'
         },
         {
