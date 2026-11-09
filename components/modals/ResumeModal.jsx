@@ -22,7 +22,8 @@ export default function ResumeModal({ onClose }) {
 
                     <div className="flex items-center gap-1 md:gap-3">
                         <a href={pdfPath} download="Ehrl_Balquin_Resume.pdf" className="btn-link px-2">
-                            Download<span className="hidden md:inline">&nbsp;PDF</span>
+                            {/* one flex item, so .btn-link's gap doesn't split the label */}
+                            <span>Download<span className="hidden md:inline">&nbsp;PDF</span></span>
                         </a>
                         <form method="dialog" className="contents">
                             <button

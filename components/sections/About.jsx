@@ -4,13 +4,14 @@ import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import ErrorBoundary from '../ui/ErrorBoundary.jsx'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 
 const SplineScene = dynamic(() => import('../ui/SplineScene'), { ssr: false })
 
 const skills = [
   ['Languages', 'Java · Python · JavaScript · TypeScript · C# · SQL · HTML/CSS'],
-  ['Frontend & Mobile', 'React · React Native · Next.js · Expo Go · Tailwind'],
+  ['Front-end & Mobile', 'React · React Native · Next.js · Expo Go · Tailwind'],
   ['Backend & APIs', 'Node.js · Express · FastAPI · REST · JWT Auth'],
   ['Databases', 'PostgreSQL · MySQL · MongoDB · SQLite'],
   ['Testing & QA', 'Jest · Postman · Selenium'],
@@ -19,15 +20,9 @@ const skills = [
 ]
 
 export default function About() {
-  // The 3D scene is desktop-only; don't download the runtime on phones
+  // The 3D scene is desktop-only, and its ~560KB runtime loads only as About comes near
   const [showScene, setShowScene] = useState(false)
-  useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1024px)')
-    const syncScene = () => setShowScene(desktop.matches)
-    syncScene()
-    desktop.addEventListener('change', syncScene)
-    return () => desktop.removeEventListener('change', syncScene)
-  }, [])
+  const nearScene = () => window.matchMedia('(min-width: 1024px)').matches && setShowScene(true)
 
   // The disc has two faces: the 3D avatar in front, the photo behind. It turns like a coin seen face-on:
   // it narrows to its edge, catching a little less light, the other side comes round, and it widens again.
@@ -67,7 +62,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
               About
             </motion.h2>
@@ -78,7 +73,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
                 <p>Hey there!</p>
                 <p>
@@ -91,7 +86,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.35 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               >
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                   {skills.map(([label, value]) => (
@@ -112,7 +107,7 @@ export default function About() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -128,59 +123,70 @@ export default function About() {
             </div>
           </div>
 
-          {/* Desktop: 3D Scene */}
+          {/* Desktop: 3D Scene. The outer watch starts the download 400px early; the entrance plays in view. */}
           <motion.div
             className="hidden lg:flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true, margin: '400px' }}
+            onViewportEnter={nearScene}
           >
-            <div className="relative w-full aspect-square max-w-[400px]">
-              <div className="absolute inset-0 rounded-full border border-border-light" />
-              <motion.div style={{ scaleX: width }} className="absolute inset-4">
-                <motion.div
-                  style={{ opacity: frontShown }}
-                  inert={showPhoto}
-                  className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary ${showPhoto ? 'pointer-events-none' : ''}`}
-                >
-                  {showScene && (
-                    <SplineScene
-                      // ponytail: Spline sends no Cache-Control, so ?v= (live ETag prefix) busts stale browser copies; bump it after each Spline promote
-                      sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode?v=42b17fcc"
-                      className="w-full h-full"
-                      fallbackContent={
-                        <div className="w-full h-full grid place-items-center">
-                          <p className="text-[13px] text-text-muted">3D scene unavailable</p>
-                        </div>
-                      }
-                    />
-                  )}
+            <motion.div
+              className="w-full flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="relative w-full aspect-square max-w-[400px]">
+                <div className="absolute inset-0 rounded-full border border-border-light" />
+                <motion.div style={{ scaleX: width }} className="absolute inset-4">
+                  <motion.div
+                    style={{ opacity: frontShown }}
+                    inert={showPhoto}
+                    className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary ${showPhoto ? 'pointer-events-none' : ''}`}
+                  >
+                    {showScene && (
+                      // the runtime throws (it has no onError) when its chunk, the scene, the decoder or
+                      // WebGL is unavailable; this keeps that inside the circle, not the page-wide boundary
+                      <ErrorBoundary
+                        fallback={
+                          <div className="w-full h-full grid place-items-center">
+                            <p className="text-[13px] text-text-muted">3D scene unavailable</p>
+                          </div>
+                        }
+                      >
+                        <SplineScene
+                          // ponytail: Spline sends no Cache-Control, so ?v= (live ETag prefix) busts stale browser copies; bump it after each Spline promote
+                          sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode?v=42b17fcc"
+                          className="w-full h-full"
+                        />
+                      </ErrorBoundary>
+                    )}
+                  </motion.div>
+                  <motion.div
+                    style={{ opacity: backShown }}
+                    inert={!showPhoto}
+                    className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary border-[3px] border-rose-taupe ${showPhoto ? '' : 'pointer-events-none'}`}
+                  >
+                    {/* the full portrait squared and zoomed out with its own mirrored studio backdrop, so the circle shows head and shoulders instead of a close crop */}
+                    {showScene && <Image src="/images/ehrl-balquin-portrait-wide.webp" alt="Portrait of Ehrl Balquin" fill sizes="368px" className="object-cover" />}
+                  </motion.div>
+                  <motion.div aria-hidden="true" style={{ opacity: edgeShade }} className="pointer-events-none absolute inset-0 rounded-full bg-text-primary" />
                 </motion.div>
-                <motion.div
-                  style={{ opacity: backShown }}
-                  inert={!showPhoto}
-                  className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary border-[3px] border-rose-taupe ${showPhoto ? '' : 'pointer-events-none'}`}
+                <button
+                  type="button"
+                  onClick={flip}
+                  onPointerEnter={() => setPeek(true)}
+                  onPointerLeave={() => setPeek(false)}
+                  className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 flex items-center gap-2 rounded-full border border-border-light bg-bg-primary px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase text-text-secondary transition-[color,transform] duration-200 hover:text-text-primary active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-taupe"
                 >
-                  {/* the full portrait squared and zoomed out with its own mirrored studio backdrop, so the circle shows head and shoulders instead of a close crop */}
-                  {showScene && <Image src="/images/ehrl-balquin-portrait-wide.webp" alt="Portrait of Ehrl Balquin" fill sizes="368px" className="object-cover" />}
-                </motion.div>
-                <motion.div aria-hidden="true" style={{ opacity: edgeShade }} className="pointer-events-none absolute inset-0 rounded-full bg-text-primary" />
-              </motion.div>
-              <button
-                type="button"
-                onClick={flip}
-                onPointerEnter={() => setPeek(true)}
-                onPointerLeave={() => setPeek(false)}
-                className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 flex items-center gap-2 rounded-full border border-border-light bg-bg-primary px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase text-text-secondary transition-[color,transform] duration-200 hover:text-text-primary active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-taupe"
-              >
-                <motion.svg animate={{ rotate: showPhoto ? -180 : 0 }} transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
-                  <path d="M21 3v5h-5" />
-                </motion.svg>
-                {showPhoto ? 'Flip to 3D' : 'Flip to photo'}
-              </button>
-            </div>
+                  <motion.svg animate={{ rotate: showPhoto ? -180 : 0 }} transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                  </motion.svg>
+                  {showPhoto ? 'Flip to 3D' : 'Flip to photo'}
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

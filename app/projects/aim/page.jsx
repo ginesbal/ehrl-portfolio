@@ -1,4 +1,4 @@
-import { CaseStudyHero, CaseStudyNav, Contributions, Implementation, Overview } from '@/components/case-study/CaseStudy'
+import { CaseStudyHero, CaseStudyNav, Implementation, Overview } from '@/components/case-study/CaseStudy'
 import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
@@ -43,10 +43,10 @@ export default function AimPage() {
                                             width={s.width}
                                             height={s.height}
                                             sizes="(min-width: 1280px) 34vw, (min-width: 768px) 672px, 100vw"
-                                            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light shadow-[var(--shadow-md)]"
+                                            className="w-full h-auto rounded-[var(--radius-md)] border border-border-light"
                                         />
                                     </a>
-                                    <figcaption className="mt-3 text-[13px] leading-relaxed text-text-muted">{s.caption}</figcaption>
+                                    <figcaption className="mt-3 text-[13px] leading-relaxed text-pretty text-text-muted">{s.caption}</figcaption>
                                 </figure>
                             ))}
                         </div>
@@ -54,7 +54,6 @@ export default function AimPage() {
                 />
                 <Overview overview={aimData.overview} />
                 <Implementation highlights={aimData.technicalHighlights} />
-                <Contributions contributions={aimData.contributions} />
                 <CaseStudyNav id={aimData.id} />
                 <Footer />
             </main>

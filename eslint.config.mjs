@@ -11,8 +11,12 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  // flat config only lints .js/.ts by default; the site is .jsx
+  { files: ["**/*.{js,jsx,mjs,ts,tsx}"] },
   {
     ignores: [
+      // the Expo web export is generated, minified code
+      "public/**",
       "node_modules/**",
       ".next/**",
       "out/**",

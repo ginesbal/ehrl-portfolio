@@ -1,24 +1,15 @@
-// spline 3d scene wrapper (load via next/dynamic with ssr: false)
+// spline 3d scene wrapper (load via next/dynamic with ssr: false; wrap it in an ErrorBoundary)
 'use client'
 
 import Spline from '@splinetool/react-spline'
 import { useEffect, useId, useRef, useState } from 'react'
 import { createAvatarInteraction } from '../../lib/avatar-interaction'
 import { createAvatarSleepOverlay } from '../../lib/avatar-sleep-overlay'
-import ErrorBoundary from './ErrorBoundary'
 
 // How far the scene is zoomed in; the sleep overlay scales by the same amount so it stays matched to the face.
 const ZOOM = 1.45
 
-export default function SplineScene({ sceneUrl, className = '', fallbackContent = null }) {
-    return (
-        <ErrorBoundary key={sceneUrl} fallback={fallbackContent}>
-            <InteractiveScene sceneUrl={sceneUrl} className={className} />
-        </ErrorBoundary>
-    )
-}
-
-function InteractiveScene({ sceneUrl, className }) {
+export default function SplineScene({ sceneUrl, className = '' }) {
     const instructionsId = useId()
     const [status, setStatus] = useState('loading')
     const [greeting, setGreeting] = useState('')

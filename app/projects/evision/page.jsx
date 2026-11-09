@@ -1,4 +1,4 @@
-import { CaseStudyHero, CaseStudyNav, Contributions, Implementation, Overview, TextLink } from '@/components/case-study/CaseStudy'
+import { CaseStudyHero, CaseStudyNav, Implementation, Overview, TextLink } from '@/components/case-study/CaseStudy'
 import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
@@ -64,8 +64,8 @@ function QuerySpecimen({ specimen }) {
                 </ol>
             </div>
 
-            <figcaption className="mt-5 text-[12px] leading-relaxed text-text-muted">
-                Real output of the app&apos;s parser and ranking on its catalog (evtable.com data, March 2024), as deployed. Every word became a filter, so the scores (out of 100) come from spec fit and the range-and-price tie-break. Prices in CAD.
+            <figcaption className="mt-5 text-[13px] leading-relaxed text-pretty text-text-muted">
+                Real output of the app’s parser and ranking on its catalog (evtable.com data, March 2024), as deployed. Every word became a filter, so the scores (out of 100) come from spec fit and the range-and-price tie-break. Prices in CAD.
             </figcaption>
         </figure>
     )
@@ -103,7 +103,6 @@ export default async function EVisionPage() {
                 />
                 <Overview overview={evisionData.overview} />
                 <Implementation highlights={evisionData.technicalHighlights} />
-                <Contributions contributions={evisionData.contributions} />
                 <CaseStudyNav id={evisionData.id} />
                 <Footer />
             </main>

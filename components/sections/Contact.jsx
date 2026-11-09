@@ -135,9 +135,9 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          Let&apos;s <span className="italic">talk</span>
+          Let’s <span className="italic">talk</span>
         </motion.h2>
 
         <motion.dl
@@ -145,19 +145,19 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="col-span-2 md:col-span-1">
             <dt className="text-[11px] tracking-[0.2em] uppercase text-text-light/60 mb-2">Email</dt>
             <dd>
-              <a href={`mailto:${EMAIL}`} className="text-[17px] hover:text-rose-taupe">{EMAIL}</a>
+              <a href={`mailto:${EMAIL}`} className="text-[17px] hover:text-[var(--powder-blush-300)]">{EMAIL}</a>
             </dd>
           </div>
           <div>
             <dt className="text-[11px] tracking-[0.2em] uppercase text-text-light/60 mb-2">Social</dt>
             <dd className="flex flex-col gap-1">
               {links.map(({ label, href }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-[17px] hover:text-rose-taupe">
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-[17px] hover:text-[var(--powder-blush-300)]">
                   {label}
                 </a>
               ))}
@@ -181,7 +181,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           <input type="text" name="_hp" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
@@ -199,10 +199,10 @@ export default function Contact() {
           </button>
 
           <div ref={statusRef} tabIndex={-1} aria-live="polite" className="!mt-4 focus:outline-none text-[14px]">
-            {status === 'success' && <p className="text-text-primary">Message sent. I&apos;ll get back to you soon.</p>}
+            {status === 'success' && <p className="text-text-primary">Message sent. I’ll get back to you soon.</p>}
             {status === 'error' && (
               <p className="text-text-secondary">
-                That didn&apos;t go through. You can email me directly at{' '}
+                That didn’t go through. You can email me directly at{' '}
                 <a href={`mailto:${EMAIL}`} className="text-rose-taupe underline underline-offset-4">{EMAIL}</a>.
               </p>
             )}

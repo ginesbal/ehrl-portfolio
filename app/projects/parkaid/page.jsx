@@ -1,4 +1,4 @@
-import { CaseStudyNav, Contributions, Implementation, Overview } from '@/components/case-study/CaseStudy'
+import { CaseStudyNav, Implementation, Overview } from '@/components/case-study/CaseStudy'
 import Footer from '@/components/layout/Footer'
 import MobileNav from '@/components/layout/MobileNav'
 import SidebarNav from '@/components/layout/SidebarNav'
@@ -23,7 +23,6 @@ export default function ParkaidPage() {
                 <ProjectHero project={parkaidData} />
                 <Overview overview={parkaidData.overview} />
                 <Implementation highlights={parkaidData.technicalHighlights} />
-                <Contributions contributions={parkaidData.contributions} />
                 <CaseStudyNav id={parkaidData.id} />
                 <Footer />
             </main>

@@ -13,6 +13,16 @@
       var dialog = e.key === 'Escape' && window.frameElement && window.frameElement.closest('dialog')
       if (dialog) dialog.close()
     })
+    // The demo's data covers downtown Calgary only, so location is always off, as in the dialog's
+    // iframe (allow="geolocation 'none'"): opened in its own tab, the app falls back to downtown too.
+    if (navigator.geolocation) {
+      var denied = function (ok, fail) {
+        setTimeout(function () { if (fail) fail({ code: 1, PERMISSION_DENIED: 1, message: 'Location is off in this demo' }) })
+        return 0
+      }
+      navigator.geolocation.getCurrentPosition = denied
+      navigator.geolocation.watchPosition = denied
+    }
   </script>
   <style id="expo-reset">
     html,
