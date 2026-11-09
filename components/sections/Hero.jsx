@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
+import PunctuationDot from '../ui/PunctuationDot.jsx'
 import ScrollIndicator from '../ui/ScrollIndicator.jsx'
 
 const ResumeModal = dynamic(() => import('../modals/ResumeModal.jsx'), { ssr: false })
@@ -71,7 +72,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-serif text-[clamp(3.5rem,13vw,8rem)] font-normal leading-[0.92] tracking-[-0.02em] text-onyx"
           >
-            portfolio<span className="italic text-rose-taupe">.</span>
+            portfolio<PunctuationDot firstDelay={650} />
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 12 }}

@@ -1,0 +1,123 @@
+/* The person rests as the old 8px dot and rises on arrival; the bulb and bubble are icons from the start and play on arrival. */
+.icon {
+  --ease-gentle: cubic-bezier(0.37, 0, 0.63, 1); /* slow start, slow finish: nothing rushes */
+  --ease-soft-out: cubic-bezier(0.33, 1, 0.68, 1);
+  overflow: visible;
+  color: var(--rose-taupe);
+  fill: currentColor;
+}
+
+.icon * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* person: the dot slowly rises into the head while the shoulders come up beneath it */
+.head {
+  transform: translateY(4.7px) scale(1.385);
+  transition: transform 1380ms var(--ease-gentle);
+}
+
+.body {
+  transform-origin: 50% 100%;
+  transform: translateY(1.5px) scale(0.55, 0.3);
+  opacity: 0;
+  transition:
+    transform 1520ms var(--ease-gentle) 240ms,
+    opacity 1100ms var(--ease-gentle) 240ms;
+}
+
+/* bulb: already a bulb; arriving switches it on with a few flickers before it settles */
+.lamp {
+  --glow: color-mix(in srgb, var(--rose-taupe) 75%, transparent);
+}
+
+.bulb[data-open] .lamp {
+  animation: flicker 3200ms 280ms linear both;
+}
+
+/* uneven on/off beats read as a filament catching; the last flash is the brightest, and its glow
+   lingers as it slowly settles back to steady */
+@keyframes flicker {
+  0% { filter: drop-shadow(0 0 0 transparent) brightness(1); }
+  4% { filter: drop-shadow(0 0 3px var(--glow)) brightness(1.35); }
+  9% { filter: drop-shadow(0 0 0 transparent) brightness(0.8); }
+  16% { filter: drop-shadow(0 0 2px var(--glow)) brightness(1.2); }
+  21% { filter: drop-shadow(0 0 0 transparent) brightness(0.85); }
+  27% { filter: drop-shadow(0 0 1.5px var(--glow)) brightness(1.1); }
+  31% { filter: drop-shadow(0 0 0 transparent) brightness(0.9); }
+  42% {
+    filter: drop-shadow(0 0 4.5px var(--glow)) brightness(1.4);
+    animation-timing-function: var(--ease-soft-out);
+  }
+  100% { filter: drop-shadow(0 0 0 transparent) brightness(1); }
+}
+
+/* message: nothing until the reader arrives, then a bubble inflates from the tail's tip,
+   three dots type inside it, and it settles as a plain bubble. It rests at the animation's own
+   starting point, so the opening only ever grows and never reads as shrinking first. */
+.typing {
+  opacity: 0;
+}
+
+.bubble {
+  transform-origin: 25% 99%; /* the tail's tip */
+  transform: scale(0.06);
+  opacity: 0;
+}
+
+.message[data-open] .bubble {
+  animation: bubble-from-tail 1700ms var(--ease-soft-out) both;
+}
+
+@keyframes bubble-from-tail {
+  from { opacity: 0; transform: scale(0.06); }
+  15% { opacity: 1; }
+}
+
+/* cut-outs: page-coloured dots read as holes in the solid bubble */
+.typing {
+  fill: var(--bg-primary);
+}
+
+.message[data-open] .typing {
+  animation: type 2600ms var(--ease-soft-out) both;
+}
+
+/* they spread from the middle once the bubble is most of the way open */
+.message[data-open] .typing:nth-of-type(1) { --from: 3.1px; animation-delay: 950ms; }
+.message[data-open] .typing:nth-of-type(2) { animation-delay: 1050ms; }
+.message[data-open] .typing:nth-of-type(3) { --from: -3.1px; animation-delay: 1150ms; }
+
+/* three bounces as a wave, a held beat, then they fade and leave the plain bubble */
+@keyframes type {
+  0% { opacity: 0; transform: translateX(var(--from, 0)) scale(0.6); }
+  12% { opacity: 1; transform: none; }
+  22% { transform: translateY(-1.2px); }
+  32% { transform: none; }
+  42% { transform: translateY(-1.2px); }
+  52% { transform: none; }
+  62% { transform: translateY(-1.2px); }
+  72% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: none; }
+}
+
+/* open state (also what reduced motion shows, without the journey) */
+.icon[data-open] .head,
+.icon[data-open] .body,
+.icon[data-open] .bubble {
+  transform: none;
+  opacity: 1;
+}
+
+.icon[data-open] .typing {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon *,
+  .icon[data-open] * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

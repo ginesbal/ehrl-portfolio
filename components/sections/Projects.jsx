@@ -6,11 +6,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 import PillCta from '../ui/PillCta.jsx'
+import styles from './Projects.module.css'
 
 const showcaseProjects = (projects.some((p) => p.featured) ? projects.filter((p) => p.featured) : projects).slice(0, 3)
 
 export default function Projects() {
   const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [pressedIndex, setPressedIndex] = useState(null)
   const [canHover, setCanHover] = useState(true)
 
   // Detect touch-only devices
@@ -18,8 +20,8 @@ export default function Projects() {
     const mq = window.matchMedia('(hover: hover)')
     setCanHover(mq.matches)
     const handler = (e) => setCanHover(e.matches)
-    mq.addEventListener?.('change', handler) || mq.addListener?.(handler)
-    return () => mq.removeEventListener?.('change', handler) || mq.removeListener?.(handler)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
   }, [])
 
   return (
@@ -54,18 +56,23 @@ export default function Projects() {
             >
               <Link
                 href={`/projects/${project.id}`}
-                className="group relative block border-t border-border-light active:bg-rose-taupe/5"
+                className={`${styles.link} group relative block border-t border-border-light active:bg-rose-taupe/5`}
+                data-pressed={pressedIndex === index ? '' : undefined}
+                onPointerDown={(event) => {
+                  if (event.isPrimary && event.pointerType !== 'mouse') setPressedIndex(index)
+                }}
+                onPointerUp={() => setPressedIndex(null)}
+                onPointerCancel={() => setPressedIndex(null)}
               >
-                {/* Left accent — CSS only */}
-                <div
-                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-rose-taupe origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[400ms]"
-                  style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-                />
-
                 <div className="pl-4 md:pl-6 py-6 md:py-8 grid lg:grid-cols-[1fr_auto] gap-x-8 items-start">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-baseline gap-x-3 md:gap-x-4 gap-y-1">
-                      <h3 className="font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] font-normal leading-[1.05] tracking-[-0.01em] text-text-primary">
+                      <h3 className="relative font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] font-normal leading-[1.05] tracking-[-0.01em] text-text-primary">
+                        <span
+                          data-project-accent
+                          aria-hidden="true"
+                          className={`${styles.accent} pointer-events-none absolute -left-4 top-[0.525em] bg-rose-taupe md:-left-6`}
+                        />
                         {project.title}
                       </h3>
                       <span className="text-[11px] tracking-[0.2em] uppercase text-text-muted">

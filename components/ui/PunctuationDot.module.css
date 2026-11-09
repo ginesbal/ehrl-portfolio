@@ -1,0 +1,39 @@
+/* Hero period: a drawn dot matched to Source Serif 4's italic full stop (0.15em across, starting
+   0.04em after the o), so it can stretch into a text cursor and back. Hidden until it is typed. */
+.dot {
+  display: inline-block;
+  width: 0.15em;
+  height: 0.15em;
+  margin-left: 0.04em;
+  border-radius: 50%;
+  background: currentColor;
+  transform-origin: 50% 100%;
+}
+
+.dot[data-mark='waiting'] {
+  opacity: 0;
+}
+
+/* a text cursor (reaching below the baseline, like a real one) blinks twice after the word,
+   then drops into the period, as if it had just been typed */
+.dot[data-mark='typed'] {
+  animation: typed 1800ms both;
+}
+
+@keyframes typed {
+  0%, 12% { transform: translateY(0.18em) scale(0.24, 6); border-radius: 0.01em; opacity: 1; }
+  13%, 25% { opacity: 0; }
+  26%, 38% { opacity: 1; }
+  39%, 51% { opacity: 0; }
+  52% { opacity: 1; }
+  63% { transform: translateY(0.18em) scale(0.24, 6); border-radius: 0.01em; animation-timing-function: var(--ease-out-expo); }
+  86% { transform: translateY(0) scale(1.14, 0.88); border-radius: 50%; }
+  100% { transform: none; border-radius: 50%; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

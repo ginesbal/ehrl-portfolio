@@ -1,3 +1,7 @@
+import SectionDot from '../ui/SectionDot'
+
+const icons = { about: 'person', projects: 'bulb', contact: 'message' }
+
 export default function Waypoint({
   id, label, annotation, meta
 }) {
@@ -6,7 +10,7 @@ export default function Waypoint({
       <div className="container-custom">
         <div className="flex items-center gap-4 md:gap-8">
           <div className="flex items-center gap-2 shrink-0 text-[11px] tracking-[0.3em] uppercase text-text-muted">
-            <span className="inline-flex w-2 h-2 rounded-full bg-rose-taupe" />
+            <SectionDot icon={icons[id]} />
             <span>{label}</span>
           </div>
 

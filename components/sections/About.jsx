@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import FloatingCircles from '../ui/FloatingCircles.jsx'
 
@@ -20,7 +21,38 @@ const skills = [
 export default function About() {
   // The 3D scene is desktop-only; don't download the runtime on phones
   const [showScene, setShowScene] = useState(false)
-  useEffect(() => setShowScene(window.matchMedia('(min-width: 1024px)').matches), [])
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const syncScene = () => setShowScene(desktop.matches)
+    syncScene()
+    desktop.addEventListener('change', syncScene)
+    return () => desktop.removeEventListener('change', syncScene)
+  }, [])
+
+  // The disc has two faces: the 3D avatar in front, the photo behind. It turns like a coin seen face-on:
+  // it narrows to its edge, catching a little less light, the other side comes round, and it widens again.
+  // Flat 2D transforms only, so the live WebGL canvas never goes through 3D compositing (no hitch on return).
+  const [showPhoto, setShowPhoto] = useState(false)
+  const [peek, setPeek] = useState(false)
+  const reduceMotion = useReducedMotion()
+  const angle = useMotionValue(0)
+  const turn = (showPhoto ? 180 : 0) + (peek && !reduceMotion ? (showPhoto ? -16 : 16) : 0)
+  useEffect(() => {
+    if (reduceMotion) {
+      angle.set(turn)
+      return
+    }
+    const turning = animate(angle, turn, { duration: peek ? 0.35 : 0.7, ease: [0.65, 0, 0.35, 1] })
+    return () => turning.stop()
+  }, [angle, turn, peek, reduceMotion])
+  const width = useTransform(angle, (a) => Math.max(0.015, Math.abs(Math.cos((a * Math.PI) / 180))))
+  const frontShown = useTransform(angle, (a) => (a < 90 ? 1 : 0))
+  const backShown = useTransform(angle, (a) => (a < 90 ? 0 : 1))
+  const edgeShade = useTransform(angle, (a) => Math.sin((a * Math.PI) / 180) * 0.3)
+  function flip() {
+    setShowPhoto((shown) => !shown)
+    setPeek(false)
+  }
 
   return (
     <section className="relative bg-bg-primary pt-8 md:pt-0 pb-12 overflow-hidden">
@@ -106,19 +138,48 @@ export default function About() {
           >
             <div className="relative w-full aspect-square max-w-[400px]">
               <div className="absolute inset-0 rounded-full border border-border-light" />
-              <div className="absolute inset-4 rounded-full overflow-hidden bg-bg-secondary">
-                {showScene && (
-                  <SplineScene
-                    sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode"
-                    className="w-full h-full"
-                    fallbackContent={
-                      <div className="w-full h-full grid place-items-center">
-                        <p className="text-[13px] text-text-muted">3D scene unavailable</p>
-                      </div>
-                    }
-                  />
-                )}
-              </div>
+              <motion.div style={{ scaleX: width }} className="absolute inset-4">
+                <motion.div
+                  style={{ opacity: frontShown }}
+                  inert={showPhoto}
+                  className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary ${showPhoto ? 'pointer-events-none' : ''}`}
+                >
+                  {showScene && (
+                    <SplineScene
+                      // ponytail: Spline sends no Cache-Control, so ?v= (live ETag prefix) busts stale browser copies; bump it after each Spline promote
+                      sceneUrl="https://prod.spline.design/0PMuB12cmQMtH4FZ/scene.splinecode?v=42b17fcc"
+                      className="w-full h-full"
+                      fallbackContent={
+                        <div className="w-full h-full grid place-items-center">
+                          <p className="text-[13px] text-text-muted">3D scene unavailable</p>
+                        </div>
+                      }
+                    />
+                  )}
+                </motion.div>
+                <motion.div
+                  style={{ opacity: backShown }}
+                  inert={!showPhoto}
+                  className={`absolute inset-0 rounded-full overflow-hidden bg-bg-secondary border-[3px] border-rose-taupe ${showPhoto ? '' : 'pointer-events-none'}`}
+                >
+                  {/* the full portrait squared and zoomed out with its own mirrored studio backdrop, so the circle shows head and shoulders instead of a close crop */}
+                  {showScene && <Image src="/images/ehrl-balquin-portrait-wide.webp" alt="Portrait of Ehrl Balquin" fill sizes="368px" className="object-cover" />}
+                </motion.div>
+                <motion.div aria-hidden="true" style={{ opacity: edgeShade }} className="pointer-events-none absolute inset-0 rounded-full bg-text-primary" />
+              </motion.div>
+              <button
+                type="button"
+                onClick={flip}
+                onPointerEnter={() => setPeek(true)}
+                onPointerLeave={() => setPeek(false)}
+                className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 flex items-center gap-2 rounded-full border border-border-light bg-bg-primary px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase text-text-secondary transition-[color,transform] duration-200 hover:text-text-primary active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-taupe"
+              >
+                <motion.svg animate={{ rotate: showPhoto ? -180 : 0 }} transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+                  <path d="M21 3v5h-5" />
+                </motion.svg>
+                {showPhoto ? 'Flip to 3D' : 'Flip to photo'}
+              </button>
             </div>
           </motion.div>
         </div>

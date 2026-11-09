@@ -1,0 +1,21 @@
+.accent {
+  width: 6px;
+  height: 24px;
+  transform: translateY(-50%);
+  clip-path: inset(9px 0 round 3px);
+  transition: clip-path 200ms var(--ease-out-expo);
+}
+
+.link:is(:focus-visible, :active, [data-pressed]) .accent {
+  clip-path: inset(0 2px round 1px);
+}
+
+.link:is(:active, [data-pressed]) .accent {
+  transition-duration: 80ms;
+}
+
+@media (hover: hover) {
+  .link:hover .accent {
+    clip-path: inset(0 2px round 1px);
+  }
+}

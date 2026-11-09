@@ -22,7 +22,7 @@ export default function MobileNav() {
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50)
-            const sections = ['projects', 'skills', 'about', 'contact']
+            const sections = ['about', 'skills', 'projects', 'contact']
             const current = sections.find((section) => {
                 const el = document.getElementById(section)
                 if (!el) return false
@@ -155,7 +155,7 @@ export default function MobileNav() {
                         style={{ top: '76px' }}
                     >
                         <div className="container-custom py-2 max-h-[calc(100vh-80px)] overflow-y-auto">
-                            {['Projects', 'About', 'Contact'].map((item, index) => {
+                            {['About', 'Projects', 'Contact'].map((item, index) => {
                                 const href = hrefFor(item)
                                 const active = isItemActive(item)
                                 return (

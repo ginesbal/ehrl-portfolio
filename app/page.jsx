@@ -24,19 +24,19 @@ export default function Home() {
                     <Hero />
                 </div>
                 <Waypoint
-                    id="projects"
-                    label="Selected Work"
-                    annotation="recent projects"
-                    meta="02"
-                />
-                <Projects />
-                <Waypoint
                     id="about"
                     label="About Me"
                     annotation="background and approach"
-                    meta="03"
+                    meta="02"
                 />
                 <About />
+                <Waypoint
+                    id="projects"
+                    label="Selected Work"
+                    annotation="recent projects"
+                    meta="03"
+                />
+                <Projects />
                 <Waypoint
                     id="contact"
                     label="Get in Touch"

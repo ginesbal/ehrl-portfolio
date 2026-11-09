@@ -20,8 +20,8 @@ export default function SidebarNav() {
 
   const sections = [
     { id: 'hero', label: 'Home', num: '01' },
-    { id: 'projects', label: 'Projects', num: '02' },
-    { id: 'about', label: 'About', num: '03' },
+    { id: 'about', label: 'About', num: '02' },
+    { id: 'projects', label: 'Projects', num: '03' },
     { id: 'contact', label: 'Contact', num: '04' },
   ]
 

@@ -86,9 +86,9 @@ export default function ScrollIndicator() {
                 willChange: 'opacity, transform',
                 pointerEvents: opacity < 0.05 ? 'none' : 'auto'
             }}
-            aria-label="Scroll to projects"
+            aria-label="Scroll to About"
             onClick={() => {
-                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
             }}
         >
             <div className="flex flex-col items-center gap-2 cursor-pointer group">
