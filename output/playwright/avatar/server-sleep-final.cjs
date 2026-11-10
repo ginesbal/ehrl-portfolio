@@ -1,0 +1,6 @@
+const http = require('node:http')
+const next = require('next')
+const config = require('../../../next.config.js')
+const app = next({ dev: true, hostname: '127.0.0.1', port: 3101, conf: { ...config, distDir: 'output/playwright/avatar/.next-sleep-final' } })
+const handler = app.getRequestHandler()
+app.prepare().then(() => http.createServer((req, res) => handler(req, res)).listen(3101, '127.0.0.1', () => console.log('Sleep preview ready at http://127.0.0.1:3101')))

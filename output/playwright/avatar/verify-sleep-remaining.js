@@ -1,0 +1,48 @@
+async (page) => {
+  const assert = (condition, message) => { if (!condition) throw new Error(message) }
+  const stage = name => page.evaluate(value => console.info('AVATAR VERIFY ' + value), name)
+  const errors = []
+  page.on('pageerror', error => errors.push(error.message))
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await page.goto('http://127.0.0.1:3101/#about')
+  const avatar = page.getByRole('button', { name: 'Interact with the 3D avatar' })
+  await avatar.waitFor({ state: 'visible' })
+  await page.waitForFunction(() => document.querySelector('[aria-label="Interact with the 3D avatar"]')?.getAttribute('aria-busy') === 'false')
+  await avatar.scrollIntoViewIfNeeded()
+  await page.waitForTimeout(450)
+  await page.clock.install({ time: new Date('2026-11-05T00:00:00Z') })
+  await page.clock.pauseAt(new Date('2026-11-05T00:00:01Z'))
+  await stage('clock-paused')
+  await avatar.dispatchEvent('pointermove', { pointerType: 'mouse', clientX: 100, clientY: 100 })
+  const sleeping = () => avatar.locator('[data-avatar-sleep-effects]').evaluate(element => !element.hidden)
+  await page.clock.fastForward(60001)
+  await stage('idle-deadline')
+  await page.clock.runFor(1800)
+  assert(await sleeping(), 'Expected sleeping avatar')
+  await stage('sleeping')
+  await avatar.dispatchEvent('keydown', { key: 'Enter' })
+  await avatar.dispatchEvent('keyup', { key: 'Enter' })
+  await page.clock.runFor(500)
+  assert(!await sleeping(), 'Enter failed to wake the avatar')
+  await stage('keyboard-woke')
+  assert((await avatar.locator('[aria-live]').textContent()).includes('Back to work'), 'Keyboard wake feedback missing')
+  await avatar.dispatchEvent('click')
+  await page.clock.runFor(650)
+  assert((await avatar.locator('[aria-live]').textContent()).includes('Nice to see you'), 'Awake click failed to wave')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await stage('reduced-motion')
+  await avatar.dispatchEvent('pointermove', { pointerType: 'mouse', clientX: 100, clientY: 100 })
+  await page.clock.fastForward(60001)
+  await page.clock.runFor(100)
+  assert(await sleeping(), 'Reduced-motion sleep missing')
+  await stage('reduced-sleeping')
+  const effects = await avatar.locator('[data-avatar-sleep-effects]').evaluate(element => ({
+    bubble: getComputedStyle(element.querySelector('.avatar-nose-bubble')).animationName,
+    zzz: getComputedStyle(element.querySelector('.avatar-zzz span')).animationName,
+  }))
+  assert(effects.bubble === 'none' && effects.zzz === 'none', 'Reduced motion still animates sleep effects')
+  await avatar.dispatchEvent('click')
+  assert(!await sleeping(), 'Reduced-motion click failed to wake')
+  assert(errors.length === 0, errors.join('; '))
+  return { keyboardEnterWake: 'passed', awakeClickWave: 'passed', reducedMotionSleep: effects, reducedMotionClickWake: 'passed', browserErrors: errors }
+}
