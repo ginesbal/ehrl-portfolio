@@ -1,0 +1,194 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - link "eb" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - navigation [ref=e11]:
+          - link "01 Home" [ref=e12] [cursor=pointer]:
+            - /url: "#hero"
+            - generic [ref=e13]: "01"
+            - generic [ref=e14]: Home
+          - link "02 Projects" [ref=e15] [cursor=pointer]:
+            - /url: "#projects"
+            - generic [ref=e16]: "02"
+            - generic [ref=e17]: Projects
+          - link "03 About" [ref=e18] [cursor=pointer]:
+            - /url: "#about"
+            - generic [ref=e19]: "03"
+            - generic [ref=e20]: About
+          - link "04 Contact" [ref=e21] [cursor=pointer]:
+            - /url: "#contact"
+            - generic [ref=e22]: "04"
+            - generic [ref=e23]: Contact
+      - button "Resume" [ref=e24] [cursor=pointer]
+    - button "Hide sidebar" [ref=e27] [cursor=pointer]
+    - main [ref=e32]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e38]:
+            - paragraph [ref=e39]: EhrlBalquin
+            - paragraph [ref=e40]: Full-Stack Developer
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Welcome to my
+            - heading "portfolio ." [level=1] [ref=e43]:
+              - text: portfolio
+              - generic [ref=e44]: .
+            - paragraph [ref=e45]: I design and build for the web, with the same care for how an interface looks as for how it works.
+            - generic [ref=e46]:
+              - link "View Work" [ref=e47] [cursor=pointer]:
+                - /url: "#projects"
+              - button "Resume" [ref=e49] [cursor=pointer]
+        - button "Scroll to projects" [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]: Scroll
+      - generic [ref=e57]:
+        - generic [ref=e58]: Selected Work
+        - generic [ref=e61]: "02"
+        - paragraph [ref=e63]: recent projects
+      - generic [ref=e65]:
+        - heading "Projects" [level=2] [ref=e66]
+        - generic [ref=e67]:
+          - link "parkaid Mobile Development Mobile parking finder for downtown Calgary built with React Native and PostGIS. Lists the closest of about 2,700 city parking spots with distance and walking time. React Native Node.js PostgreSQL 01 2024" [ref=e69] [cursor=pointer]:
+            - /url: /projects/parkaid
+            - generic [ref=e70]:
+              - generic [ref=e71]:
+                - generic [ref=e72]:
+                  - heading "parkaid" [level=3] [ref=e73]
+                  - generic [ref=e74]: Mobile Development
+                - paragraph [ref=e75]: Mobile parking finder for downtown Calgary built with React Native and PostGIS. Lists the closest of about 2,700 city parking spots with distance and walking time.
+                - generic [ref=e76]:
+                  - generic [ref=e77]: React Native
+                  - generic [ref=e78]: Node.js
+                  - generic [ref=e79]: PostgreSQL
+              - generic [ref=e80]:
+                - generic [ref=e81]: "01"
+                - generic [ref=e82]: "2024"
+                - generic [aria-hidden] [ref=e83]: →
+          - 'link "EVision Advisor Web Development Electric vehicle search in plain language: a query like “SUV under 50k with over 450 km of range” becomes filters and a ranked list of 231 EVs. Built with FastAPI. FastAPI Python Jinja2 02 2025" [ref=e85] [cursor=pointer]':
+            - /url: /projects/evision
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - generic [ref=e88]:
+                  - heading "EVision Advisor" [level=3] [ref=e89]
+                  - generic [ref=e90]: Web Development
+                - paragraph [ref=e91]: "Electric vehicle search in plain language: a query like “SUV under 50k with over 450 km of range” becomes filters and a ranked list of 231 EVs. Built with FastAPI."
+                - generic [ref=e92]:
+                  - generic [ref=e93]: FastAPI
+                  - generic [ref=e94]: Python
+                  - generic [ref=e95]: Jinja2
+              - generic [ref=e96]:
+                - generic [ref=e97]: "02"
+                - generic [ref=e98]: "2025"
+                - generic [aria-hidden] [ref=e99]: →
+          - link "aim Web Development A calm study planner built around the focus session. Every finished session fills the \"a\" of the logo toward the day's goal, and nothing leaves the browser. Next.js TypeScript Tailwind CSS 03 2026" [ref=e101] [cursor=pointer]:
+            - /url: /projects/aim
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - generic [ref=e104]:
+                  - heading "aim" [level=3] [ref=e105]
+                  - generic [ref=e106]: Web Development
+                - paragraph [ref=e107]: A calm study planner built around the focus session. Every finished session fills the "a" of the logo toward the day's goal, and nothing leaves the browser.
+                - generic [ref=e108]:
+                  - generic [ref=e109]: Next.js
+                  - generic [ref=e110]: TypeScript
+                  - generic [ref=e111]: Tailwind CSS
+              - generic [ref=e112]:
+                - generic [ref=e113]: "03"
+                - generic [ref=e114]: "2026"
+                - generic [aria-hidden] [ref=e115]: →
+        - link "Project archive" [ref=e118] [cursor=pointer]:
+          - /url: /projects
+          - generic [ref=e121]: →
+      - generic [ref=e124]:
+        - generic [ref=e125]: About Me
+        - generic [ref=e128]: "03"
+        - paragraph [ref=e130]: background and approach
+      - generic [ref=e134]:
+        - heading "About" [level=2] [ref=e135]
+        - generic [ref=e136]:
+          - generic [ref=e137]:
+            - paragraph [ref=e138]: Hey there!
+            - paragraph [ref=e139]: I’m a SAIT Software Development graduate interested in front-end development and UI/UX design. I like building interfaces that feel clean, intuitive, and purposeful. A lot of my time goes into prototyping, refining details, and finding simple ways to make products easier to use while still keeping them visually engaging.
+          - generic [ref=e141]:
+            - generic [ref=e142]:
+              - term [ref=e143]: Languages
+              - definition [ref=e144]: Java · Python · JavaScript · TypeScript · C# · SQL · HTML/CSS
+            - generic [ref=e145]:
+              - term [ref=e146]: Frontend & Mobile
+              - definition [ref=e147]: React · React Native · Next.js · Expo Go · Tailwind
+            - generic [ref=e148]:
+              - term [ref=e149]: Backend & APIs
+              - definition [ref=e150]: Node.js · Express · FastAPI · REST · JWT Auth
+            - generic [ref=e151]:
+              - term [ref=e152]: Databases
+              - definition [ref=e153]: PostgreSQL · MySQL · MongoDB · SQLite
+            - generic [ref=e154]:
+              - term [ref=e155]: Testing & QA
+              - definition [ref=e156]: Jest · Postman · Selenium
+            - generic [ref=e157]:
+              - term [ref=e158]: DevOps & Tools
+              - definition [ref=e159]: Git · Docker · AWS · CI/CD · Firebase · Figma
+            - generic [ref=e160]:
+              - term [ref=e161]: Security
+              - definition [ref=e162]: OWASP · XSS Prevention · JWT Sessions
+            - generic [ref=e163]:
+              - term [ref=e164]: Expanding
+              - definition [ref=e165]: Three.js · Rust · OpenAI API
+          - generic [ref=e167]:
+            - generic [ref=e168]:
+              - paragraph [ref=e169]: Location
+              - paragraph [ref=e170]: Calgary, AB
+            - generic [ref=e171]:
+              - paragraph [ref=e172]: Status
+              - paragraph [ref=e173]: Open to work
+      - generic [ref=e180]:
+        - generic [ref=e181]: Get in Touch
+        - generic [ref=e184]: "04"
+        - paragraph [ref=e186]: let's work together
+      - generic [ref=e187]:
+        - generic [ref=e188]:
+          - heading "Let's talk" [level=2] [ref=e189]
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - term [ref=e192]: Email
+              - definition [ref=e193]:
+                - link "ehrlbalquin@gmail.com" [ref=e194] [cursor=pointer]:
+                  - /url: mailto:ehrlbalquin@gmail.com
+            - generic [ref=e195]:
+              - term [ref=e196]: Social
+              - definition [ref=e197]:
+                - link "LinkedIn" [ref=e198] [cursor=pointer]:
+                  - /url: https://linkedin.com/in/ehrlbalquin
+                - link "GitHub" [ref=e199] [cursor=pointer]:
+                  - /url: https://github.com/ginesbal
+            - generic [ref=e200]:
+              - term [ref=e201]: Based in
+              - definition [ref=e202]: Calgary, AB
+        - generic [ref=e204]:
+          - generic [ref=e205]:
+            - generic [ref=e206]: Name
+            - textbox "Name" [ref=e208]
+            - paragraph [ref=e209]
+          - generic [ref=e210]:
+            - generic [ref=e211]: Email
+            - textbox "Email" [ref=e213]
+            - paragraph [ref=e214]
+          - generic [ref=e215]:
+            - generic [ref=e216]: Message
+            - textbox "Message" [ref=e218]
+            - paragraph [ref=e219]
+          - button "Send" [ref=e220] [cursor=pointer]
+      - generic [ref=e223]:
+        - link "eb" [ref=e224] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e229]:
+          - link "Email" [ref=e230] [cursor=pointer]:
+            - /url: mailto:ehrlbalquin@gmail.com
+          - link "LinkedIn" [ref=e231] [cursor=pointer]:
+            - /url: https://linkedin.com/in/ehrlbalquin
+          - link "GitHub" [ref=e232] [cursor=pointer]:
+            - /url: https://github.com/ginesbal
+          - generic [ref=e233]: —
+          - generic [ref=e234]: © 2026

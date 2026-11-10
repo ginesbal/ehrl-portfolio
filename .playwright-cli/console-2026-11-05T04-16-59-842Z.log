@@ -1,0 +1,10 @@
+[     660ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[    1614ms] [WARNING] updating from  118 to  122 @ webpack-internal:///(app-pages-browser)/./node_modules/@splinetool/runtime/build/runtime.js:3155
+[    3014ms] [INFO] AVATAR VERIFY clock-paused @ :0
+[    3032ms] [INFO] AVATAR VERIFY idle-deadline @ :0
+[    3216ms] [INFO] AVATAR VERIFY sleeping @ :0
+[    3296ms] [INFO] AVATAR VERIFY keyboard-woke @ :0
+[    3376ms] [INFO] AVATAR VERIFY reduced-motion @ :0
+[    3414ms] [INFO] AVATAR VERIFY reduced-sleeping @ :0
+[   43919ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[   44611ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3101/_next/static/webpack/7a0908e8af1816d8.webpack.hot-update.json:0

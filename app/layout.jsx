@@ -1,28 +1,33 @@
 // app/layout.jsx
 import Providers from '@/components/Providers.jsx'
-import { Source_Code_Pro, Source_Sans_3, Source_Serif_4 } from 'next/font/google'
+import localFont from 'next/font/local'
 import Script from 'next/script'
 import './globals.css'
 
-const sourceSans = Source_Sans_3({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+// The fonts ship with the site: Google Fonts' latin files, the same ones next/font/google used to fetch
+// at build time, so a build never depends on Google's answer (Vercel's builder once got a link it couldn't read).
+// Sans and serif are variable fonts, so one file covers every weight.
+const sourceSans = localFont({
+  src: './fonts/source-sans-3-latin.woff2',
+  weight: '200 900',
   variable: '--font-sans',
   display: 'swap',
 })
 
-const sourceSerif = Source_Serif_4({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
+const sourceSerif = localFont({
+  src: [
+    { path: './fonts/source-serif-4-latin.woff2', weight: '200 900', style: 'normal' },
+    { path: './fonts/source-serif-4-italic-latin.woff2', weight: '200 900', style: 'italic' },
+  ],
   variable: '--font-serif',
   display: 'swap',
+  adjustFontFallback: 'Times New Roman',
 })
 
 // the superfamily's mono, for code in the case studies; only those pages use it, so no preload
-const sourceCode = Source_Code_Pro({
-  subsets: ['latin'],
-  weight: ['400'],
+const sourceCode = localFont({
+  src: './fonts/source-code-pro-latin.woff2',
+  weight: '400',
   variable: '--font-mono',
   display: 'swap',
   preload: false,

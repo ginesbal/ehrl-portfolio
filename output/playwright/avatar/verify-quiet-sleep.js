@@ -1,0 +1,60 @@
+async page => {
+  const assert = (condition, message) => { if (!condition) throw new Error(message) }
+  const errors = []
+  page.on('pageerror', error => errors.push(error.message))
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await page.goto('http://127.0.0.1:3102/#about')
+  const avatar = page.getByRole('button', { name: 'Interact with the 3D avatar' })
+  await avatar.waitFor({ state: 'visible' })
+  await page.waitForFunction(() => document.querySelector('[aria-label="Interact with the 3D avatar"]')?.getAttribute('aria-busy') === 'false')
+  await avatar.scrollIntoViewIfNeeded()
+  await page.waitForTimeout(500)
+  const canvas = avatar.locator('canvas')
+  const overlay = avatar.locator('[data-avatar-sleep-effects]')
+  const liveText = () => avatar.locator('[aria-live]').textContent()
+  const phase = () => overlay.evaluate(element => element.hidden ? 'hidden' : element.dataset.state)
+  const capture = name => avatar.screenshot({ path: `output/playwright/avatar/${name}.png` })
+  const mark = label => page.evaluate(name => console.info('AVATAR CHECK ' + name), label)
+  const now = () => page.evaluate(() => performance.now())
+  const advanceTo = async time => {
+    const elapsed = Math.ceil(time - await now())
+    if (elapsed > 0) await page.clock.fastForward(elapsed)
+  }
+  const box = await avatar.boundingBox()
+  const point = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+  const click = () => page.mouse.click(point.x, point.y)
+  const activity = () => avatar.dispatchEvent('pointermove', {
+    pointerType: 'mouse', clientX: point.x, clientY: point.y,
+  })
+  const startTime = new Date('2026-11-05T12:00:00Z')
+  await page.clock.install({ time: startTime })
+  await page.clock.pauseAt(new Date(startTime.getTime() + 1000))
+
+  await activity()
+  await page.clock.fastForward(30000)
+  await page.clock.runFor(7500)
+  await capture('drowsy-eyelids')
+  assert(await phase() === 'hidden', 'sleep started before drowsy phase ended')
+  await page.clock.runFor(4600)
+  const opacity = selector => overlay.locator(selector).evaluate(el => Number(getComputedStyle(el).opacity))
+  assert(await phase() === 'sleeping', 'sleep missing')
+  assert(await opacity('.avatar-zzz') < 0.05, 'Zzz appeared before eyes closed')
+  assert(await opacity('.avatar-nose-bubble') < 0.05, 'bubble appeared too early')
+  await page.clock.runFor(3200)
+  await overlay.evaluate(el => el.getAnimations({ subtree: true }).forEach(a => { a.pause(); a.currentTime = 3300 }))
+  assert(await opacity('.avatar-zzz') > 0.9, 'Zzz did not fade in')
+  assert(await opacity('.avatar-nose-bubble') < 0.05, 'bubble appeared before Zzz')
+  await page.clock.runFor(3000)
+  await overlay.evaluate(el => el.getAnimations({ subtree: true }).forEach(a => { a.pause(); a.currentTime = 6300 }))
+  assert(await opacity('.avatar-nose-bubble') > 0.9, 'bubble did not fade in')
+  await capture('gradual-sleep-zzz')
+  await page.clock.fastForward(30000)
+  assert(await phase() === 'sleeping', 'nap ended too soon')
+  await avatar.dispatchEvent('click')
+  assert(await phase() === 'popping', 'click did not wake immediately')
+  await page.clock.runFor(2200)
+  assert(await phase() === 'hidden', 'effects did not clear')
+  assert(await avatar.locator('span[aria-hidden="true"]').count() === 0, 'visible caption remains')
+  assert(errors.length === 0, errors.join(', '))
+  return { gradualSleep: true, stagedEffects: true, longerNap: true, clickWake: true, noVisibleCaptions: true, errors }
+}
